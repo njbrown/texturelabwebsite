@@ -6,5 +6,18 @@
 
 module.exports = {
   siteName: 'Gridsome',
-  plugins: []
+  plugins: [
+    {
+      use: 'gridsome-plugin-tailwindcss',
+      options: {
+        tailwindConfig: './tailwind.config.js',
+        purgeConfig: {
+          // Prevent purging of prism classes.
+          whitelistPatternsChildren: [
+            /token$/
+          ]
+        }
+      }
+    }
+  ]
 }

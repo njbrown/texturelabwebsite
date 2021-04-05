@@ -8,5 +8,9 @@
   },
   "dependencies": {
     "gridsome": "^0.7.0"
+  },
+  "devDependencies": {
+    "gridsome-plugin-tailwindcss": "^4.1.1",
+    "tailwindcss": "^2.1.1"
   }
 }
