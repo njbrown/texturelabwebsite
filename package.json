@@ -7,7 +7,10 @@
     "build": "gridsome build"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "autoprefixer": "^10.2.5",
+    "gridsome": "^0.7.0",
+    "postcss": "^8.2.9",
+    "vue-feather-icons": "^5.1.0"
   },
   "devDependencies": {
     "gridsome-plugin-tailwindcss": "^4.1.1",
