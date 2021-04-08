@@ -18,6 +18,11 @@
       </div>
     </div>
 
+    <div class="w-full">
+      <div class="container text-white text-center">
+      </div>
+    </div>
+
   </Layout>
 </template>
 
