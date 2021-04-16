@@ -73,7 +73,6 @@ export default {
       );
     },
     showSidebar() {
-      // console.log(this.sidebar);
       return this.$page.docPage.sidebar
         && this.sidebar;
     },
@@ -89,9 +88,6 @@ export default {
       };
     },
     findPages(links) {
-      console.log(links);
-      console.log(this.pages);
-      console.log(links.map(link => this.pages.find(page => page.path === link)));
       return links.map(link => this.pages.find(page => page.path === link));
     }
   },  

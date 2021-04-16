@@ -10,7 +10,7 @@
           <div class="content" v-html="$page.docPage.content" />
 
           <div class="mt-8 pt-8 lg:mt-12 lg:pt-12 border-t border-ui-border">
-            <!-- <NextPrevLinks /> -->
+            <NextPrevLinks />
           </div>
         </div>
 
@@ -50,13 +50,13 @@ query ($id: ID!) {
 <script>
 import OnThisPage from '@/components/OnThisPage.vue';
 import Layout from '@/layouts/Doc.vue';
-// import NextPrevLinks from '@/components/NextPrevLinks.vue';
+import NextPrevLinks from '@/components/NextPrevLinks.vue';
 
 export default {
   components: {
     Layout,
     OnThisPage,
-    // NextPrevLinks
+    NextPrevLinks
   },
   
   metaInfo() {

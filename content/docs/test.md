@@ -1,7 +1,7 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/writing-content/'
+prev: '/docs/'
 next: '/docs/settings/'
 ---
 
