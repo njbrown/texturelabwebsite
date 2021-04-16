@@ -6,6 +6,37 @@
 
 module.exports = {
   siteName: 'Gridsome',
+  settings:{
+    nav: {
+      links: [
+        { path: '/docs/', title: 'Docs' }
+      ]
+    },
+    sidebar: [
+      {
+        name: 'docs',
+        sections: [
+          {
+            title: 'Getting Started',
+            items: [
+              '/docs/',
+              '/docs/test/',
+              // '/docs/installation/',
+              // '/docs/writing-content/',
+              // '/docs/deploying/',
+            ]
+          },
+          {
+            title: 'Configuration',
+            items: [
+              // '/docs/settings/',
+              // '/docs/sidebar/',
+            ]
+          }
+        ]
+      }
+    ]
+  },
   plugins: [
     {
       use: 'gridsome-plugin-tailwindcss',
@@ -18,6 +49,21 @@ module.exports = {
           ]
         }
       }
-    }
+    },
+    {
+      use: '@gridsome/source-filesystem',
+      options: {
+        baseDir:'./content',
+        path: '**/*.md',
+        typeName: 'DocPage',
+        remark: {
+          externalLinksTarget: '_blank',
+          externalLinksRel: ['noopener', 'noreferrer'],
+          plugins: [
+            '@gridsome/remark-prismjs'
+          ]
+        }
+      }
+    },
   ]
 }
