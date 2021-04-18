@@ -981,6 +981,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@fontsource/barlow@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/barlow/-/barlow-4.2.2.tgz#f24f0939c1c720309150f34c42289d53702e279d"
+  integrity sha512-5FGBI5G3Bod7e3o5cOGAvfUfjyZGK/vI9vz/MGgxta0zQDaVLudqyQS0gDYF8lZswGU251dYhjfFMniX+rwPBQ==
+
 "@fontsource/inter@^4.2.2":
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.2.2.tgz#efe97167aac992db3fadf60ea0dd72aacd3e1fc4"

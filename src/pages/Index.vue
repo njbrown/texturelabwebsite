@@ -3,7 +3,7 @@
     <div class="w-full bg-gray-800 block">
       <div class="container text-white text-center hero-margin">
         <div class="flex flex-col pt-8 px-8">
-          <h1 class="text-5xl pt-8 font-bold mx-auto max-w-4xl">Procedural Texturing is the Future</h1>
+          <h1 class="text-5xl pt-8 font-bold mx-auto max-w-4xl font-barlow">Procedural Texturing is the Future</h1>
           <h4 class="text-2xl mt-4 text-gray-300 mx-auto max-w-lg">With TextureLab, you dont have to be an artist to make beautiful textures</h4>
           <div>  
             <a class="px-5 py-5 mt-8 mb-12 rounded bg-blue-400 text-2xl font-bold inline-block flex-wrap" href="#">Download</a>
@@ -22,7 +22,7 @@
       <div class="container text-black text-left max-w-6xl">
         <div class="grid grid-cols-2">
           <div class="flex flex-col text-left justify-center px-8">
-            <h1 class="text-5xl font-bold py-3">Decent Looking Title</h1>
+            <h1 class="text-5xl font-bold py-3 font-barlow">Decent Looking Title</h1>
             <h2 class="text-2xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h2>
           </div>
           <div class="flex items-start px-8">
@@ -39,7 +39,7 @@
             <g-image class="inline-block shadow-md" src="https://via.placeholder.com/500" />
           </div>
           <div class="flex flex-col items-start justify-center px-8">
-            <h1 class="text-5xl font-bold py-3">Decent Looking Title</h1>
+            <h1 class="text-5xl font-bold py-3 font-barlow">Decent Looking Title</h1>
             <h2 class="text-2xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h2>
           </div>
           
@@ -51,7 +51,7 @@
       <div class="container text-black text-left max-w-6xl">
         <div class="grid grid-cols-2">
           <div class="flex flex-col justify-center px-8">
-            <h1 class="text-5xl font-bold py-3">Decent Looking Title</h1>
+            <h1 class="text-5xl font-bold py-3 font-barlow">Decent Looking Title</h1>
             <h2 class="text-2xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h2>
           </div>
           <div class="flex items-start px-8">
