@@ -53,9 +53,10 @@ module.exports = {
     {
       use: '@gridsome/source-filesystem',
       options: {
-        baseDir:'./content',
+        baseDir:'./content/docs',
         path: '**/*.md',
         typeName: 'DocPage',
+        index: ['readme'], //  necessary to prevent conflicts between plugins
         remark: {
           externalLinksTarget: '_blank',
           externalLinksRel: ['noopener', 'noreferrer'],
@@ -65,5 +66,18 @@ module.exports = {
         }
       }
     },
+    {
+			use: "@gridsome/vue-remark",
+			options: {
+				typeName: 'BlogPage',
+				baseDir: "./content/blog",
+				pathPrefix: '/blog',
+				template: "./src/templates/BlogPage.vue",
+				// route: "/blog/:slug",
+				// refs: {
+				// 	author: 'Author'
+				// }
+			}
+		},
   ]
 }
