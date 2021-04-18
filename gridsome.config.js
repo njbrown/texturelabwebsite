@@ -55,8 +55,9 @@ module.exports = {
       options: {
         baseDir:'./content/docs',
         path: '**/*.md',
+        pathPrefix: '/docs',
         typeName: 'DocPage',
-        index: ['readme'], //  necessary to prevent conflicts between plugins
+        index: ['index'], //  necessary to prevent conflicts between plugins
         remark: {
           externalLinksTarget: '_blank',
           externalLinksRel: ['noopener', 'noreferrer'],
