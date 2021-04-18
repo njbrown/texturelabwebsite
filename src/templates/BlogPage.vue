@@ -6,6 +6,9 @@
       >
         <span class="text-md block mb-2">{{$page.blogPage.date}}</span>
         <h2 class="font-bold mb-8 text-4xl">{{$page.blogPage.title}}</h2>
+        <div class="text-center mb-8">
+            <img class="inline" src="https://picsum.photos/600/300" />
+        </div>
         <!-- <div class="content" v-html="$page.blogPage.content" /> -->
         <div id="blog-content" class="text-left">
             <VueRemarkContent />
