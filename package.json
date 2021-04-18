@@ -7,6 +7,7 @@
     "build": "gridsome build"
   },
   "dependencies": {
+    "@fontsource/inter": "^4.2.2",
     "@gridsome/remark-prismjs": "^0.5.0",
     "@gridsome/source-filesystem": "^0.6.2",
     "@gridsome/transformer-remark": "^0.6.4",

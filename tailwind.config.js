@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
@@ -22,6 +24,11 @@ module.exports = {
     container: {
       center: true,
       padding: '1rem'
+    }
+    ,
+    fontFamily: {
+      ...defaultTheme.fontFamily,
+      'inter': ['Inter', 'Open Sans', ...defaultTheme.fontFamily.sans]
     }
   },
   variants: {
