@@ -6,9 +6,9 @@
                 <g-link class="inline-block text-md px-4 py-4" to="/">© 2021 Texturelab, Inc., All Rights Reserved</g-link>
             </div>
             <div class="flex flex-center sm:justify-center md:justify-end items-center">
-                <g-link class="inline-block text-lg mx-1 px-2 py-2 hover:text-gray-500" to="/github"><TwitterIcon class="inline-block" /></g-link>
-                <g-link class="inline-block text-lg mx-1 px-2 py-2 hover:text-gray-500" to="/github"><GithubIcon class="inline-block" /></g-link>
-                <g-link class="inline-block text-lg mx-1 px-2 py-2 hover:text-gray-500" to="/github"><MessageSquareIcon class="inline-block" /></g-link>
+                <a class="inline-block text-lg mx-1 px-2 py-2 hover:text-gray-500" target="_blank" href="https://twitter.com/njbrown92"><TwitterIcon class="inline-block" /></a>
+                <a class="inline-block text-lg mx-1 px-2 py-2 hover:text-gray-500" target="_blank" href="https://github.com/njbrown/texturelab"><GithubIcon class="inline-block" /></a>
+                <a class="inline-block text-lg mx-1 px-2 py-2 hover:text-gray-500" target="_blank" href="https://discord.gg/975NdQPsSc"><MessageSquareIcon class="inline-block" /></a>
             </div>
         </div>
     </div>

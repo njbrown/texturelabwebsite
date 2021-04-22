@@ -6,8 +6,8 @@
             <div>
                 <g-link class="inline-block text-lg px-4 py-4" to="/docs">Docs</g-link>
                 <g-link class="inline-block text-lg px-4 py-4" to="/blog">Blog</g-link>
-                <g-link class="inline-block text-lg px-4 py-4" to="/download">Download</g-link>
-                <g-link class="inline-block text-lg px-4 py-4" to="/github"><GithubIcon class="inline-block" /></g-link>
+                <a class="inline-block text-lg px-4 py-4" href="https://njbrown.itch.io/texturelab" target="_blank">Download</a>
+                <a class="inline-block text-lg px-4 py-4" href="https://github.com/njbrown/texturelab" target="_blank"><GithubIcon class="inline-block" /></a>
             </div>
         </div>
     </div>
