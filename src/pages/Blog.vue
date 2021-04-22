@@ -12,15 +12,15 @@
       <div class="container grid md:grid-cols-2 gap-6 text-white text-center text-black max-w-6xl">
         <div v-for="post in posts" :key="post.index"
         class="rounded-lg shadow-md overflow-hidden bg-gray-100 border border-gray-300">
-        <a href="#"
+        <g-link :to="post.path"
         >
-          <img :src="post.thumbail" />
+          <g-image :src="post.image.src" />
           <div class="px-8 py-7">
-            <h2 class="text-black text-gray-700 text-left text-3xl font-bold font-barlow">Hello Welcome to my Blog</h2>
-            <h4 class="text-black text-gray-400 font-bolder text-left pt-1">March 31, 2021</h4>
-            <p class="text-black text-left pt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pretium tempor placerat. Quisque id nunc a ipsum maximus dapibus. Maecenas nec metus odio. Praesent non odio aliquam, volutpat nisl non, iaculis erat.</p>
+            <h2 class="text-black text-gray-700 text-left text-3xl font-bold font-barlow">{{ post.title }}</h2>
+            <h4 class="text-black text-gray-400 font-bolder text-left pt-1">{{ post.date }}</h4>
+            <p class="text-black text-left pt-1">{{ post.description }}</p>
           </div>
-        </a>
+        </g-link>
         </div>
       </div>
     </div>
@@ -29,29 +29,52 @@
   </Layout>
 </template>
 
+<page-query>
+query Blog {
+	blogs: allBlogPage(order: DESC, filter: { draft: { eq: false } }) {
+		edges {
+			node {
+				id
+        path
+				title
+				description
+				image
+				path
+				category
+				date (format: "MMMM DD, YYYY")
+			}
+		}
+	}
+}
+</page-query>
+
 <script>
 export default {
   metaInfo: {
     title: 'Texturelab Blog'
   },
   computed:{
-      posts: function(){
-        let posts = []
-          for(let i=0;i<20;i++) {
-            let post = {
-              index:i,
-              thumbail:"https://picsum.photos/600/300",
-              category:"",
-              date:"",
-              author:"",
-              summary:""
-            }
+      // posts: function(){
+      //   let posts = []
+      //     for(let i=0;i<20;i++) {
+      //       let post = {
+      //         index:i,
+      //         thumbail:"https://picsum.photos/600/300",
+      //         category:"",
+      //         date:"",
+      //         author:"",
+      //         summary:""
+      //       }
 
-            posts.push(post);
-          }
+      //       posts.push(post);
+      //     }
 
-          return posts;
-      }
+      //     return posts;
+      // },
+    posts:function(){
+      console.log(this.$page.blogs.edges)
+      return this.$page.blogs.edges.map( ({ node })  => node);
+    }
   }
 }
 </script>

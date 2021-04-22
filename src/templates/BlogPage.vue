@@ -7,7 +7,7 @@
         <h2 class="font-barlow font-bold mb-2 mt-16 text-6xl">{{$page.blogPage.title}}</h2>
         <span class="font-barlow text-md font-bolder text-gray-700 text-lg block mb-12">{{$page.blogPage.date}}</span>
         <div class="text-center mb-10">
-            <img class="inline w-full rounded" src="https://picsum.photos/600/300" />
+            <g-image class="inline w-full rounded" :src="$page.blogPage.image.src" />
         </div>
         <!-- <div class="content" v-html="$page.blogPage.content" /> -->
         <div id="blog-content" class="text-left">

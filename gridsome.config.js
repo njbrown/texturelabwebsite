@@ -74,7 +74,7 @@ module.exports = {
 				baseDir: "./content/blog",
 				pathPrefix: '/blog',
 				template: "./src/templates/BlogPage.vue",
-				// route: "/blog/:slug",
+				route: "/blog/:slug",
 				// refs: {
 				// 	author: 'Author'
 				// }
