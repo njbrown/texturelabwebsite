@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="w-full bg-gray-800 block">
+    <div class="w-full bg-gray-900 block">
       <div class="container text-white text-center">
         <div class="flex flex-col pt-8 px-8">
           <h1 class="text-5xl pt-8 font-bold mx-auto max-w-4xl font-barlow">Welcome to TextureLab's Blog</h1>

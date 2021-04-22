@@ -1,5 +1,5 @@
 <template>
-<div class="bg-gray-800 text-white">
+<div class="bg-gray-900 text-white">
     <div class="container mx-auto">
         <div class="flex justify-between text-center items-center">
             <div><g-link class="inline-block text-lg px-4 py-4" to="/">TextureLab</g-link></div>

@@ -4,10 +4,10 @@
       <div 
         class="container text-black text-center text-black max-w-4xl"
       >
-        <span class="text-md block mb-2">{{$page.blogPage.date}}</span>
-        <h2 class="font-bold mb-8 text-4xl">{{$page.blogPage.title}}</h2>
-        <div class="text-center mb-8">
-            <img class="inline" src="https://picsum.photos/600/300" />
+        <h2 class="font-barlow font-bold mb-2 mt-16 text-6xl">{{$page.blogPage.title}}</h2>
+        <span class="font-barlow text-md font-bolder text-gray-700 text-lg block mb-12">{{$page.blogPage.date}}</span>
+        <div class="text-center mb-10">
+            <img class="inline w-full rounded" src="https://picsum.photos/600/300" />
         </div>
         <!-- <div class="content" v-html="$page.blogPage.content" /> -->
         <div id="blog-content" class="text-left">
@@ -82,4 +82,53 @@ export default {
 
 <style>
 /* @import 'prism-themes/themes/prism-vs.css'; */
+</style>
+
+<style lang="scss">
+#blog-content {
+    @apply mb-2
+}
+
+#blog-content {
+    // h1, h2, h3, h4, h5, h6 {
+    //     @apply mt-4 pb-2
+    // }
+
+    // h1, h2, h3, h4, h5, h6, ol, ul, p {
+	// 	@apply mb-2
+    // }
+
+    // ol, ul, p {
+	// 	color: #474C55;
+	// 	@apply leading-8
+    // }
+
+    h1 {
+        @apply text-4xl font-bold mb-2 mt-4
+    }
+
+    h2 {
+        @apply text-3xl font-bold mt-12
+    }
+
+    h3 {
+        @apply text-2xl font-bold mt-12
+    }
+
+    h4 {
+        @apply text-xl font-bold mt-12
+    }
+
+    h5 {
+        @apply text-lg font-bold mt-12
+    }
+
+    p {
+        @apply mt-8 leading-8 text-lg
+    }
+
+    img {
+        @apply w-full
+    }
+}
 </style>
