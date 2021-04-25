@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <div class="w-full pt-8 pb-8 bg-gray-200">
+    <div class="w-full pt-8 pb-8 bg-gray-200 blog-list">
       <div class="container grid md:grid-cols-2 gap-6 text-white text-center text-black max-w-6xl">
         <div v-for="post in posts" :key="post.index"
         class="rounded-lg shadow-md overflow-hidden bg-gray-100 border border-gray-300">
@@ -80,4 +80,7 @@ export default {
 </script>
 
 <style>
+.blog-list {
+  min-height: 70vh;
+}
 </style>
