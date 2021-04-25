@@ -21,16 +21,46 @@ module.exports = {
             items: [
               '/docs/',
               '/docs/test/',
-              // '/docs/installation/',
               // '/docs/writing-content/',
               // '/docs/deploying/',
             ]
           },
           {
-            title: 'Configuration',
+            title: 'Interface',
             items: [
               // '/docs/settings/',
-              // '/docs/sidebar/',
+              '/docs/interface/toolbar/',
+              '/docs/interface/library/',
+              '/docs/interface/editor/',
+              '/docs/interface/3dview/',
+              '/docs/interface/2dview/',
+              '/docs/interface/settings/',
+              '/docs/interface/menu/',
+            ]
+          },
+          {
+            title: 'Workflow',
+            items: [
+              // '/docs/settings/',
+              '/docs/workflow/nodes/',
+              '/docs/workflow/outputs/',
+              '/docs/workflow/randomseed/',
+              '/docs/workflow/resolution/',
+              '/docs/workflow/exporting/'
+            ]
+          },
+          {
+            title: 'Tutorials',
+            items: [
+              '/docs/tutorials/cracked-tile-texture/',
+            ]
+          },
+          {
+            title: 'Development',
+            items: [
+              '/docs/development/building-from-source/',
+              '/docs/development/creating-nodes/',
+              '/docs/development/contributing/',
             ]
           }
         ]

@@ -63,6 +63,10 @@ export default {
       expanded: []
     };
   },
+  mounted:function(){
+    // console.log(this.pages)
+    this.pages.forEach(p => console.log(p.path))
+  },
   computed: {
     pages() {
       return this.$page.allDocPage.edges.map(edge => edge.node);
@@ -77,6 +81,7 @@ export default {
         && this.sidebar;
     },
     currentPage() {
+      console.log(this.$page.docPage);
       return this.$page.docPage;
     }
   },
@@ -88,7 +93,10 @@ export default {
       };
     },
     findPages(links) {
-      return links.map(link => this.pages.find(page => page.path === link));
+      let pages =  links.map(link => this.pages.find(page => page.path === link));
+      
+      //console.log(pages);
+      return pages;
     }
   },  
 };
