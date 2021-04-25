@@ -1,10 +1,9 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+next: '/docs/workflow/outputs/'
 ---
 
-# 2D View
+# Nodes
 
 This is the documentation home page

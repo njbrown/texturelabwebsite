@@ -1,8 +1,7 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+next: '/docs/development/creating-nodes/'
 ---
 
 # Building From Source

@@ -1,8 +1,8 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+prev: '/docs/interface/3dview/'
+next: '/docs/interface/settings/'
 ---
 
 # 2D View

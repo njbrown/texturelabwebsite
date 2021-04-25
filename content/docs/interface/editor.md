@@ -1,8 +1,8 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+prev: '/docs/interface/library/'
+next: '/docs/interface/3dview/'
 ---
 
 # Editor

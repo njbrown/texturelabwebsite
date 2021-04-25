@@ -1,10 +1,10 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+prev: '/docs/workflow/nodes/'
+next: '/docs/workflow/randomseed/'
 ---
 
-# 3D View
+# Outputs
 
 This is the documentation home page

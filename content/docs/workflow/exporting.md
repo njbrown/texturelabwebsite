@@ -1,10 +1,9 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+prev: '/docs/workflow/resolution/'
 ---
 
-# Toolbar
+# Exporting
 
 This is the documentation home page

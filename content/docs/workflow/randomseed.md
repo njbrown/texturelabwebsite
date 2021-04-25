@@ -1,10 +1,10 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+prev: '/docs/workflow/outputs/'
+next: '/docs/workflow/resolution/'
 ---
 
-# Editor
+# Random Seed
 
 This is the documentation home page

@@ -1,8 +1,7 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/library/'
+next: '/docs/interface/library/'
 ---
 
 # Toolbar
