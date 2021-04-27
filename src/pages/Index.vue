@@ -67,35 +67,38 @@
 
         <div class="flex flex-col items-center justify-center px-8">
           <h1 class="text-5xl font-bold py-3 font-barlow">Want to Contribute?</h1>
-          <h2 class="text-2xl text-gray-300 max-w-3xl text-center">This project is still under heavy development so your input can influence the project in a big way</h2>
+          <h2 class="text-2xl text-gray-300 max-w-3xl text-center">This project is still under heavy development so now is your chance to influence the project in a big way</h2>
         </div>
 
-        <div class="grid grid-cols-3 mt-8">
+        <div class="grid grid-cols-1 mt-8">
 
-          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-200 pb-5 font-inter">View Our Roadmap on Github</h4>
-            <p class="text-gray-300 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
+            <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Join Our Communities</h4>
+            <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <div class="flex justify-end">
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3">Join Our Discord Server</a>
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">Checkout our itch.io Community</a>
+            </div>
           </div>
 
-          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-200 pb-5 font-inter">Join Our Communities</h4>
-            <p class="text-gray-300 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
+            <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Contributor on Github</h4>
+            <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <div class="flex justify-end">
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3">View our Project Roadmap</a>
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">View our Contribution Guide</a>
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">Post an Isssue, Bug or a Suggested Feature</a>
+            </div>
           </div>
 
-          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-200 pb-5 font-inter">Become a Sponsor</h4>
-            <p class="text-gray-300 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
+            <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Sponsor</h4>
+            <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <div class="flex justify-end">
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3">Become a Sponsor on itch.io</a>
+              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">Become a Sponsor on Github</a>
+            </div>
           </div>
-        </div>
-
-        <div class="flex items-center text-2xl justify-center mt-12 mb-8">
-            We'd love to hear from you!
-        </div>
-
-        <div class="flex grid grid-col-1 justify-center text-center">
-            <a href="#" class="block rounded-sm bg-white text-black px-5 py-5 mb-5">Join Our Discord Server</a>
-            <a href="#" class="block rounded-sm bg-white text-black px-5 py-5 mb-5">Post an Issue On itch.io</a>
-            <a href="#" class="block rounded-sm bg-white text-black px-5 py-5 mb-5">Message Me On Twitter</a>
         </div>
       </div>
     </div>
