@@ -76,8 +76,8 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Join Our Communities</h4>
             <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3">Join Our Discord Server</a>
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">Checkout our itch.io Community</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow discord-purple short-shadow">Join The #TextureLab Discord</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Checkout our itch.io Community</a>
             </div>
           </div>
 
@@ -85,9 +85,9 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Contributor on Github</h4>
             <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3">View our Project Roadmap</a>
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">View our Contribution Guide</a>
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">Post an Isssue, Bug or a Suggested Feature</a>
+              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3">View our Project Roadmap</a>
+              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3 ml-3">View our Contribution Guide</a>
+              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3 ml-3">Post an Isssue, Bug or a Suggested Feature</a>
             </div>
           </div>
 
@@ -95,8 +95,8 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Sponsor</h4>
             <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3">Become a Sponsor on itch.io</a>
-              <a href="#" class="inline-block rounded-sm shadow-md bg-white text-black px-5 py-3 ml-3">Become a Sponsor on Github</a>
+              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3">Become a Sponsor on itch.io</a>
+              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3 ml-3">Become a Sponsor on Github</a>
             </div>
           </div>
         </div>
@@ -145,5 +145,18 @@ export default {
 .screenshot {
   margin-top:-360px;
   box-shadow: 0 5px 30px rgb(0,0,0,0.5);
+}
+
+.discord-purple {
+  background-color:#7289DA;
+}
+
+.itch-red {
+  background-color:rgb(239, 0, 73);
+}
+
+.short-shadow
+{
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px -1px;
 }
 </style>
