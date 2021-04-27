@@ -21,14 +21,43 @@
 
     <div class="w-full py-20">
       <div class="container text-black text-left max-w-6xl">
-        <div class="grid grid-cols-2">
-          <div class="flex flex-col text-left justify-center px-8">
-            <h1 class="text-5xl font-bold py-3 font-barlow">Decent Looking Title</h1>
-            <h2 class="text-2xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h2>
+        <div class="flex flex-col text-center items-center justify-center px-8">
+          <h1 class="text-5xl font-bold py-3 font-barlow">Features</h1>
+          <h2 class="text-2xl max-w-3xl text-gray-500">TextureLab is packed with features to help you make the next beautiful game</h2>
+        </div>
+
+        <div class="grid grid-cols-3 pt-12">
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
+            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
           </div>
-          <div class="flex items-start px-8">
-            <g-image class="inline-block shadow-md" src="https://via.placeholder.com/500" />
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
+            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
           </div>
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
+            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          </div>
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
+            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          </div>
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
+            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          </div>
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
+            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          </div>
+
         </div>
       </div>
     </div>
