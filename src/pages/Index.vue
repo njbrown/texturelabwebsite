@@ -103,7 +103,7 @@
       </div>
     </div>
 
-    <div class="w-full py-20 bg-gray-300">
+    <!-- <div class="w-full py-20 bg-gray-300">
       <div class="container text-black text-left max-w-6xl">
         <div class="grid grid-cols-2">
           <div class="flex flex-col justify-center px-8">
@@ -115,7 +115,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </Layout>
 </template>
