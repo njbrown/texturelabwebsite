@@ -1,10 +1,8 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/writing-content/'
-next: '/docs/test/'
 ---
 
-# Deploying
+# Introduction
 
 This is a test page

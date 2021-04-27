@@ -20,9 +20,6 @@ module.exports = {
             title: 'Getting Started',
             items: [
               '/docs/',
-              '/docs/test/',
-              // '/docs/writing-content/',
-              // '/docs/deploying/',
             ]
           },
           {
