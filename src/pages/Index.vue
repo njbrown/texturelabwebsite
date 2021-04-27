@@ -64,15 +64,38 @@
 
     <div class="w-full py-20 bg-gray-900">
       <div class="container text-white text-left max-w-6xl">
-        <div class="grid grid-cols-2">
-          <div class="flex flex-row justify-end px-8">
-            <g-image class="inline-block shadow-md" src="https://via.placeholder.com/500" />
+
+        <div class="flex flex-col items-center justify-center px-8">
+          <h1 class="text-5xl font-bold py-3 font-barlow">Want to Contribute?</h1>
+          <h2 class="text-2xl text-gray-300 max-w-3xl text-center">This project is still under heavy development so your input can influence the project in a big way</h2>
+        </div>
+
+        <div class="grid grid-cols-3 mt-8">
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-200 pb-5 font-inter">View Our Roadmap on Github</h4>
+            <p class="text-gray-300 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
           </div>
-          <div class="flex flex-col items-start justify-center px-8">
-            <h1 class="text-5xl font-bold py-3 font-barlow">Decent Looking Title</h1>
-            <h2 class="text-2xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h2>
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-200 pb-5 font-inter">Join Our Communities</h4>
+            <p class="text-gray-300 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
           </div>
-          
+
+          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
+            <h4 class="text-2xl font-bold text-gray-200 pb-5 font-inter">Become a Sponsor</h4>
+            <p class="text-gray-300 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center text-2xl justify-center mt-12 mb-8">
+            We'd love to hear from you!
+        </div>
+
+        <div class="flex grid grid-col-1 justify-center text-center">
+            <a href="#" class="block rounded-sm bg-white text-black px-5 py-5 mb-5">Join Our Discord Server</a>
+            <a href="#" class="block rounded-sm bg-white text-black px-5 py-5 mb-5">Post an Issue On itch.io</a>
+            <a href="#" class="block rounded-sm bg-white text-black px-5 py-5 mb-5">Message Me On Twitter</a>
         </div>
       </div>
     </div>
