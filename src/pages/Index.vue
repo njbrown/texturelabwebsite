@@ -6,8 +6,8 @@
           <h1 class="text-5xl pt-8 font-bold mx-auto max-w-4xl font-barlow">Procedural Texturing is the Future</h1>
           <h4 class="text-2xl mt-4 text-gray-300 mx-auto max-w-lg">With TextureLab, you dont have to be an artist to make beautiful textures</h4>
           <div>  
-            <a class="px-5 py-5 mt-8 mb-12 rounded bg-blue-400 text-2xl font-bold inline-block flex-wrap shadow" href="https://njbrown.itch.io/texturelab" target="_blank">Download <ArrowDownCircleIcon size="1.4x" class="inline"/></a>
-            <g-link class="px-5 py-5 mt-8 mb-12 rounded bg-white text-gray-600 text-2xl font-bold inline-block flex-wrap ml-8 shadow" to="/docs">Get Started <ArrowRightIcon size="1.4x" class="inline"/></g-link>
+            <a class="px-5 py-5 mt-8 mb-12 rounded bg-blue-400 text-2xl font-bold inline-block flex-wrap shadow" href="https://njbrown.itch.io/texturelab" target="_blank">Download</a>
+            <g-link class="px-5 py-5 mt-8 mb-12 rounded bg-white text-gray-600 text-2xl font-bold inline-block flex-wrap ml-8 shadow" to="/docs">Get Started <ArrowRightIcon size="1.2x" class="inline"/></g-link>
           </div>
           <!-- <g-image class="mt-8 -mb-20 shadow-xl" src="../../static/images/screenshot.png" /> -->
         </div>
