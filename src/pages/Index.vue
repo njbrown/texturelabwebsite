@@ -26,6 +26,52 @@
           <h2 class="text-2xl max-w-3xl text-gray-500">TextureLab is packed with features to help you make the next beautiful game</h2>
         </div>
 
+        <div class="grid grid-cols-2 py-14">
+          <div class="flex flex-col justify-center px-8">
+            <h1 class="text-3xl font-bold py-3 font-barlow">Works Everywhere!</h1>
+            <h2 class="text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+          </div>
+          <div class="flex items-start px-8">
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 py-14">
+          <div class="flex items-start px-8">
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
+          </div>
+          <div class="flex flex-col justify-center px-8">
+            <h1 class="text-3xl font-bold py-3 font-barlow">GPU Accelerated</h1>
+            <h2 class="text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 py-14">
+          <div class="flex flex-col justify-center px-8">
+            <h1 class="text-3xl font-bold py-3 font-barlow">Design Once, Use At Any Resolution</h1>
+            <h2 class="text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+          </div>
+          <div class="flex items-start px-8">
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
+          </div>
+        </div>
+
+        <div class="py-14">
+          <div class="text-center px-8">
+            <h1 class="text-3xl block font-bold py-3 font-barlow">Infinite Variation</h1>
+            <h2 class="text-xl block">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+          </div>
+          <div class="grid grid-cols-5 items-start py-8 gap-x-3">
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
+            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
+          </div>
+        </div>
+
+        <h1 class="text-2xl block text-center font-bold text-gray-500 font-barlow">Other Features</h1>
+
         <div class="grid grid-cols-3 pt-12">
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
