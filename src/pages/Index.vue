@@ -85,9 +85,9 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Contributor on Github</h4>
             <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3">View our Project Roadmap</a>
-              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3 ml-3">View our Contribution Guide</a>
-              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3 ml-3">Post an Isssue, Bug or a Suggested Feature</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow">View our Project Roadmap</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">View our Contribution Guide</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Post an Isssue, Bug or a Suggested Feature</a>
             </div>
           </div>
 
@@ -95,8 +95,8 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Sponsor</h4>
             <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3">Become a Sponsor on itch.io</a>
-              <a href="#" class="inline-block rounded-md shadow-md bg-white text-black px-5 py-3 ml-3">Become a Sponsor on Github</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Become a Sponsor on itch.io</a>
+              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Become a Sponsor on Github</a>
             </div>
           </div>
         </div>
@@ -153,6 +153,10 @@ export default {
 
 .itch-red {
   background-color:rgb(239, 0, 73);
+}
+
+.github-gray {
+  /* border:solid black 1px; */
 }
 
 .short-shadow
