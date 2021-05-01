@@ -23,13 +23,13 @@
       <div class="container text-black text-left max-w-6xl">
         <div class="flex flex-col text-center items-center justify-center px-8">
           <h1 class="text-5xl font-bold py-3 font-barlow">Features</h1>
-          <h2 class="text-2xl max-w-3xl text-gray-500">TextureLab is packed with features to help you make the next beautiful game</h2>
+          <h2 class="text-2xl max-w-3xl text-gray-500">TextureLab is packed with features to help you make your next masterpiece</h2>
         </div>
 
         <div class="grid grid-cols-2 py-14">
           <div class="flex flex-col justify-center px-8">
-            <h1 class="text-3xl font-bold py-3 font-barlow">Works Everywhere!</h1>
-            <h2 class="text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+            <h1 class="text-3xl font-bold py-3 font-barlow">Artist Friendly</h1>
+            <h2 class="text-xl">Node-based workflow gives you a preview at every step.</h2>
           </div>
           <div class="flex items-start px-8">
             <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
@@ -41,15 +41,15 @@
             <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
           </div>
           <div class="flex flex-col justify-center px-8">
-            <h1 class="text-3xl font-bold py-3 font-barlow">GPU Accelerated</h1>
-            <h2 class="text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+            <h1 class="text-3xl font-bold py-3 font-barlow">Create Seamless Textures, Seamlessly</h1>
+            <h2 class="text-xl">Shapes, noises and filters in TextureLab are seamless by default.</h2>
           </div>
         </div>
 
         <div class="grid grid-cols-2 py-14">
           <div class="flex flex-col justify-center px-8">
             <h1 class="text-3xl font-bold py-3 font-barlow">Design Once, Use At Any Resolution</h1>
-            <h2 class="text-xl">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+            <h2 class="text-xl">Procedural textures are the SVGs of the 3D art world.</h2>
           </div>
           <div class="flex items-start px-8">
             <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
@@ -58,8 +58,8 @@
 
         <div class="py-14">
           <div class="text-center px-8">
-            <h1 class="text-3xl block font-bold py-3 font-barlow">Infinite Variation</h1>
-            <h2 class="text-xl block">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</h2>
+            <h1 class="text-3xl block font-bold py-3 font-barlow">Procedural Workflow</h1>
+            <h2 class="text-xl block">TextureLab's procedural and non-destructive workflow enabled you to easily create variants of your textures and maximize resusability</h2>
           </div>
           <div class="grid grid-cols-5 items-start py-8 gap-x-3">
             <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
@@ -75,33 +75,33 @@
         <div class="grid grid-cols-3 pt-12">
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
-            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Unity Support</h4>
+            <p class="text-gray-500 text-lg">Export your textures directly to unity materials.</p>
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
-            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Awesome Community</h4>
+            <p class="text-gray-500 text-lg">Join our friendly community of artists and developers on Discord and itch.io</p>
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
-            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Open Source</h4>
+            <p class="text-gray-500 text-lg">TextureLab is made awesome by the contributions of others. Check out our Github repository if you want to help with its development.</p>
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
-            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Hardware Accelerated</h4>
+            <p class="text-gray-500 text-lg">Almost all nodes are build to work on the GPU.</p>
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
-            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Works Everywhere!</h4>
+            <p class="text-gray-500 text-lg">Runs on Windows, Linux and Mac</p>
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300">
-            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">Nice Looking Title</h4>
-            <p class="text-gray-500 text-lg">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-600 pb-5 font-inter">PBR-Ready</h4>
+            <p class="text-gray-500 text-lg">By default, materials are geared towards a metallic Physically Based Rendering workflow</p>
           </div>
 
         </div>
@@ -119,8 +119,8 @@
         <div class="grid grid-cols-1 mt-8">
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
-            <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Join Our Communities</h4>
-            <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-800 pb-2 font-inter">Join Our Communities</h4>
+            <p class="text-gray-700 text-lg mb-6">Our growing community is very welcoming and responsive. We even have weekly challenges Discord.</p>
             <div class="flex justify-end">
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow discord-purple short-shadow">Join The #TextureLab Discord</a>
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Checkout our itch.io Community</a>
@@ -128,8 +128,8 @@
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
-            <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Contributor on Github</h4>
-            <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-800 pb-2 font-inter">Become a Contributor on Github</h4>
+            <p class="text-gray-700 text-lg mb-6">If you want a personal hand in the development of this project, you can join in, TextureLab is open source!</p>
             <div class="flex justify-end">
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow">View our Project Roadmap</a>
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">View our Contribution Guide</a>
@@ -138,8 +138,8 @@
           </div>
 
           <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
-            <h4 class="text-2xl font-bold text-gray-800 pb-5 font-inter">Become a Sponsor</h4>
-            <p class="text-gray-700 text-lg mb-2">Lorem upsum content that should go inside the container. Second sentence for content padding.</p>
+            <h4 class="text-2xl font-bold text-gray-800 pb-2 font-inter">Become a Sponsor</h4>
+            <p class="text-gray-700 text-lg mb-6">If you like this project and want to see it flourish, please consider donating.</p>
             <div class="flex justify-end">
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Become a Sponsor on itch.io</a>
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Become a Sponsor on Github</a>
