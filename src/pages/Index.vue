@@ -32,13 +32,13 @@
             <h2 class="text-xl">Node-based workflow gives you a preview at every step.</h2>
           </div>
           <div class="flex items-start px-8">
-            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
+            <g-image class="inline-block shadow-md rounded" src="../../static/images/artist-friendly.png" />
           </div>
         </div>
 
         <div class="grid grid-cols-2 py-14">
           <div class="flex items-start px-8">
-            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
+            <g-image class="inline-block shadow-md rounded" src="../../static/images/seamless.png" />
           </div>
           <div class="flex flex-col justify-center px-8">
             <h1 class="text-3xl font-bold py-3 font-barlow">Create Seamless Textures, Seamlessly</h1>
@@ -52,7 +52,7 @@
             <h2 class="text-xl">Procedural textures are the SVGs of the 3D art world.</h2>
           </div>
           <div class="flex items-start px-8">
-            <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x350" />
+            <g-image class="inline-block shadow-md rounded" src="../../static/images/any-resolution.png" />
           </div>
         </div>
 
