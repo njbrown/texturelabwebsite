@@ -46,12 +46,12 @@ module.exports = {
               '/docs/workflow/exporting/'
             ]
           },
-          {
-            title: 'Tutorials',
-            items: [
-              '/docs/tutorials/cracked-tile-texture/',
-            ]
-          },
+          // {
+          //   title: 'Tutorials',
+          //   items: [
+          //     '/docs/tutorials/cracked-tile-texture/',
+          //   ]
+          // },
           {
             title: 'Development',
             items: [
