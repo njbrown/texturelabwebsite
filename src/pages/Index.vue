@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <div class="py-14">
+        <!-- <div class="py-14">
           <div class="text-center px-8">
             <h1 class="text-3xl block font-bold py-3 font-barlow">Procedural Workflow</h1>
             <h2 class="text-xl block">TextureLab's procedural and non-destructive workflow enabled you to easily create variants of your textures and maximize resusability</h2>
@@ -68,7 +68,7 @@
             <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
             <g-image class="inline-block shadow-md rounded" src="https://via.placeholder.com/500x500" />
           </div>
-        </div>
+        </div> -->
 
         <h1 class="text-2xl block text-center font-bold text-gray-500 font-barlow">Other Features</h1>
 
