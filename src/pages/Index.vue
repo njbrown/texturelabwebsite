@@ -137,14 +137,14 @@
             </div>
           </div>
 
-          <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
+          <!-- <div class="px-8 py-8 mx-3 my-3 border border-2 rounded-lg border-gray-300 bg-white">
             <h4 class="text-2xl font-bold text-gray-800 pb-2 font-inter">Become a Sponsor</h4>
             <p class="text-gray-700 text-lg mb-6">If you like this project and want to see it flourish, please consider donating.</p>
             <div class="flex justify-end">
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Become a Sponsor on itch.io</a>
               <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Become a Sponsor on Github</a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
