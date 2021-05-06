@@ -31,7 +31,7 @@ module.exports = {
               '/docs/interface/editor/',
               '/docs/interface/3dview/',
               '/docs/interface/2dview/',
-              '/docs/interface/settings/',
+              '/docs/interface/properties/',
               '/docs/interface/menu/',
             ]
           },
