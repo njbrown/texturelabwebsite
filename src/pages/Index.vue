@@ -122,8 +122,8 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-2 font-inter">Join Our Communities</h4>
             <p class="text-gray-700 text-lg mb-6">Our growing community is very welcoming and responsive. We even have weekly challenges Discord.</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow discord-purple short-shadow">Join The #TextureLab Discord</a>
-              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Checkout our itch.io Community</a>
+              <a href="https://discord.gg/975NdQPsSc" target="_blank" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow discord-purple short-shadow">Join The #TextureLab Discord</a>
+              <a href="https://njbrown.itch.io/texturelab/community" target="_blank" class="inline-block rounded-md text-white font-bold px-5 py-3 ml-3 itch-red short-shadow">Checkout our itch.io Community</a>
             </div>
           </div>
 
@@ -131,9 +131,9 @@
             <h4 class="text-2xl font-bold text-gray-800 pb-2 font-inter">Become a Contributor on Github</h4>
             <p class="text-gray-700 text-lg mb-6">If you want a personal hand in the development of this project, you can join in, TextureLab is open source!</p>
             <div class="flex justify-end">
-              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow">View our Project Roadmap</a>
-              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">View our Contribution Guide</a>
-              <a href="#" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Post an Isssue, Bug or a Suggested Feature</a>
+              <a href="https://github.com/njbrown/texturelab/projects" target="_blank" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow">View our Project Roadmap</a>
+              <a href="https://github.com/njbrown/texturelab/issues" target="_blank" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Post an Isssue, Bug or a Suggested Feature</a>
+              <a href="https://github.com/njbrown/texturelab/pulls" target="_blank" class="inline-block rounded-md text-white font-bold px-5 py-3 text-shadow bg-gray-700 short-shadow ml-3">Create a Pull Request</a>
             </div>
           </div>
 
