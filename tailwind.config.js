@@ -29,7 +29,7 @@ module.exports = {
     fontFamily: {
       ...defaultTheme.fontFamily,
       'inter': ['Inter', 'Open Sans', ...defaultTheme.fontFamily.sans],
-      'barlow': ['Barlow', ...defaultTheme.fontFamily.sans]
+      'barlow': ['Inter', ...defaultTheme.fontFamily.sans]
     }
   },
   variants: {
