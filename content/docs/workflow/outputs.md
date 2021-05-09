@@ -6,11 +6,10 @@ next: '/docs/workflow/randomseed/'
 ---
 
 # Outputs
-
-This is the documentation home page
+todo
 
 ## Defaults
-TBD
+todo
 
 ## Defining Outputs
-TBD
+todo

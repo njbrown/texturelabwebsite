@@ -6,14 +6,13 @@ next: '/docs/interface/menu/'
 ---
 
 # Properties
-
-This is the documentation home page
+todo
 
 ## Texture Channel
-TBD
+todo
 
 ## Random Seed
-TBD
+todo
 
 ## Properties
-TBD
+todo

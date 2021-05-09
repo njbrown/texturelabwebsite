@@ -5,5 +5,4 @@ next: '/docs/workflow/outputs/'
 ---
 
 # Nodes
-
-This is the documentation home page
+todo

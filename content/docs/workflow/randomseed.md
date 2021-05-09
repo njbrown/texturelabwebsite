@@ -6,10 +6,9 @@ next: '/docs/workflow/resolution/'
 ---
 
 # Random Seed
-
-This is the documentation home page
+todo
 
 ## Global Seed
-TBD
+todo
 ## Local Seed
-TBD
+todo

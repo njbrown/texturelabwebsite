@@ -6,13 +6,12 @@ next: '/docs/interface/properties/'
 ---
 
 # 2D View
-
-This is the documentation home page
+todo
 
 ## Recenter View
-TBD
+todo
 ## Tile Grid
-TBD
+todo
 
 ## Save Active Texture
-TBD
+todo

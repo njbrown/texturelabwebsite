@@ -6,5 +6,4 @@ next: '/docs/library/'
 ---
 
 # Contributing
-
-This is the documentation home page
+todo

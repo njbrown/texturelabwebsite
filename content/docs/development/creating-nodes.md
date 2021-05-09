@@ -6,5 +6,4 @@ next: '/docs/development/contributing/'
 ---
 
 # Creating Nodes
-
-This is the documentation home page
+todo
