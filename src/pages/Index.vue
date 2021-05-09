@@ -172,7 +172,7 @@ import { ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
   metaInfo: {
-    title: 'Hello, world!'
+    title: 'Home'
   },
   components: {
     ArrowRightIcon,
