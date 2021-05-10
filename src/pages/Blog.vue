@@ -84,7 +84,7 @@ export default {
       //     return posts;
       // },
     posts:function(){
-      console.log(this.$page.blogs.edges)
+      // console.log(this.$page.blogs.edges)
       return this.$page.blogs.edges.map( ({ node })  => node);
     }
   }

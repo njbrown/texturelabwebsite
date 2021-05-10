@@ -81,7 +81,7 @@ export default {
         && this.sidebar;
     },
     currentPage() {
-      console.log(this.$page.docPage);
+      // console.log(this.$page.docPage);
       return this.$page.docPage;
     }
   },
