@@ -184,6 +184,23 @@ export default {
         name: 'twitter:title',
         content: 'TextureLab',
       },
+      {
+        property: 'og:image',
+        content: "/assets/static/static/images/artist-friendly.png?width=1000&key=db8ab9a"
+      },
+      {
+        name: 'twitter:card',
+        content:'summary_large_image'
+      },
+      {
+          key: 'twitter:image',
+          property: 'twitter:image',
+          content: "/assets/static/static/images/artist-friendly.png?width=1000&key=db8ab9a"
+        },
+      {
+        name: 'twitter:creator',
+        content: "@njbrown"
+      },
     ]
   },
   components: {
