@@ -172,7 +172,19 @@ import { ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
   metaInfo: {
-    title: 'Home'
+    title: 'Home',
+    meta: [
+      {
+        key: 'og:title',
+        name: 'og:title',
+        content: 'TextureLab',
+      },
+      {
+        key: 'twitter:title',
+        name: 'twitter:title',
+        content: 'TextureLab',
+      },
+    ]
   },
   components: {
     ArrowRightIcon,

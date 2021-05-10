@@ -51,7 +51,19 @@ query Blog {
 <script>
 export default {
   metaInfo: {
-    title: 'Texturelab Blog'
+    title: 'TextureLab Blog',
+    meta: [
+      {
+        key: 'og:title',
+        name: 'og:title',
+        content: 'TextureLab Blog',
+      },
+      {
+        key: 'twitter:title',
+        name: 'twitter:title',
+        content: 'TextureLab Blog',
+      },
+    ]
   },
   computed:{
       // posts: function(){
