@@ -183,8 +183,8 @@ import { ArrowDownCircleIcon } from 'vue-feather-icons'
 export default {
   metaInfo:function(){
     // console.log(this.$static.metadata.siteUrl);
-    // const siteUrl = this.$static.metadata.siteUrl;
-    const siteUrl = "";
+    const siteUrl = this.$static.metadata.siteUrl;
+    // const siteUrl = "";
 
     return {
       title: 'Home',
