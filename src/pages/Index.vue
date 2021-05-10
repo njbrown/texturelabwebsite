@@ -165,43 +165,59 @@
   </Layout>
 </template>
 
+<static-query>
+  query {
+    metadata {
+      siteName
+      siteDescription
+      siteUrl
+    }
+  }
+</static-query>
+
 <script>
 import { ArrowRightIcon } from 'vue-feather-icons'
 import { DownloadCloudIcon } from 'vue-feather-icons'
 import { ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
-  metaInfo: {
-    title: 'Home',
-    meta: [
-      {
-        key: 'og:title',
-        name: 'og:title',
-        content: 'TextureLab',
-      },
-      {
-        key: 'twitter:title',
-        name: 'twitter:title',
-        content: 'TextureLab',
-      },
-      {
-        property: 'og:image',
-        content: "/assets/static/static/images/artist-friendly.png?width=1000&key=db8ab9a"
-      },
-      {
-        name: 'twitter:card',
-        content:'summary_large_image'
-      },
-      {
-          key: 'twitter:image',
-          property: 'twitter:image',
-          content: "/assets/static/static/images/artist-friendly.png?width=1000&key=db8ab9a"
+  metaInfo:function(){
+    // console.log(this.$static.metadata.siteUrl);
+    // const siteUrl = this.$static.metadata.siteUrl;
+    const siteUrl = "";
+
+    return {
+      title: 'Home',
+      meta: [
+        {
+          key: 'og:title',
+          name: 'og:title',
+          content: 'TextureLab',
         },
-      {
-        name: 'twitter:creator',
-        content: "@njbrown"
-      },
-    ]
+        {
+          key: 'twitter:title',
+          name: 'twitter:title',
+          content: 'TextureLab',
+        },
+        {
+          property: 'og:image',
+          content: siteUrl+"/images/artist-friendly.png"
+        },
+        {
+          name: 'twitter:card',
+          content:'summary_large_image'
+        },
+        {
+            key: 'twitter:image',
+            property: 'twitter:image',
+            content: siteUrl+"/images/artist-friendly.png"
+          },
+        {
+          name: 'twitter:creator',
+          content: "@njbrown"
+        },
+      ]
+    }
   },
   components: {
     ArrowRightIcon,

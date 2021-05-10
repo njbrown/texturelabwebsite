@@ -13,13 +13,13 @@ export default function (Vue, { router, head, isClient }) {
   head.meta.push({
     key: 'og:description',
     name: 'og:description',
-    content: `Create beautiful procedural materials`,
+    content: `Create beautiful procedural materials easily`,
   })
 
   head.meta.push({
     key: 'twitter:description',
     name: 'twitter:description',
-    content: `Create beautiful procedural materials`,
+    content: `Create beautiful procedural materials easily`,
   })
 
   router.beforeEach((to, _from, next) => {

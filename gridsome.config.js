@@ -6,6 +6,8 @@
 
 module.exports = {
   siteName: 'TextureLab',
+  siteDescription: 'Procedural texture creation made easy',
+  siteUrl: 'https://texturelab.io',
   settings:{
     nav: {
       links: [
