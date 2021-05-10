@@ -4,7 +4,7 @@
       <div class="container text-white text-center hero-margin">
         <div class="flex flex-col pt-4 md:pt-8 px-8">
           <h1 class="text-3xl md:text-5xl pt-8 font-bold mx-auto max-w-4xl font-barlow">Procedural Texturing is the Future</h1>
-          <h4 class="text-xl mt-4 text-gray-300 mx-auto max-w-lg">With TextureLab, you dont have to be an artist to make beautiful textures</h4>
+          <h4 class="text-xl mt-4 text-gray-300 mx-auto max-w-lg">Texturelab is an Open Source alternative for making beautiful, tileable, physically-based textures</h4>
           <div class="pt-8">  
             <a class="md:mx-0 px-3 py-3 md:px-5 md:py-5 mb-3 md:mb-12 rounded bg-blue-400 text-xl md:text-2xl font-bold block md:inline-block flex-wrap shadow sm:text-center" href="https://njbrown.itch.io/texturelab" target="_blank">Download</a>
             <g-link class="md:mx-0 px-3 py-3 md:px-5 md:py-5 mb-12 rounded bg-white text-gray-600 text-xl md:text-2xl font-bold block md:inline-block flex-wrap md:ml-8 shadow sm:text-center" to="/docs">Get Started <ArrowRightIcon size="1.2x" class="inline"/></g-link>
