@@ -124,6 +124,13 @@ module.exports = {
       options: {
         id: 'UA-44637643-2'
       }
-    }
+    },
+    {
+      use: `gridsome-plugin-netlify-cms`,
+      options: {
+        publicPath: `/admin`,
+        modulePath: `src/admin/index.js`
+      }
+    },
   ]
 }

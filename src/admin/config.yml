@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: njbrown/texturelabwebsite
+
+media_folder: "static/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "textures"
+    label: "Textures"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Upload Date", name: "date", widget: "date"}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Thumbnail", name: "thumbnail", widget: "image"}
+      - {label: "Description", name: "description", widget: "markdown"}
