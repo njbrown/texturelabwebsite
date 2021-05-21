@@ -17,7 +17,7 @@
     "autoprefixer": "^10.2.5",
     "gridsome": "^0.7.0",
     "node-sass": "^5.0.0",
-    "postcss": "^8.2.9",
+    "postcss": "^8.2.10",
     "prism-themes": "^1.6.0",
     "sass-loader": "^10.0.1",
     "vue-feather-icons": "^5.1.0"
