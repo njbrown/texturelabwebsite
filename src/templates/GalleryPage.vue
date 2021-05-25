@@ -4,6 +4,9 @@
       <div 
         class="container text-black text-center text-black"
       >
+        <div class="text-left text-lg mb-2">
+          <a href="/gallery">Gallery</a><span class="mx-2">&raquo;</span><a href="#">{{$page.texture.title}}</a>
+        </div>
         <div class="grid grid-cols-4">
           <div class="col-span-3 bg-gray-900 rounded py-20" ><g-image class="inline rounded max-h-96" :src="$page.texture.image" /></div>
           <div class="px-6 text-left">
