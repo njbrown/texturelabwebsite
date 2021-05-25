@@ -17,14 +17,22 @@
               <span class="px-2 py-2 rounded border-2 border-gray-400 text-gray-600 mr-1">tile</span>
             </div>
 
+            <h4 class="text-center font-bold text-xl border-gray-600 py-1 mb-4 border-b-2 mt-16">Downloads</h4>
             <div class="downloads relative bottom-0">
-              <a href="#" class="w-full block px-2 py-2 mt-2 text-white font-bolder rounded-md text-center text-lg bg-blue-900">Download</a>
-              <div class="absolute w-full rounded">
+              <a href="#" class="w-full block px-2 py-2 mt-2 text-white font-bolder rounded-md text-center text-lg bg-blue-600">TextureLab</a>
+              <a href="#" class="w-full block px-2 py-2 mt-2 text-white font-bolder rounded-md text-center text-lg bg-blue-600">Zip</a>
+              <a href="#" class="w-full block px-2 py-2 mt-2 text-white font-bolder rounded-md text-center text-lg bg-blue-600">Unity Material</a>
+            </div>
+            <!-- <div class="downloads relative bottom-0">
+              <a href="#" class="w-full block px-2 py-2 mt-2 text-white font-bolder rounded-md text-center text-lg bg-blue-900"
+                @click="toggleShowDownloads()"
+                >Download</a>
+              <div class="absolute w-full rounded" v-if="showDownloads">
                 <g-link class="w-full block px-2 py-2 text-white font-bolder text-center text-lg bg-blue-900">Zip</g-link>
                 <g-link class="w-full block px-2 py-2 text-white font-bolder text-center text-lg bg-blue-900">Unity</g-link>
                 <g-link class="w-full block px-2 py-2 text-white font-bolder text-center text-lg bg-blue-900">TextureLab (.texture)</g-link>
               </div>
-            </div>
+            </div> -->
 
           </div>
         </div>
@@ -82,7 +90,12 @@ export default {
   data:function()
   {
     return {
-
+      showDownloads:false
+    }
+  },
+  methods:{
+    toggleShowDownloads(){
+      this.showDownloads = !this.showDownloads;
     }
   },
   metaInfo() {
