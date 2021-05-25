@@ -1,28 +1,28 @@
 <template>
   <Layout>
-    <div class="flex w-full pt-8 pb-8 bg-gray-200 blog-list">
-      <div class="w-60 flex-shrink-0 px-2">
-        <div class="text-xl">
+    <div class="flex w-full bg-gray-200 blog-list">
+      <div class="w-60 flex-shrink-0 px-2 bg-gray-300 pt-8">
+        <div class="text-lg text-black font-bold ml-2">
         Categories
         </div>
-        <div class="border-1 border-black w-full px-2 py-2">
+        <div class="border-1 border-black w-full py-2">
           <div v-for="(cat, index) in categories" :key="index" :value="cat" :selected="index === 0"
-          class="flex justify-between cursor-pointer text-lg"
-          ><span>{{cat}}</span> <span>10</span></div>
+          class="flex justify-between cursor-pointer text-md hover:bg-gray-100 rounded px-3 py-1 ml-2"
+          ><span class="">{{cat.title}}</span> <span class="px-1 py-0.5 bg-gray-500 text-white text-sm my-auto rounded-lg ml-3">{{cat.count}}</span></div>
         </div>
       </div>
       <div class="w-full">
-        <div class="flex w-full">
-          <input class="flex w-full max-w-4xl" />
+        <div class="flex w-full justify-center py-4">
+          <input class="flex w-full max-w-4xl text-xl rounded px-4 py-2" placeholder="search..." />
         </div>
-      <div class="grid md:grid-cols-5 gap-2 text-white text-center text-black">
+      <div class="grid md:grid-cols-5 gap-4 text-white text-center text-black px-4 py-4">
         
-        <div v-for="(texture, index) in gallery" :key="index"
+        <div v-for="(texture, index) in textures" :key="index"
         class="rounded-lg block relative shadow-xs overflow-hidden bg-gray-100 border border-gray-300 texture-card">
         <g-link :to="texture.path"
         >
           <g-image :src="texture.thumbnail" />
-          <div class="px-2 py-1 texture-card-text absolute bottom-0 white bg-gray-700 w-full text-center">
+          <div class="px-2 py-1 texture-card-text absolute bottom-0 white bg-gray-700 w-full text-center bg-opacity-50 hidden">
             <h2 class="text-gray-100 text-shadow-sm text-xl font-bold font-barlow">{{ texture.title }}</h2>
           </div>
         </g-link>
@@ -72,9 +72,9 @@ export default {
   data:function(){
     let images = [];
 
-    for(let i = 0; i < 40;i++) {
+    for(let i = 0; i < 25;i++) {
       images.push({
-        path:"",
+        path:"/gallery/hex-texture",
         title:"Hex Texture",
         date:"",
         image:"",
@@ -85,7 +85,17 @@ export default {
 
     return {
       textures:images,
-      categories:["All", "Grass","Wood", "Tiles"]
+      categories:[
+          {title:"All",count:100},
+          {title:"Wood",count:32},
+          {title:"Metal",count:12},
+          {title:"Organic",count:5},
+          {title:"Tiles",count:2},
+          {title:"Rocks",count:30},
+          {title:"Pavement",count:45},
+          {title:"Grass",count:85},
+          {title:"Scifi",count:1},
+          ]
     }
   },
   computed:{
