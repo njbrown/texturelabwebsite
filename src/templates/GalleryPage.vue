@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <h3 class="font-bold text-3xl mt-12 mb-8">Maps</h3>
+        <!-- <h3 class="font-bold text-3xl mt-12 mb-8">Maps</h3>
 
         <div class="grid grid-cols-5 gap-3">
           <div class="relative map-card">
@@ -53,12 +53,25 @@
               <span class="bg-gray-900 text-white font-bold px-8 py-4 rounded cursor-pointer">Download</span>
               <span class="bg-gray-900 text-white font-bold px-8 py-4 rounded cursor-pointer mt-2">Copy to Clipboard</span>
             </div>
-            <!-- <g-link class="w-full block px-2 py-2 mt-2 text-white font-bolder rounded-md text-center text-lg bg-blue-900">Download</g-link> -->
+          </div>
+          
+        </div> -->
+
+        <h3 class="font-bold text-2xl mt-12 mb-8">Similar Textures</h3>
+        <div class="grid grid-cols-5 gap-3">
+          <div v-for="(texture, index) in otherTextures" :key="index"
+            class="rounded-lg block relative shadow-xs overflow-hidden bg-gray-100 border border-gray-300 texture-card">
+            <g-link :to="texture.path"
+            >
+              <g-image :src="texture.thumbnail" />
+              <div class="px-2 py-1 texture-card-text absolute bottom-0 white bg-gray-700 w-full text-center bg-opacity-50 hidden">
+                <h2 class="text-gray-100 text-shadow-sm text-xl font-bold font-barlow">{{ texture.title }}</h2>
+              </div>
+            </g-link>
+            </div>
           </div>
           
         </div>
-
-        <h3 class="font-bold text-2xl mt-12 mb-8">Similar Textures</h3>
 
       </div>
     </div>
@@ -92,8 +105,10 @@ export default {
   },
   data:function()
   {
+    const otherTextures = []
     return {
-      showDownloads:false
+      showDownloads:false,
+      otherTextures
     }
   },
   methods:{
@@ -153,6 +168,10 @@ export default {
 
 .map-card:hover > .map-card-title{
   display:none;
+}
+
+.texture-card:hover .texture-card-text{
+  display:block;
 }
 
 </style>
