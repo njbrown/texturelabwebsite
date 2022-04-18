@@ -8,7 +8,7 @@
         <div class="border-1 border-black w-full py-2">
           <div v-for="(cat, index) in categories" :key="index" :value="cat" :selected="index === 0"
           class="flex justify-between cursor-pointer text-md hover:bg-gray-100 rounded px-3 py-1 ml-2"
-          ><span class="">{{cat.title}}</span> <span class="px-1 py-0.5 bg-gray-500 text-white text-sm my-auto rounded-lg ml-3">{{cat.count}}</span></div>
+          ><span class="">{{cat.name}}</span> <span class="px-1 py-0.5 bg-gray-500 text-white text-sm my-auto rounded-lg ml-3">{{cat.count}}</span></div>
         </div>
       </div>
       <div class="w-full">
@@ -53,6 +53,17 @@ query Gallery{
 </page-query>
 
 <script>
+import config from "../config";
+
+async function fetchCategories(){
+  const res = await fetch(`${config.apiUrl}/categories`);
+  if(res.ok){
+    return (await res.json()).categories;
+  }
+
+  return [];
+}
+
 export default {
   metaInfo: {
     title: 'Gallery',
@@ -68,6 +79,15 @@ export default {
         content: 'TextureLab Gallery',
       },
     ]
+  },
+  mounted(){
+    this.loadCategories();
+  },
+  methods:{
+    loadCategories: async function(){
+      this.categories = await fetchCategories();
+      console.log(this.categories);
+    }
   },
   data:function(){
     let images = [];
@@ -86,15 +106,15 @@ export default {
     return {
       textures:images,
       categories:[
-          {title:"All",count:100},
-          {title:"Wood",count:32},
-          {title:"Metal",count:12},
-          {title:"Organic",count:5},
-          {title:"Tiles",count:2},
-          {title:"Rocks",count:30},
-          {title:"Pavement",count:45},
-          {title:"Grass",count:85},
-          {title:"Scifi",count:1},
+          // {title:"All",count:100},
+          // {title:"Wood",count:32},
+          // {title:"Metal",count:12},
+          // {title:"Organic",count:5},
+          // {title:"Tiles",count:2},
+          // {title:"Rocks",count:30},
+          // {title:"Pavement",count:45},
+          // {title:"Grass",count:85},
+          // {title:"Scifi",count:1},
           ]
     }
   },
