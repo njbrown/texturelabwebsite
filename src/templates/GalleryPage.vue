@@ -8,7 +8,27 @@
           <a href="/gallery">Gallery</a><span class="mx-2">&raquo;</span><a href="#">{{$page.texture.title}}</a>
         </div>
         <div class="grid grid-cols-4">
-          <div class="col-span-3 bg-gray-900 rounded py-20" ><g-image class="inline rounded max-h-96" :src="$page.texture.image" /></div>
+          <div class="col-span-3 rounded" >
+            <agile :dots="true">
+              <!-- <div class="slide">
+                  <g-image  :src="$page.texture.image" />
+              </div> -->
+              <div class="slide">
+                  <g-image src="/images/slide1.PNG" />
+              </div>
+              <div class="slide">
+                  <g-image src="/images/slide2.PNG" />
+              </div>
+              <div class="slide">
+                  <g-image src="/images/slide3.PNG" />
+              </div>
+              <div class="slide">
+                  <g-image class="w-full" src="/images/slide4.png" />
+              </div>
+              <template slot="prevButton"><chevron-left-icon class="left-0" size="1.5x" /></template>
+              <template slot="nextButton"><chevron-right-icon class="right-0" size="1.5x" /></template>
+            </agile>
+          </div>
           <div class="px-6 text-left">
             <h2 class="font-barlow font-bold mt-5 text-3xl">{{$page.texture.title}}</h2>
             <div class="mb-2">by <a href="#">njbrown</a></div>
@@ -96,12 +116,18 @@ query Texture ($path: String!) {
 import OnThisPage from '@/components/OnThisPage.vue';
 import Layout from '@/layouts/Default.vue';
 import NextPrevLinks from '@/components/NextPrevLinks.vue';
+import { VueAgile } from 'vue-agile'
+import { ChevronLeftIcon } from 'vue-feather-icons'
+import { ChevronRightIcon } from 'vue-feather-icons'
 
 export default {
   components: {
     Layout,
     OnThisPage,
-    NextPrevLinks
+    NextPrevLinks,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    agile:VueAgile 
   },
   data:function()
   {
@@ -172,6 +198,72 @@ export default {
 
 .texture-card:hover .texture-card-text{
   display:block;
+}
+
+</style>
+
+<style lang="scss">
+// Basic VueAgile styles
+.agile {
+  width: 100%;
+
+  &__actions {
+  }
+  &__nav-button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    transition-duration: .3s;
+    padding:0 0.5em;
+
+    &:hover {
+      background-color: rgba(#000, .5);
+      opacity: 1;
+    }
+    &--prev {
+      left: 0;
+    }
+    &--next {
+      right: 0;
+    }
+  }
+  &__dots {
+    left: 50%;
+		position: absolute;
+		transform: translateX(-50%);
+    margin-top:1em;
+    bottom:1em;
+  }
+
+  &__dot {
+    margin: 0 8px;
+
+    button {
+      background-color: rgb(90, 90, 90);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: block;
+      height: 15px;
+      font-size: 0;
+      line-height: 0;
+      margin: 0;
+      padding: 0;
+      transition-duration: .3s;
+      width: 15px;
+    }
+    &--current,
+    &:hover {
+      button {
+        background-color: rgb(219, 219, 219);
+      }
+    }
+  }
 }
 
 </style>
