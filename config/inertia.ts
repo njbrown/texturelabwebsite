@@ -21,6 +21,18 @@ const inertiaConfig = defineConfig({
       links: site.links,
     }),
     currentPath: (ctx) => ctx.request.url(),
+
+    /**
+     * Only set once a request has gone through the auth middleware, so the
+     * public pages simply see `null`.
+     */
+    user: (ctx) => {
+      const user = ctx.auth?.user
+      return user ? { id: user.id, email: user.email, fullName: user.fullName } : null
+    },
+
+    errors: (ctx) => ctx.session?.flashMessages.get('errors') ?? {},
+    notification: (ctx) => ctx.session?.flashMessages.get('notification') ?? null,
   },
 
   /**

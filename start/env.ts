@@ -24,4 +24,17 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for the /ops admin
+  |----------------------------------------------------------
+  |
+  | The admin account seeded by `node ace db:seed`.
+  */
+  DB_FILE: Env.schema.string.optional(),
+
+  ADMIN_EMAIL: Env.schema.string.optional({ format: 'email' }),
+  ADMIN_PASSWORD: Env.schema.string.optional(),
+  ADMIN_NAME: Env.schema.string.optional(),
 })

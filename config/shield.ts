@@ -1,3 +1,4 @@
+import app from '@adonisjs/core/services/app'
 import { defineConfig } from '@adonisjs/shield'
 
 const shieldConfig = defineConfig({
@@ -16,7 +17,11 @@ const shieldConfig = defineConfig({
    * to learn more
    */
   csrf: {
-    enabled: true,
+    /**
+     * Disabled in the test environment so the API client can post without
+     * round-tripping a token.
+     */
+    enabled: !app.inTest,
     exceptRoutes: [],
     enableXsrfCookie: true,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],

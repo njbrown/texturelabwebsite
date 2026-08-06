@@ -1,5 +1,6 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
+/// <reference path="../../config/auth.ts" />
 
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'

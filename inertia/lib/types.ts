@@ -59,6 +59,30 @@ export type BlogPost = BlogPostSummary & {
   html: string
 }
 
+export type AuthUser = {
+  id: number
+  email: string
+  fullName: string | null
+}
+
+export const RELEASE_CHANNELS = ['stable', 'beta'] as const
+export type ReleaseChannel = (typeof RELEASE_CHANNELS)[number]
+
+export type Release = {
+  id: number
+  version: string
+  title: string | null
+  channel: ReleaseChannel
+  notes: string | null
+  windowsUrl: string | null
+  macUrl: string | null
+  linuxUrl: string | null
+  isPublished: boolean
+  releasedAt: string | null
+  createdAt: string
+  updatedAt: string | null
+}
+
 export type GalleryItem = {
   slug: string
   title: string
