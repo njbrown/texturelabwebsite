@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title inertia>TextureLab</title>
+
+  <link rel="icon" href="/images/logo.png" type="image/png">
+
+  @stack('dumper')
+  @viteReactRefresh()
+  @inertiaHead()
+  @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
+</head>
+
+<body class="min-h-screen">
+  @inertia()
+
+  @if (app.inProduction)
+    {{-- Hotjar --}}
+    <script>
+      (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:2751895,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+  @end
+</body>
+
+</html>

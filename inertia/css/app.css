@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-display: 'Barlow', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand colours carried over from the v1 site. */
+  --color-brand: #60a5fa;
+  --color-discord: #7289da;
+  --color-itch: #ef0049;
+
+  /* Docs chrome. */
+  --color-ui-background: #ffffff;
+  --color-ui-typo: oklch(0.373 0.034 259.733);
+  --color-ui-sidebar: oklch(0.928 0.006 264.531);
+  --color-ui-border: oklch(0.872 0.01 258.338);
+  --color-ui-primary: oklch(0.511 0.262 276.966);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans leading-relaxed;
+}
+
+/*
+| Styling for server rendered markdown. The markup comes from markdown-it, so
+| it carries no utility classes of its own and is styled by element here.
+*/
+.markdown {
+  @apply text-ui-typo;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-black leading-snug mb-4 scroll-mt-24;
+
+    a {
+      @apply no-underline text-inherit;
+
+      &::before {
+        content: '#';
+        margin-left: -0.75em;
+        padding-right: 0.25em;
+        @apply text-ui-primary absolute opacity-0 float-left;
+      }
+    }
+
+    &:hover a::before {
+      @apply opacity-100;
+    }
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl border-b border-ui-border pb-1 mt-10;
+  }
+
+  h3 {
+    @apply text-xl mt-8;
+  }
+
+  h4 {
+    @apply text-lg mt-6;
+  }
+
+  p,
+  ol,
+  ul,
+  blockquote {
+    @apply mb-4;
+  }
+
+  a:not(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a) {
+    @apply text-ui-primary underline underline-offset-2;
+  }
+
+  ul {
+    @apply list-disc pl-5 py-1;
+
+    ul {
+      list-style: circle;
+    }
+  }
+
+  ol {
+    @apply list-decimal pl-5 py-1;
+  }
+
+  li {
+    @apply mb-2;
+
+    p {
+      @apply mb-0;
+    }
+  }
+
+  blockquote {
+    @apply border-l-4 border-ui-border py-2 pl-4;
+
+    p:last-child {
+      @apply mb-0;
+    }
+  }
+
+  img {
+    @apply max-w-full rounded my-6;
+  }
+
+  code {
+    @apply px-1 py-0.5 bg-ui-sidebar font-mono border-b border-r border-ui-border text-sm rounded;
+  }
+
+  pre {
+    @apply max-w-full overflow-x-auto rounded p-4 my-6 text-sm;
+
+    code {
+      @apply p-0 bg-transparent border-none;
+    }
+  }
+
+  table {
+    @apply text-left mb-6 w-full;
+
+    td,
+    th {
+      @apply py-3 px-4;
+
+      &:first-child {
+        @apply pl-0;
+      }
+
+      &:last-child {
+        @apply pr-0;
+      }
+    }
+
+    tr {
+      @apply border-b border-ui-border last:border-b-0;
+    }
+  }
+}
+
+/* Larger typography for blog articles. */
+.markdown--article {
+  p {
+    @apply mt-6 mb-0 text-lg leading-8;
+  }
+
+  img {
+    @apply w-full;
+  }
+}

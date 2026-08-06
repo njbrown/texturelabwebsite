@@ -1,0 +1,10 @@
+node_modules
+build
+tmp
+.env
+.env.*
+.git
+.github
+npm-debug.log
+yarn-error.log
+.DS_Store

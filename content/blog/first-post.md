@@ -5,7 +5,7 @@ category: general
 date: 2021-02-01
 image: ../../static/images/screenshot.png
 author:
-	- njbrown
+  - njbrown
 draft: false
 slug: welcome-to-texturelab
 ---

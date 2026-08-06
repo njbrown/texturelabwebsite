@@ -1,8 +1,25 @@
-*.log
-.cache
-.DS_Store
-src/.temp
+# Dependencies and AdonisJS build
 node_modules
-dist
+build
+tmp
+
+# Secrets
 .env
-.env.*
+.env.local
+.env.production.local
+.env.development.local
+
+# Frontend assets compiled code
+public/assets
+
+# Build tools specific
+npm-debug.log
+yarn-error.log
+
+# Editors specific
+.fleet
+.idea
+.vscode
+
+# Platform specific
+.DS_Store
