@@ -27,14 +27,38 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   /*
   |----------------------------------------------------------
+  | Variables for configuring the database
+  |----------------------------------------------------------
+  |
+  | DB_CONNECTION picks the connection defined in config/database.ts and
+  | defaults to "sqlite". The DB_* credentials below are for the postgres
+  | connection, served by the container in docker-compose.yml.
+  */
+  DB_CONNECTION: Env.schema.enum.optional(['sqlite', 'postgres'] as const),
+  DB_FILE: Env.schema.string.optional(),
+  DB_HOST: Env.schema.string.optional({ format: 'host' }),
+  DB_PORT: Env.schema.number.optional(),
+  DB_USER: Env.schema.string.optional(),
+  DB_PASSWORD: Env.schema.string.optional(),
+  DB_DATABASE: Env.schema.string.optional(),
+
+  /*
+  |----------------------------------------------------------
   | Variables for the /ops admin
   |----------------------------------------------------------
   |
   | The admin account seeded by `node ace db:seed`.
   */
-  DB_FILE: Env.schema.string.optional(),
-
   ADMIN_EMAIL: Env.schema.string.optional({ format: 'email' }),
   ADMIN_PASSWORD: Env.schema.string.optional(),
   ADMIN_NAME: Env.schema.string.optional(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the redis package
+  |----------------------------------------------------------
+  */
+  REDIS_HOST: Env.schema.string({ format: 'host' }),
+  REDIS_PORT: Env.schema.number(),
+  REDIS_PASSWORD: Env.schema.string.optional(),
 })

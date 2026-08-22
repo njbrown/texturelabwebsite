@@ -83,7 +83,7 @@ export default class ReleasesController {
     }
   }
 
-  async latest({ request, response }: HttpContext) {
+  async latest({ request, response, logger }: HttpContext) {
     const { query, errors } = await validateQuery(request.qs())
 
     if (!query) {
@@ -100,6 +100,9 @@ export default class ReleasesController {
     if (!release) {
       return response.notFound({ error: 'No published release found' })
     }
+
+    logger.info('latest release:')
+    logger.info(release.toJSON())
 
     response.header('Cache-Control', 'public, max-age=300')
 
