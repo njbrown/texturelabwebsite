@@ -2,7 +2,7 @@ import env from '#start/env'
 import app from '@adonisjs/core/services/app'
 import { createRequire } from 'node:module'
 import { defineConfig, targets } from '@adonisjs/core/logger'
-import 'pino-pretty'
+// import 'pino-pretty'
 
 /**
  * "pino-pretty" is a devDependency, so it is pruned from the production image
