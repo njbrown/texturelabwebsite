@@ -9,6 +9,26 @@
 
   <link rel="icon" href="/images/logo.png" type="image/png">
 
+  {{--
+    Every @fontsource face is declared "font-display: swap", so without a hint
+    the browser only discovers the woff2 files after it has parsed app.css and
+    laid out the text -- the first paint lands in the system fallback and then
+    reflows. Preloading the two faces used above the fold (Inter 400 for body
+    copy, Barlow 700 for the display headings) starts those fetches alongside
+    the stylesheet instead of after it. The remaining weights and subsets stay
+    lazy on purpose; preloading all 37 would just crowd out the CSS and JS.
+
+    Production only: asset() reads the build manifest, which does not exist
+    while the dev server is running. The paths must stay in step with the
+    @fontsource imports in inertia/app/app.tsx, or the lookup will throw.
+  --}}
+  @if (app.inProduction)
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="{{ asset('node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2') }}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="{{ asset('node_modules/@fontsource/barlow/files/barlow-latin-700-normal.woff2') }}">
+  @end
+
   @stack('dumper')
   @viteReactRefresh()
   @inertiaHead()
