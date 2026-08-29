@@ -37,7 +37,7 @@ export default function DownloadLinks({
           return (
             <span
               key={key}
-              className="flex cursor-not-allowed items-center justify-center gap-2 rounded border border-dashed border-gray-300 px-4 py-3 text-gray-400"
+              className="flex cursor-not-allowed items-center justify-center gap-2 rounded border border-dashed border-gray-400 px-4 py-3 text-gray-500"
             >
               <Icon size={20} />
               <span>
@@ -51,7 +51,7 @@ export default function DownloadLinks({
         return (
           <a
             key={key}
-            className="flex items-center justify-center gap-2 rounded bg-brand px-4 py-3 font-bold text-white shadow transition hover:brightness-110"
+            className="flex items-center justify-center gap-2 rounded bg-gray-800 px-4 py-3 font-bold text-white shadow transition-colors hover:bg-gray-900"
             href={url}
             rel="noopener noreferrer"
           >
