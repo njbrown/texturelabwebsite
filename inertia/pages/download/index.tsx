@@ -37,10 +37,13 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
       <section className="w-full bg-gray-200 py-10">
         <div className="container mx-auto max-w-4xl px-4">
           {latest ? (
-            <article className="rounded-lg border border-gray-300 bg-white p-6 shadow-md md:p-10">
+            <article
+              className="rounded-lg border border-gray-300 bg-white p-6 shadow-xs
+             md:p-10"
+            >
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h2 className="font-display text-3xl font-bold text-gray-800">
-                  <Link className="underline-offset-4 hover:underline" href={latest.path}>
+                  <Link className="hover:text-ui-primary" href={latest.path}>
                     Version {latest.version}
                   </Link>
                   {latest.channel !== 'stable' && (
@@ -52,7 +55,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                 {latest.releasedAtLabel && (
                   <p className="text-gray-500">
                     Released{' '}
-                    <Link className="underline-offset-2 hover:underline" href={latest.path}>
+                    <Link className="hover:text-ui-primary" href={latest.path}>
                       {latest.releasedAtLabel}
                     </Link>
                   </p>
@@ -68,7 +71,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
               <p className="mt-4 text-sm text-gray-500">
                 Also available on{' '}
                 <a
-                  className="text-ui-primary underline underline-offset-2"
+                  className="text-ui-primary hover:opacity-75"
                   href={links.download}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -77,7 +80,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                 </a>
                 , or build it yourself from{' '}
                 <Link
-                  className="text-ui-primary underline underline-offset-2"
+                  className="text-ui-primary hover:opacity-75"
                   href="/docs/development/building-from-source"
                 >
                   source
@@ -98,7 +101,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
               )}
 
               <Link
-                className="mt-8 inline-flex items-center gap-1 text-ui-primary underline underline-offset-2"
+                className="mt-8 inline-flex items-center gap-1 text-ui-primary hover:opacity-75"
                 href={latest.path}
               >
                 Read more <ArrowRight className="inline" size={16} />
@@ -109,7 +112,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
               <p className="text-lg text-gray-600">
                 No builds have been published here yet — grab the latest version from{' '}
                 <a
-                  className="text-ui-primary underline underline-offset-2"
+                  className="text-ui-primary hover:opacity-75"
                   href={links.download}
                   target="_blank"
                   rel="noopener noreferrer"

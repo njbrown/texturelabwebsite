@@ -53,7 +53,7 @@ export default function DownloadShow({ release, links }: DownloadShowProps) {
               <p className="text-gray-600">
                 This release has no direct downloads. It may still be available on{' '}
                 <a
-                  className="text-ui-primary underline underline-offset-2"
+                  className="text-ui-primary hover:opacity-75"
                   href={links.download}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -76,7 +76,7 @@ export default function DownloadShow({ release, links }: DownloadShowProps) {
           </div>
 
           <Link
-            className="mt-8 inline-flex items-center gap-1 text-ui-primary underline underline-offset-2"
+            className="mt-8 inline-flex items-center gap-1 text-ui-primary hover:opacity-75"
             href="/download"
           >
             <ArrowLeft className="inline" size={16} /> All releases
