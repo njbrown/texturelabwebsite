@@ -40,7 +40,9 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
             <article className="rounded-lg border border-gray-300 bg-white p-6 shadow-md md:p-10">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h2 className="font-display text-3xl font-bold text-gray-800">
-                  Version {latest.version}
+                  <Link className="underline-offset-4 hover:underline" href={latest.path}>
+                    Version {latest.version}
+                  </Link>
                   {latest.channel !== 'stable' && (
                     <span className="ml-3 rounded bg-gray-200 px-2 py-1 align-middle text-sm font-normal tracking-wide text-gray-600 uppercase">
                       {latest.channel}
@@ -48,7 +50,12 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                   )}
                 </h2>
                 {latest.releasedAtLabel && (
-                  <p className="text-gray-500">Released {latest.releasedAtLabel}</p>
+                  <p className="text-gray-500">
+                    Released{' '}
+                    <Link className="underline-offset-2 hover:underline" href={latest.path}>
+                      {latest.releasedAtLabel}
+                    </Link>
+                  </p>
                 )}
               </div>
 
@@ -94,7 +101,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                 className="mt-8 inline-flex items-center gap-1 text-ui-primary underline underline-offset-2"
                 href={latest.path}
               >
-                Permalink to this release <ArrowRight className="inline" size={16} />
+                Read more <ArrowRight className="inline" size={16} />
               </Link>
             </article>
           ) : (
