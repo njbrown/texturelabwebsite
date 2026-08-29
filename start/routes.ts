@@ -14,6 +14,7 @@ const HomeController = () => import('#controllers/home_controller')
 const DocsController = () => import('#controllers/docs_controller')
 const BlogController = () => import('#controllers/blog_controller')
 const GalleryController = () => import('#controllers/gallery_controller')
+const DownloadsController = () => import('#controllers/downloads_controller')
 const ApiReleasesController = () => import('#controllers/api/releases_controller')
 const DashboardController = () => import('#controllers/ops/dashboard_controller')
 const OpsReleasesController = () => import('#controllers/ops/releases_controller')
@@ -30,6 +31,9 @@ router.get('/blog', [BlogController, 'index'])
 router.get('/blog/:slug', [BlogController, 'show'])
 
 router.get('/gallery', [GalleryController, 'index'])
+
+router.get('/download', [DownloadsController, 'index'])
+router.get('/download/:version', [DownloadsController, 'show'])
 
 /*
 |--------------------------------------------------------------------------

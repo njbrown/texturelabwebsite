@@ -18,14 +18,9 @@ export default function SiteHeader() {
           </Link>
 
           <nav className="hidden items-center md:flex">
-            <a
-              className="px-4 py-4 text-lg hover:text-gray-300"
-              href={site.links.download}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link className="px-4 py-4 text-lg hover:text-gray-300" href="/download">
               Download
-            </a>
+            </Link>
             {site.nav.map((item) => (
               <Link
                 key={item.path}
@@ -59,14 +54,9 @@ export default function SiteHeader() {
 
         {open && (
           <nav className="flex flex-col border-t border-gray-800 pb-3 md:hidden">
-            <a
-              className="py-3 text-lg"
-              href={site.links.download}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link className="py-3 text-lg" href="/download" onClick={() => setOpen(false)}>
               Download
-            </a>
+            </Link>
             {site.nav.map((item) => (
               <Link
                 key={item.path}

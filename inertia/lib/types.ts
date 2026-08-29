@@ -92,3 +92,26 @@ export type GalleryItem = {
   thumbnail: string | null
   html: string
 }
+
+export type ReleaseDownloads = {
+  windows: string | null
+  mac: string | null
+  linux: string | null
+}
+
+/**
+ * The published shape of a release, as served by the public download pages.
+ */
+export type ReleaseSummary = {
+  version: string
+  title: string | null
+  channel: ReleaseChannel
+  path: string
+  releasedAt: string | null
+  releasedAtLabel: string | null
+  downloads: ReleaseDownloads
+}
+
+export type ReleaseDetail = ReleaseSummary & {
+  notesHtml: string | null
+}

@@ -61,14 +61,12 @@ export default function Home({ links }: { links: SiteLinks }) {
               physically-based textures
             </p>
             <div className="pt-8">
-              <a
+              <Link
                 className="mb-3 block rounded bg-brand px-3 py-3 text-xl font-bold shadow md:mb-12 md:inline-block md:px-5 md:py-5 md:text-2xl"
-                href={links.download}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/download"
               >
                 Download
-              </a>
+              </Link>
               <Link
                 className="mb-12 block rounded bg-white px-3 py-3 text-xl font-bold text-gray-600 shadow md:ml-8 md:inline-block md:px-5 md:py-5 md:text-2xl"
                 href="/docs"

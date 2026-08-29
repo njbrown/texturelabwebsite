@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '~/components/ui/select'
 import { Switch } from '~/components/ui/switch'
-import { Textarea } from '~/components/ui/textarea'
+import MarkdownEditor from './markdown_editor'
 import { RELEASE_CHANNELS, type Release, type ReleaseChannel } from '~/lib/types'
 
 type ReleaseFormProps = {
@@ -157,16 +157,18 @@ export default function ReleaseForm({ release }: ReleaseFormProps) {
       <Card>
         <CardHeader>
           <CardTitle>Release notes</CardTitle>
-          <CardDescription>Markdown — served as both raw text and HTML.</CardDescription>
+          <CardDescription>
+            Shown on the download page and served to the desktop app as both raw markdown and HTML.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Textarea
+          <MarkdownEditor
             id="notes"
-            rows={10}
-            className="font-mono text-sm"
+            rows={14}
             placeholder={'## Added\n- Something new\n'}
             value={data.notes}
-            onChange={(event) => setData('notes', event.target.value)}
+            onChange={(value) => setData('notes', value)}
+            invalid={Boolean(errors.notes)}
           />
           {errors.notes && <p className="mt-2 text-sm text-destructive">{errors.notes}</p>}
         </CardContent>
