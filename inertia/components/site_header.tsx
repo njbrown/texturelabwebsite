@@ -13,7 +13,7 @@ export default function SiteHeader() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="inline-flex items-center gap-2 py-4 text-lg">
-            <img src="/images/logo.png" alt="" className="h-[1.3em]" />
+            <img src="/images/logo.svg" alt="" className="h-[1.3em]" />
             {site.name}
           </Link>
 
