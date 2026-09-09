@@ -62,17 +62,17 @@ export default function Home({ links }: { links: SiteLinks }) {
             </p>
             <div className="pt-8">
               <Link
-                className="mb-3 block rounded bg-brand px-3 py-3 text-xl font-bold shadow md:mb-12 md:inline-block md:px-5 md:py-5 md:text-2xl"
+                className="mb-3 block rounded bg-brand px-3 py-3 text-xl font-semibold shadow md:mb-12 md:inline-block md:px-5 md:py-5 md:text-2xl"
                 href="/download"
               >
-                Download
+                Download <ArrowRight strokeWidth={3} className="inline font-bold" size={20} />
               </Link>
-              <Link
+              {/* <Link
                 className="mb-12 block rounded bg-white px-3 py-3 text-xl font-bold text-gray-600 shadow md:ml-8 md:inline-block md:px-5 md:py-5 md:text-2xl"
                 href="/docs"
               >
                 Get Started <ArrowRight className="inline" size={20} />
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

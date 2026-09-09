@@ -36,9 +36,9 @@ const site = {
   },
 
   nav: [
-    { path: '/docs', title: 'Docs' },
-    { path: '/blog', title: 'Blog' },
-    { path: '/gallery', title: 'Gallery' },
+    // { path: '/docs', title: 'Docs' },
+    // { path: '/blog', title: 'Blog' },
+    // { path: '/gallery', title: 'Gallery' },
   ],
 
   sidebars: [
