@@ -1,14 +1,16 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Release from '#models/release'
 import { getBlogPosts, getDocLinks, getGalleryItems } from '#services/content_service'
+import { dailyVisitors } from '#services/usage_service'
 
 export default class DashboardController {
   async index({ inertia }: HttpContext) {
-    const [releases, docs, posts, gallery] = await Promise.all([
+    const [releases, docs, posts, gallery, usage] = await Promise.all([
       Release.query().orderBy('released_at', 'desc').orderBy('id', 'desc'),
       getDocLinks(),
       getBlogPosts(),
       getGalleryItems(),
+      dailyVisitors(30),
     ])
 
     const published = releases.filter((release) => release.isPublished)
@@ -26,6 +28,7 @@ export default class DashboardController {
       },
       latest: latestStable?.serialize() ?? null,
       recent: releases.slice(0, 5).map((release) => release.serialize()),
+      usage,
     })
   }
 }

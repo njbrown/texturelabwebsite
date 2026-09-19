@@ -38,7 +38,7 @@ app/controllers/        public site (home, docs, blog, gallery)
 app/controllers/api/    the public releases feed
 app/controllers/ops/    the admin: session, dashboard, releases CRUD
 app/models/             User, Release
-app/services/           markdown rendering + content loading
+app/services/           markdown rendering, content loading, usage counts
 config/site.ts          site metadata, nav and the docs sidebar
 content/                markdown: docs/, blog/, gallery/
 database/               migrations and the admin seeder
@@ -133,6 +133,31 @@ published. Responses are cacheable for 5 minutes.
   },
 }
 ```
+
+## Usage analytics
+
+`GET /api/releases/latest` doubles as an anonymous daily-active-users counter,
+done the way [Plausible](https://plausible.io/data-policy) does it
+(`app/services/usage_service.ts`):
+
+- Each request is hashed as `sha256(dailySalt + ip + userAgent)`. The salt is
+  random, kept only in Redis and expires at the end of the UTC day, after which
+  the hash can no longer be recomputed or linked across days.
+- Hashes go into a Redis HyperLogLog (dropped after 48h), which counts uniques
+  without keeping the hashes themselves.
+- Only the daily total is persisted, in `daily_usage` (`day`, `visitors`). It is
+  charted on `/ops`.
+
+Tracking never delays or fails the API response. Behind a reverse proxy,
+`request.ip()` only sees the real client if `trustProxy` is configured in
+`config/app.ts`; otherwise every user collapses into the proxy's IP.
+
+**TODO — privacy policy:** add a line along the lines of _"When TextureLab checks
+for updates it contacts texturelab.io. We count unique users per day using a
+hash of your IP address and user agent with a salt that is deleted every 24
+hours. We never store your IP address or any identifier — only the daily
+total."_ Also make sure web server / host access logs for `/api/releases/latest`
+don't retain raw IPs longer than needed.
 
 ## Rendering
 

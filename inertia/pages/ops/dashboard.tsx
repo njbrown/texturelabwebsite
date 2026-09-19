@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react'
 import { ExternalLink, Plus } from 'lucide-react'
 import OpsLayout from '~/components/ops/ops_layout'
+import { UsageChart } from '~/components/ops/usage_chart'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
@@ -25,6 +26,7 @@ type DashboardProps = {
   }
   latest: Release | null
   recent: Release[]
+  usage: { day: string; visitors: number }[]
 }
 
 function formatDate(value: string | null) {
@@ -36,7 +38,7 @@ function formatDate(value: string | null) {
   }).format(new Date(value))
 }
 
-export default function OpsDashboard({ stats, latest, recent }: DashboardProps) {
+export default function OpsDashboard({ stats, latest, recent, usage }: DashboardProps) {
   const tiles = [
     { label: 'Published releases', value: stats.publishedReleases },
     { label: 'Drafts', value: stats.draftReleases },
@@ -44,6 +46,11 @@ export default function OpsDashboard({ stats, latest, recent }: DashboardProps) 
     { label: 'Blog posts', value: stats.posts },
     { label: 'Gallery items', value: stats.gallery },
   ]
+
+  const todayUsers = usage.at(-1)?.visitors ?? 0
+  const averageUsers = usage.length
+    ? Math.round(usage.reduce((sum, point) => sum + point.visitors, 0) / usage.length)
+    : 0
 
   return (
     <OpsLayout
@@ -68,6 +75,25 @@ export default function OpsDashboard({ stats, latest, recent }: DashboardProps) 
           </Card>
         ))}
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardDescription>Daily app users · last 30 days (UTC)</CardDescription>
+          <CardTitle className="flex items-baseline gap-3">
+            <span className="text-3xl tabular-nums">{todayUsers}</span>
+            <span className="text-sm font-normal text-muted-foreground">
+              today · {averageUsers} avg/day
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <UsageChart data={usage} />
+          <p className="mt-3 text-xs text-muted-foreground">
+            Unique update checks per day, counted with a daily-rotating salted hash. No IPs or
+            identifiers are stored.
+          </p>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-1">

@@ -3,6 +3,7 @@ import vine, { errors as vineErrors } from '@vinejs/vine'
 import Release from '#models/release'
 import { RELEASE_CHANNELS } from '#models/release'
 import { renderMarkdown } from '#services/markdown_service'
+import { recordVisit } from '#services/usage_service'
 
 const queryValidator = vine.compile(
   vine.object({
@@ -95,6 +96,9 @@ export default class ReleasesController {
     if (!query) {
       return response.unprocessableEntity({ errors })
     }
+
+    // The app calls this on startup, so it doubles as an anonymous daily count.
+    recordVisit(request.ip(), request.header('user-agent'))
 
     const release = await Release.query()
       .where('is_published', true)
