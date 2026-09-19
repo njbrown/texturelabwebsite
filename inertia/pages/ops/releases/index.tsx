@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, router } from '@inertiajs/react'
 import { Apple, ExternalLink, Monitor, Pencil, Plus, Terminal, Trash2 } from 'lucide-react'
+import { ItchIcon } from '~/components/icons'
 import OpsLayout from '~/components/ops/ops_layout'
 import {
   AlertDialog,
@@ -102,7 +103,12 @@ export default function ReleasesIndex({ releases }: { releases: Release[] }) {
                         {release.windowsUrl && <Monitor className="size-4" aria-label="Windows" />}
                         {release.macUrl && <Apple className="size-4" aria-label="macOS" />}
                         {release.linuxUrl && <Terminal className="size-4" aria-label="Linux" />}
-                        {!release.windowsUrl && !release.macUrl && !release.linuxUrl && '—'}
+                        {release.itchUrl && <ItchIcon className="size-4" aria-label="itch.io" />}
+                        {!release.windowsUrl &&
+                          !release.macUrl &&
+                          !release.linuxUrl &&
+                          !release.itchUrl &&
+                          '—'}
                       </div>
                     </TableCell>
                     <TableCell className="text-right">

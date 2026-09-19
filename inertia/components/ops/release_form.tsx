@@ -43,6 +43,7 @@ export default function ReleaseForm({ release }: ReleaseFormProps) {
     windowsUrl: release?.windowsUrl ?? '',
     macUrl: release?.macUrl ?? '',
     linuxUrl: release?.linuxUrl ?? '',
+    itchUrl: release?.itchUrl ?? '',
     isPublished: release?.isPublished ?? false,
     releasedAt: toLocalInput(release?.releasedAt ?? null),
   })
@@ -58,6 +59,7 @@ export default function ReleaseForm({ release }: ReleaseFormProps) {
       windowsUrl: payload.windowsUrl || null,
       macUrl: payload.macUrl || null,
       linuxUrl: payload.linuxUrl || null,
+      itchUrl: payload.itchUrl || null,
       releasedAt: payload.releasedAt ? new Date(payload.releasedAt).toISOString() : null,
     }))
 
@@ -68,10 +70,11 @@ export default function ReleaseForm({ release }: ReleaseFormProps) {
     }
   }
 
-  const downloads: { key: 'windowsUrl' | 'macUrl' | 'linuxUrl'; label: string }[] = [
+  const downloads: { key: 'windowsUrl' | 'macUrl' | 'linuxUrl' | 'itchUrl'; label: string }[] = [
     { key: 'windowsUrl', label: 'Windows' },
     { key: 'macUrl', label: 'macOS' },
     { key: 'linuxUrl', label: 'Linux' },
+    { key: 'itchUrl', label: 'itch.io page' },
   ]
 
   return (
@@ -177,7 +180,9 @@ export default function ReleaseForm({ release }: ReleaseFormProps) {
       <Card>
         <CardHeader>
           <CardTitle>Downloads</CardTitle>
-          <CardDescription>Direct links per platform. Leave blank if not shipped.</CardDescription>
+          <CardDescription>
+            Direct links per platform, and/or an itch.io page. Leave blank if not shipped.
+          </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           {downloads.map((download) => (

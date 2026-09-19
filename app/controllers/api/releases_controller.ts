@@ -18,7 +18,12 @@ type SerializedRelease = {
   notes: string | null
   notesHtml: string
   releasedAt: string | null
-  downloads: { windows: string | null; mac: string | null; linux: string | null }
+  downloads: {
+    windows: string | null
+    mac: string | null
+    linux: string | null
+    itch: string | null
+  }
 }
 
 async function present(release: Release): Promise<SerializedRelease> {
@@ -35,6 +40,7 @@ async function present(release: Release): Promise<SerializedRelease> {
       windows: release.windowsUrl,
       mac: release.macUrl,
       linux: release.linuxUrl,
+      itch: release.itchUrl,
     },
   }
 }

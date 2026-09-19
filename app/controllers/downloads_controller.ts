@@ -36,6 +36,7 @@ function summary(release: Release) {
       windows: release.windowsUrl,
       mac: release.macUrl,
       linux: release.linuxUrl,
+      itch: release.itchUrl,
     },
   }
 }

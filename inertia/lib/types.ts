@@ -77,6 +77,7 @@ export type Release = {
   windowsUrl: string | null
   macUrl: string | null
   linuxUrl: string | null
+  itchUrl: string | null
   isPublished: boolean
   releasedAt: string | null
   createdAt: string
@@ -97,6 +98,7 @@ export type ReleaseDownloads = {
   windows: string | null
   mac: string | null
   linux: string | null
+  itch: string | null
 }
 
 /**

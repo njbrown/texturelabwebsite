@@ -36,6 +36,7 @@ function attributes(payload: ReleasePayload) {
     windowsUrl: payload.windowsUrl ?? null,
     macUrl: payload.macUrl ?? null,
     linuxUrl: payload.linuxUrl ?? null,
+    itchUrl: payload.itchUrl ?? null,
     isPublished: payload.isPublished,
     releasedAt: toDateTime(payload.releasedAt),
   }

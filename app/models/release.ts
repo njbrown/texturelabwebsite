@@ -30,6 +30,13 @@ export default class Release extends BaseModel {
   declare linuxUrl: string | null
 
   /**
+   * An itch.io page, for builds distributed there instead of (or as well as)
+   * through direct links.
+   */
+  @column()
+  declare itchUrl: string | null
+
+  /**
    * SQLite stores booleans as 0/1, so they are normalised on the way out.
    */
   @column({ consume: (value) => Boolean(value) })

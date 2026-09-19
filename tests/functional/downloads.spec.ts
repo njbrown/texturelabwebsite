@@ -32,6 +32,7 @@ test.group('Download pages', (group) => {
         version: '1.2.0-beta',
         channel: 'beta',
         isPublished: true,
+        itchUrl: 'https://njbrown.itch.io/texturelab',
         releasedAt: DateTime.fromISO('2026-03-01T00:00:00.000Z'),
       },
       {
@@ -54,6 +55,7 @@ test.group('Download pages', (group) => {
       windows: 'https://example.com/1.1.0/win.zip',
       mac: 'https://example.com/1.1.0/mac.dmg',
       linux: 'https://example.com/1.1.0/linux.AppImage',
+      itch: null,
     })
     assert.deepEqual(
       props.releases.map((release: { version: string }) => release.version),
@@ -82,6 +84,15 @@ test.group('Download pages', (group) => {
     assert.include(release.notesHtml, '<h2 id="added"')
     assert.equal(release.downloads.windows, 'https://example.com/1.0.0/win.zip')
     assert.isNull(release.downloads.mac)
+  })
+
+  test('exposes an itch.io page for builds shipped there', async ({ client, assert }) => {
+    const response = await client.get('/download/1.2.0-beta').headers(inertiaHeaders)
+    const release = response.body().props.release
+
+    response.assertStatus(200)
+    assert.equal(release.downloads.itch, 'https://njbrown.itch.io/texturelab')
+    assert.isNull(release.downloads.windows)
   })
 
   test('leaves the notes null when a release has none', async ({ client, assert }) => {

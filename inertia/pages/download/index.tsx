@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react'
 import { ArrowRight } from 'lucide-react'
 import DownloadLinks, { PLATFORMS } from '~/components/download_links'
+import { ItchIcon } from '~/components/icons'
 import Seo from '~/components/seo'
 import SiteLayout from '~/components/site_layout'
 import type { ReleaseDetail, ReleaseSummary, SiteLinks } from '~/lib/types'
@@ -69,16 +70,22 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
               </div>
 
               <p className="mt-4 text-sm text-gray-500">
-                Also available on{' '}
-                <a
-                  className="text-ui-primary hover:opacity-75"
-                  href={links.download}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  itch.io
-                </a>
-                , or build it yourself from{' '}
+                {latest.downloads.itch ? (
+                  'Or build it yourself from '
+                ) : (
+                  <>
+                    Also available on{' '}
+                    <a
+                      className="text-ui-primary hover:opacity-75"
+                      href={links.download}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      itch.io
+                    </a>
+                    , or build it yourself from{' '}
+                  </>
+                )}
                 <Link
                   className="text-ui-primary hover:opacity-75"
                   href="/docs/development/building-from-source"
@@ -157,6 +164,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                           <Icon key={key} size={16} aria-label={label} />
                         )
                       )}
+                      {release.downloads.itch && <ItchIcon size={16} aria-label="itch.io" />}
                     </span>
                     <span className="text-sm text-gray-500">{release.releasedAtLabel}</span>
                   </Link>

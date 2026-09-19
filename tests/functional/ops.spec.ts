@@ -82,6 +82,7 @@ test.group('Ops releases CRUD', (group) => {
       windowsUrl: 'https://example.com/win.zip',
       macUrl: null,
       linuxUrl: null,
+      itchUrl: 'https://njbrown.itch.io/texturelab',
       isPublished: true,
       releasedAt: '2026-01-15T00:00:00.000Z',
     })
@@ -91,6 +92,7 @@ test.group('Ops releases CRUD', (group) => {
     const release = await Release.findByOrFail('version', '1.0.0')
     assert.isTrue(release.isPublished)
     assert.equal(release.windowsUrl, 'https://example.com/win.zip')
+    assert.equal(release.itchUrl, 'https://njbrown.itch.io/texturelab')
     assert.equal(release.releasedAt?.toISODate(), '2026-01-15')
   })
 

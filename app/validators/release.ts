@@ -13,6 +13,7 @@ const releaseFields = {
   windowsUrl: vine.string().trim().url().nullable().optional(),
   macUrl: vine.string().trim().url().nullable().optional(),
   linuxUrl: vine.string().trim().url().nullable().optional(),
+  itchUrl: vine.string().trim().url().nullable().optional(),
   isPublished: vine.boolean(),
   /**
    * Sent as an ISO string by the form; parsed into a DateTime in the controller.
