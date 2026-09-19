@@ -37,7 +37,7 @@ export default function OpsSidebar({ currentPath }: { currentPath: string }) {
     <Sidebar>
       <SidebarHeader className="border-b border-sidebar-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <img src="/images/logo.png" alt="" className="size-7" />
+          <img src="/images/logo.svg" alt="" className="size-7" />
           <div className="leading-tight">
             <div className="font-semibold text-sidebar-foreground">TextureLab</div>
             <div className="text-xs text-muted-foreground">Ops</div>

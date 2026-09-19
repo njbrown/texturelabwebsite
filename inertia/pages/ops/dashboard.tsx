@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react'
-import { Plus } from 'lucide-react'
+import { ExternalLink, Plus } from 'lucide-react'
 import OpsLayout from '~/components/ops/ops_layout'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
@@ -111,6 +111,9 @@ export default function OpsDashboard({ stats, latest, recent }: DashboardProps) 
                     <TableHead>Channel</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Released</TableHead>
+                    <TableHead>
+                      <span className="sr-only">Public page</span>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -131,6 +134,22 @@ export default function OpsDashboard({ stats, latest, recent }: DashboardProps) 
                       </TableCell>
                       <TableCell className="text-muted-foreground">
                         {formatDate(release.releasedAt)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {release.isPublished && (
+                          <Button variant="ghost" size="sm" asChild>
+                            <a
+                              href={`/download/${encodeURIComponent(release.version)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <ExternalLink className="size-4" />
+                              <span className="sr-only">
+                                View public page for {release.version}
+                              </span>
+                            </a>
+                          </Button>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}

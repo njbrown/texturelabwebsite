@@ -21,7 +21,7 @@ export default function OpsLogin() {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <div className="mb-2 flex items-center gap-2">
-            <img src="/images/logo.png" alt="" className="size-7" />
+            <img src="/images/logo.svg" alt="" className="size-7" />
             <span className="font-semibold">TextureLab Ops</span>
           </div>
           <CardTitle>Sign in</CardTitle>

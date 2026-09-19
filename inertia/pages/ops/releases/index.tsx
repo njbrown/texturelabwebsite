@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, router } from '@inertiajs/react'
-import { Apple, Monitor, Pencil, Plus, Terminal, Trash2 } from 'lucide-react'
+import { Apple, ExternalLink, Monitor, Pencil, Plus, Terminal, Trash2 } from 'lucide-react'
 import OpsLayout from '~/components/ops/ops_layout'
 import {
   AlertDialog,
@@ -106,6 +106,18 @@ export default function ReleasesIndex({ releases }: { releases: Release[] }) {
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
+                      {release.isPublished && (
+                        <Button variant="ghost" size="sm" asChild>
+                          <a
+                            href={`/download/${encodeURIComponent(release.version)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <ExternalLink className="size-4" />
+                            <span className="sr-only">View public page for {release.version}</span>
+                          </a>
+                        </Button>
+                      )}
                       <Button variant="ghost" size="sm" asChild>
                         <Link href={`/ops/releases/${release.id}/edit`}>
                           <Pencil className="size-4" />
