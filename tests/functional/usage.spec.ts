@@ -23,7 +23,9 @@ async function visitorsToday(expected: number) {
 
 test.group('Usage tracking', (group) => {
   group.each.setup(() => testUtils.db().truncate())
-  group.each.setup(() => redis.del(`usage:visitors:${today()}`))
+  group.each.setup(() => {
+    redis.del(`usage:visitors:${today()}`)
+  })
 
   test('counts unique visitors once per day', async ({ client, assert }) => {
     await client
