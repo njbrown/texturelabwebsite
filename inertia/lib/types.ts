@@ -70,7 +70,13 @@ export type ReleaseChannel = (typeof RELEASE_CHANNELS)[number]
 
 export type Release = {
   id: number
+  identifier: string
   version: string
+  versionMajor: number
+  versionMinor: number
+  versionPatch: number
+  build: number
+  commit: string
   title: string | null
   channel: ReleaseChannel
   notes: string | null
@@ -105,9 +111,12 @@ export type ReleaseDownloads = {
  * The published shape of a release, as served by the public download pages.
  */
 export type ReleaseSummary = {
+  identifier: string
   version: string
-  title: string | null
   channel: ReleaseChannel
+  build: number
+  commit: string
+  title: string | null
   path: string
   releasedAt: string | null
   releasedAtLabel: string | null
@@ -117,3 +126,25 @@ export type ReleaseSummary = {
 export type ReleaseDetail = ReleaseSummary & {
   notesHtml: string | null
 }
+
+/**
+ * The shape `/api/releases/latest` serves the desktop app.
+ */
+export type ApiRelease = {
+  identifier: string
+  version: string
+  channel: ReleaseChannel
+  build: number
+  commit: string
+  title: string | null
+  notes: string | null
+  notesHtml: string
+  releasedAt: string | null
+  downloads: ReleaseDownloads
+  pageUrl: string
+}
+
+/**
+ * What each channel's update check returns right now.
+ */
+export type LiveReleases = Record<ReleaseChannel, Release | null>

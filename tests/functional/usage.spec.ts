@@ -26,15 +26,27 @@ test.group('Usage tracking', (group) => {
   group.each.setup(() => redis.del(`usage:visitors:${today()}`))
 
   test('counts unique visitors once per day', async ({ client, assert }) => {
-    await client.get('/api/releases/latest').header('user-agent', 'TextureLab/1.0')
-    await client.get('/api/releases/latest').header('user-agent', 'TextureLab/1.0')
-    await client.get('/api/releases/latest').header('user-agent', 'TextureLab/2.0')
+    await client
+      .get('/api/releases/latest')
+      .qs({ channel: 'stable' })
+      .header('user-agent', 'TextureLab/1.0')
+    await client
+      .get('/api/releases/latest')
+      .qs({ channel: 'stable' })
+      .header('user-agent', 'TextureLab/1.0')
+    await client
+      .get('/api/releases/latest')
+      .qs({ channel: 'stable' })
+      .header('user-agent', 'TextureLab/2.0')
 
     assert.equal(await visitorsToday(2), 2)
   })
 
   test('stores only aggregate counts', async ({ client, assert }) => {
-    await client.get('/api/releases/latest').header('user-agent', 'TextureLab/1.0')
+    await client
+      .get('/api/releases/latest')
+      .qs({ channel: 'stable' })
+      .header('user-agent', 'TextureLab/1.0')
     await visitorsToday(1)
 
     const rows = await db.from('daily_usage')

@@ -26,10 +26,13 @@ function summary(release: Release) {
   const releasedAt = release.releasedAt?.toISO() ?? null
 
   return {
+    identifier: release.identifier,
     version: release.version,
-    title: release.title,
     channel: release.channel,
-    path: `/download/${encodeURIComponent(release.version)}`,
+    build: release.build,
+    commit: release.commit,
+    title: release.title,
+    path: `/download/${encodeURIComponent(release.identifier)}`,
     releasedAt,
     releasedAtLabel: formatDate(releasedAt),
     downloads: {
@@ -54,9 +57,8 @@ async function detail(release: Release) {
 export default class DownloadsController {
   private query() {
     return Release.query()
-      .where('is_published', true)
-      .orderBy('released_at', 'desc')
-      .orderBy('id', 'desc')
+      .withScopes((scopes) => scopes.published())
+      .withScopes((scopes) => scopes.newestFirst())
   }
 
   async index({ inertia }: HttpContext) {
@@ -76,10 +78,10 @@ export default class DownloadsController {
   }
 
   async show({ params, inertia }: HttpContext) {
-    const release = await this.query().where('version', params.version).first()
+    const release = await this.query().where('identifier', params.identifier).first()
 
     if (!release) {
-      throw new Exception(`Cannot find the release ${params.version}`, {
+      throw new Exception(`Cannot find the release ${params.identifier}`, {
         status: 404,
         code: 'E_ROUTE_NOT_FOUND',
       })

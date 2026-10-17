@@ -1,12 +1,15 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Release from '#models/release'
+import { liveRelease } from '#services/release_feed_service'
 import { getBlogPosts, getDocLinks, getGalleryItems } from '#services/content_service'
 import { dailyVisitors } from '#services/usage_service'
 
 export default class DashboardController {
   async index({ inertia }: HttpContext) {
-    const [releases, docs, posts, gallery, usage] = await Promise.all([
-      Release.query().orderBy('released_at', 'desc').orderBy('id', 'desc'),
+    const [releases, liveStable, liveBeta, docs, posts, gallery, usage] = await Promise.all([
+      Release.query().withScopes((scopes) => scopes.newestFirst()),
+      liveRelease('stable'),
+      liveRelease('beta'),
       getDocLinks(),
       getBlogPosts(),
       getGalleryItems(),
@@ -14,8 +17,6 @@ export default class DashboardController {
     ])
 
     const published = releases.filter((release) => release.isPublished)
-    // Mirrors the default of /api/releases/latest, which is the stable channel.
-    const latestStable = published.find((release) => release.channel === 'stable')
 
     return inertia.render('ops/dashboard', {
       stats: {
@@ -26,7 +27,11 @@ export default class DashboardController {
         posts: posts.length,
         gallery: gallery.length,
       },
-      latest: latestStable?.serialize() ?? null,
+      // Exactly what /api/releases/latest serves each channel.
+      live: {
+        stable: liveStable?.serialize() ?? null,
+        beta: liveBeta?.serialize() ?? null,
+      },
       recent: releases.slice(0, 5).map((release) => release.serialize()),
       usage,
     })

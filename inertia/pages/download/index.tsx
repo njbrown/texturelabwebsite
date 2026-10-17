@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react'
 import { ArrowRight } from 'lucide-react'
+import ChannelBadge from '~/components/channel_badge'
 import DownloadLinks, { PLATFORMS } from '~/components/download_links'
 import { ItchIcon } from '~/components/icons'
 import Seo from '~/components/seo'
@@ -13,7 +14,7 @@ type DownloadIndexProps = {
 }
 
 export default function DownloadIndex({ latest, releases, links }: DownloadIndexProps) {
-  const previous = releases.filter((release) => release.version !== latest?.version)
+  const previous = releases.filter((release) => release.identifier !== latest?.identifier)
 
   return (
     <SiteLayout>
@@ -48,9 +49,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                     Version {latest.version}
                   </Link>
                   {latest.channel !== 'stable' && (
-                    <span className="ml-3 rounded bg-gray-200 px-2 py-1 align-middle text-sm font-normal tracking-wide text-gray-600 uppercase">
-                      {latest.channel}
-                    </span>
+                    <ChannelBadge channel={latest.channel} className="ml-3 align-middle text-sm" />
                   )}
                 </h2>
                 {latest.releasedAtLabel && (
@@ -64,6 +63,9 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
               </div>
 
               {latest.title && <p className="mt-1 text-xl text-gray-600">{latest.title}</p>}
+              <p className="mt-1 font-mono text-xs text-gray-400">
+                Build {latest.build} · {latest.commit}
+              </p>
 
               <div className="mt-6">
                 <DownloadLinks downloads={latest.downloads} version={latest.version} />
@@ -142,7 +144,7 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
 
             <ul className="divide-y divide-gray-300 rounded-lg border border-gray-300 bg-white">
               {previous.map((release) => (
-                <li key={release.version}>
+                <li key={release.identifier}>
                   <Link
                     className="flex flex-wrap items-center gap-x-4 gap-y-1 px-6 py-4 hover:bg-gray-50"
                     href={release.path}
@@ -150,11 +152,8 @@ export default function DownloadIndex({ latest, releases, links }: DownloadIndex
                     <span className="font-display text-lg font-bold text-gray-800">
                       {release.version}
                     </span>
-                    {release.channel !== 'stable' && (
-                      <span className="rounded bg-gray-200 px-2 py-0.5 text-xs tracking-wide text-gray-600 uppercase">
-                        {release.channel}
-                      </span>
-                    )}
+                    {release.channel !== 'stable' && <ChannelBadge channel={release.channel} />}
+                    <span className="font-mono text-xs text-gray-400">build {release.build}</span>
                     <span className="min-w-0 flex-1 truncate text-gray-600">
                       {release.title || ''}
                     </span>

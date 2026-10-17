@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react'
 import { ArrowLeft } from 'lucide-react'
+import ChannelBadge from '~/components/channel_badge'
 import DownloadLinks, { hasDownloads } from '~/components/download_links'
 import Seo from '~/components/seo'
 import SiteLayout from '~/components/site_layout'
@@ -14,7 +15,7 @@ export default function DownloadShow({ release, links }: DownloadShowProps) {
   return (
     <SiteLayout>
       <Seo
-        title={`TextureLab ${release.version}`}
+        title={`TextureLab ${release.version}${release.channel === 'stable' ? '' : ` ${release.channel}`}`}
         description={
           release.title || `Download TextureLab ${release.version} and read its release notes`
         }
@@ -27,14 +28,15 @@ export default function DownloadShow({ release, links }: DownloadShowProps) {
             <h1 className="mx-auto max-w-4xl pt-8 font-display text-4xl font-bold md:text-5xl">
               TextureLab {release.version}
               {release.channel !== 'stable' && (
-                <span className="ml-3 rounded bg-gray-700 px-2 py-1 align-middle text-base font-normal tracking-wide uppercase">
-                  {release.channel}
-                </span>
+                <ChannelBadge channel={release.channel} className="ml-3 align-middle text-base" />
               )}
             </h1>
             {release.title && (
               <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-300">{release.title}</p>
             )}
+            <p className="mx-auto mt-2 font-mono text-xs text-gray-500">
+              {release.identifier} · build {release.build}
+            </p>
             <p className="mx-auto mt-2 mb-12 text-gray-400">
               {release.releasedAtLabel ? `Released ${release.releasedAtLabel}` : 'Unreleased'}
             </p>

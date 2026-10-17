@@ -33,7 +33,7 @@ router.get('/blog/:slug', [BlogController, 'show'])
 router.get('/gallery', [GalleryController, 'index'])
 
 router.get('/download', [DownloadsController, 'index'])
-router.get('/download/:version', [DownloadsController, 'show'])
+router.get('/download/:identifier', [DownloadsController, 'show'])
 
 /*
 |--------------------------------------------------------------------------
@@ -64,9 +64,12 @@ router
 
         router.get('/releases', [OpsReleasesController, 'index'])
         router.get('/releases/create', [OpsReleasesController, 'create'])
+        router.get('/releases/offer', [OpsReleasesController, 'offer'])
         router.post('/releases', [OpsReleasesController, 'store'])
         router.get('/releases/:id/edit', [OpsReleasesController, 'edit'])
         router.put('/releases/:id', [OpsReleasesController, 'update'])
+        router.post('/releases/:id/publish', [OpsReleasesController, 'publish'])
+        router.post('/releases/:id/unpublish', [OpsReleasesController, 'unpublish'])
         router.delete('/releases/:id', [OpsReleasesController, 'destroy'])
       })
       .use(middleware.auth())

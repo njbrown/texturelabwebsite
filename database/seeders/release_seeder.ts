@@ -2,7 +2,7 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import app from '@adonisjs/core/services/app'
 import logger from '@adonisjs/core/services/logger'
 import { DateTime } from 'luxon'
-import Release, { type ReleaseChannel } from '#models/release'
+import Release, { releaseIdentifier, type ReleaseChannel } from '#models/release'
 
 /**
  * Sample release history for local work on the /download pages and the ops
@@ -10,8 +10,9 @@ import Release, { type ReleaseChannel } from '#models/release'
  * this refuses to run in production regardless — these are made up builds
  * pointing at download URLs that do not exist.
  *
- * Keyed on version, so re-running it updates the rows rather than duplicating
- * them and never touches a release that was created by hand.
+ * Keyed on identifier, so re-running it updates the rows rather than
+ * duplicating them and never touches a release that was created by hand. The
+ * build numbers and commits are made up too, but they increase like real ones.
  */
 
 const GITHUB = 'https://github.com/njbrown/texturelab/releases/download'
@@ -20,6 +21,8 @@ type Seed = {
   version: string
   title: string | null
   channel: ReleaseChannel
+  build: number
+  commit: string
   releasedAt: string
   platforms: ('windows' | 'mac' | 'linux')[]
   isPublished?: boolean
@@ -29,6 +32,8 @@ type Seed = {
 const RELEASES: Seed[] = [
   {
     version: '0.9.0',
+    build: 120,
+    commit: 'a1c93e0',
     title: 'First public build',
     channel: 'stable',
     releasedAt: '2023-11-14',
@@ -44,6 +49,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '0.9.1',
+    build: 141,
+    commit: '5d2e7b1',
     title: null,
     channel: 'stable',
     releasedAt: '2023-12-02',
@@ -56,6 +63,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.0.0',
+    build: 212,
+    commit: '9f04c6a',
     title: 'TextureLab 1.0',
     channel: 'stable',
     releasedAt: '2024-02-20',
@@ -81,6 +90,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.0.2',
+    build: 230,
+    commit: 'e7b31d4',
     title: null,
     channel: 'stable',
     releasedAt: '2024-03-08',
@@ -93,6 +104,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.1.0',
+    build: 318,
+    commit: '0c8a5f2',
     title: 'Nodes everywhere',
     channel: 'stable',
     releasedAt: '2024-05-30',
@@ -114,6 +127,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.2.0',
+    build: 402,
+    commit: 'b65d1e9',
     title: 'Unity export',
     channel: 'stable',
     releasedAt: '2024-09-12',
@@ -131,6 +146,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.2.1',
+    build: 415,
+    commit: '3fa2c08',
     title: null,
     channel: 'stable',
     releasedAt: '2024-10-01',
@@ -142,6 +159,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.3.0',
+    build: 511,
+    commit: 'd94e7a3',
     title: 'Faster graphs',
     channel: 'stable',
     releasedAt: '2025-01-23',
@@ -163,6 +182,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.4.0',
+    build: 604,
+    commit: '71bc2f5',
     title: 'Custom nodes',
     channel: 'stable',
     releasedAt: '2025-05-07',
@@ -180,6 +201,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.4.2',
+    build: 633,
+    commit: 'c2e8d90',
     title: null,
     channel: 'stable',
     releasedAt: '2025-06-19',
@@ -192,6 +215,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.5.0',
+    build: 745,
+    commit: '4a7f1b6',
     title: 'Layers',
     channel: 'stable',
     releasedAt: '2025-11-04',
@@ -212,6 +237,8 @@ const RELEASES: Seed[] = [
   },
   {
     version: '1.5.1',
+    build: 790,
+    commit: '8e3d5c2',
     title: null,
     channel: 'stable',
     releasedAt: '2026-02-11',
@@ -222,7 +249,9 @@ const RELEASES: Seed[] = [
 - Crash on startup for GPUs without \`OES_texture_float_linear\``,
   },
   {
-    version: '2.0.0-beta.1',
+    version: '2.0.0',
+    build: 861,
+    commit: '2b9e4f7',
     title: 'The 2.0 preview',
     channel: 'beta',
     releasedAt: '2026-06-15',
@@ -242,7 +271,9 @@ the project format has changed and 1.x cannot open what it writes.
 - Unity export is disabled in this preview`,
   },
   {
-    version: '2.0.0-beta.2',
+    version: '2.0.0',
+    build: 902,
+    commit: 'f13a6d8',
     title: null,
     channel: 'beta',
     releasedAt: '2026-08-03',
@@ -254,11 +285,13 @@ the project format has changed and 1.x cannot open what it writes.
 
 ## Fixed
 
-- Projects saved by beta.1 failing to reopen
+- Projects saved by the first beta failing to reopen
 - Compute path falling back to the old renderer on some AMD cards`,
   },
   {
     version: '2.0.0',
+    build: 960,
+    commit: '6c0d2ea',
     title: 'Not out yet',
     channel: 'stable',
     releasedAt: '2026-09-30',
@@ -269,14 +302,18 @@ appear anywhere on the public site.`,
   },
 ]
 
-function downloadUrl(version: string, platform: 'windows' | 'mac' | 'linux') {
+/**
+ * Named like the real artifacts, after the identifier, so the publish checks
+ * pass on seeded builds.
+ */
+function downloadUrl(identifier: string, platform: 'windows' | 'mac' | 'linux') {
   const file = {
-    windows: `TextureLab-${version}-win-x64.zip`,
-    mac: `TextureLab-${version}-mac-universal.dmg`,
-    linux: `TextureLab-${version}-linux-x86_64.AppImage`,
+    windows: `texturelab-win-v${identifier}.zip`,
+    mac: `texturelab-mac-v${identifier}.zip`,
+    linux: `texturelab-linux-v${identifier}.zip`,
   }[platform]
 
-  return `${GITHUB}/v${version}/${file}`
+  return `${GITHUB}/v${identifier}/${file}`
 }
 
 export default class extends BaseSeeder {
@@ -286,17 +323,22 @@ export default class extends BaseSeeder {
     }
 
     for (const seed of RELEASES) {
+      const identifier = releaseIdentifier(seed.version, seed.channel, seed.commit)
+      const url = (platform: 'windows' | 'mac' | 'linux') =>
+        seed.platforms.includes(platform) ? downloadUrl(identifier, platform) : null
+
       await Release.updateOrCreate(
-        { version: seed.version },
+        { identifier },
         {
-          title: seed.title,
+          version: seed.version,
           channel: seed.channel,
+          build: seed.build,
+          commit: seed.commit,
+          title: seed.title,
           notes: seed.notes,
-          windowsUrl: seed.platforms.includes('windows')
-            ? downloadUrl(seed.version, 'windows')
-            : null,
-          macUrl: seed.platforms.includes('mac') ? downloadUrl(seed.version, 'mac') : null,
-          linuxUrl: seed.platforms.includes('linux') ? downloadUrl(seed.version, 'linux') : null,
+          windowsUrl: url('windows'),
+          macUrl: url('mac'),
+          linuxUrl: url('linux'),
           isPublished: seed.isPublished ?? true,
           releasedAt: DateTime.fromISO(`${seed.releasedAt}T10:00:00`, { zone: 'utc' }),
         }

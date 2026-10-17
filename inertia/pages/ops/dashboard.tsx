@@ -1,5 +1,8 @@
 import { Link } from '@inertiajs/react'
 import { ExternalLink, Plus } from 'lucide-react'
+import ChannelBadge from '~/components/channel_badge'
+import LiveNowCard from '~/components/ops/live_now_card'
+import OfferCheck from '~/components/ops/offer_check'
 import OpsLayout from '~/components/ops/ops_layout'
 import { UsageChart } from '~/components/ops/usage_chart'
 import { Badge } from '~/components/ui/badge'
@@ -13,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table'
-import type { Release } from '~/lib/types'
+import type { LiveReleases, Release } from '~/lib/types'
 
 type DashboardProps = {
   stats: {
@@ -24,7 +27,7 @@ type DashboardProps = {
     posts: number
     gallery: number
   }
-  latest: Release | null
+  live: LiveReleases
   recent: Release[]
   usage: { day: string; visitors: number }[]
 }
@@ -38,7 +41,7 @@ function formatDate(value: string | null) {
   }).format(new Date(value))
 }
 
-export default function OpsDashboard({ stats, latest, recent, usage }: DashboardProps) {
+export default function OpsDashboard({ stats, live, recent, usage }: DashboardProps) {
   const tiles = [
     { label: 'Published releases', value: stats.publishedReleases },
     { label: 'Drafts', value: stats.draftReleases },
@@ -96,35 +99,16 @@ export default function OpsDashboard({ stats, latest, recent, usage }: Dashboard
       </Card>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-1">
-          <CardHeader>
-            <CardTitle>Latest stable</CardTitle>
-            <CardDescription>What the app sees at /api/releases/latest</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {latest ? (
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl font-semibold">{latest.version}</span>
-                  <Badge variant="secondary">{latest.channel}</Badge>
-                </div>
-                {latest.title && <p className="text-sm">{latest.title}</p>}
-                <p className="text-sm text-muted-foreground">
-                  Released {formatDate(latest.releasedAt)}
-                </p>
-              </div>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Nothing published yet — the app will get an empty feed.
-              </p>
-            )}
-          </CardContent>
-        </Card>
+        <LiveNowCard channel="stable" release={live.stable} />
+        <LiveNowCard channel="beta" release={live.beta} />
+        <OfferCheck />
+      </div>
 
-        <Card className="lg:col-span-2">
+      <div className="grid gap-4">
+        <Card>
           <CardHeader>
             <CardTitle>Recent releases</CardTitle>
-            <CardDescription>Newest first</CardDescription>
+            <CardDescription>Newest build first</CardDescription>
           </CardHeader>
           <CardContent>
             {recent.length === 0 ? (
@@ -133,7 +117,8 @@ export default function OpsDashboard({ stats, latest, recent, usage }: Dashboard
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Version</TableHead>
+                    <TableHead>Identifier</TableHead>
+                    <TableHead>Build</TableHead>
                     <TableHead>Channel</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Released</TableHead>
@@ -145,13 +130,14 @@ export default function OpsDashboard({ stats, latest, recent, usage }: Dashboard
                 <TableBody>
                   {recent.map((release) => (
                     <TableRow key={release.id}>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-mono font-medium">
                         <Link href={`/ops/releases/${release.id}/edit`} className="hover:underline">
-                          {release.version}
+                          {release.identifier}
                         </Link>
                       </TableCell>
+                      <TableCell className="tabular-nums">{release.build}</TableCell>
                       <TableCell>
-                        <Badge variant="secondary">{release.channel}</Badge>
+                        <ChannelBadge channel={release.channel} />
                       </TableCell>
                       <TableCell>
                         <Badge variant={release.isPublished ? 'default' : 'outline'}>
@@ -165,13 +151,13 @@ export default function OpsDashboard({ stats, latest, recent, usage }: Dashboard
                         {release.isPublished && (
                           <Button variant="ghost" size="sm" asChild>
                             <a
-                              href={`/download/${encodeURIComponent(release.version)}`}
+                              href={`/download/${encodeURIComponent(release.identifier)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
                               <ExternalLink className="size-4" />
                               <span className="sr-only">
-                                View public page for {release.version}
+                                View public page for {release.identifier}
                               </span>
                             </a>
                           </Button>
