@@ -5,6 +5,12 @@ export const RELEASE_CHANNELS = ['stable', 'beta'] as const
 export type ReleaseChannel = (typeof RELEASE_CHANNELS)[number]
 
 /**
+ * Who wrote a release: someone in /ops, or CI through the drafts API.
+ */
+export const RELEASE_SOURCES = ['ops', 'ci'] as const
+export type ReleaseSource = (typeof RELEASE_SOURCES)[number]
+
+/**
  * A build is named by four facts shared with the app: a plain numeric version,
  * its channel, the build number (the git commit count, which only grows on
  * master) and the short commit hash. The pre-release suffix that used to live
@@ -118,6 +124,12 @@ export default class Release extends BaseModel {
    */
   @column({ consume: (value) => Boolean(value) })
   declare isPublished: boolean
+
+  /**
+   * Defaults to "ops" in the database.
+   */
+  @column()
+  declare source: ReleaseSource
 
   @column.dateTime()
   declare releasedAt: DateTime | null

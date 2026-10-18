@@ -1,5 +1,6 @@
 import { defineConfig } from '@adonisjs/auth'
 import { sessionGuard, sessionUserProvider } from '@adonisjs/auth/session'
+import { tokensGuard, tokensUserProvider } from '@adonisjs/auth/access_tokens'
 import type { InferAuthenticators, InferAuthEvents, Authenticators } from '@adonisjs/auth/types'
 
 const authConfig = defineConfig({
@@ -8,6 +9,17 @@ const authConfig = defineConfig({
     web: sessionGuard({
       useRememberMeTokens: false,
       provider: sessionUserProvider({
+        model: () => import('#models/user'),
+      }),
+    }),
+
+    /**
+     * Bearer tokens for CI. Only used by `/api/ops/*`, through the api_token
+     * middleware, which also handles abilities and rate limits.
+     */
+    api: tokensGuard({
+      provider: tokensUserProvider({
+        tokens: 'accessTokens',
         model: () => import('#models/user'),
       }),
     }),

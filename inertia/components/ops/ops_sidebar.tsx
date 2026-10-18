@@ -1,5 +1,13 @@
 import { Link, router, usePage } from '@inertiajs/react'
-import { FileText, Images, LayoutDashboard, LogOut, Package, ExternalLink } from 'lucide-react'
+import {
+  FileText,
+  Images,
+  KeyRound,
+  LayoutDashboard,
+  LogOut,
+  Package,
+  ExternalLink,
+} from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +25,7 @@ import type { AuthUser } from '~/lib/types'
 const NAV = [
   { title: 'Overview', url: '/ops', icon: LayoutDashboard },
   { title: 'Releases', url: '/ops/releases', icon: Package },
+  { title: 'API tokens', url: '/ops/tokens', icon: KeyRound },
 ]
 
 const SITE_LINKS = [

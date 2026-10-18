@@ -85,6 +85,8 @@ export type Release = {
   linuxUrl: string | null
   itchUrl: string | null
   isPublished: boolean
+  /** "ci" when drafted by the release workflow through the API. */
+  source: 'ops' | 'ci'
   releasedAt: string | null
   createdAt: string
   updatedAt: string | null
@@ -148,3 +150,26 @@ export type ApiRelease = {
  * What each channel's update check returns right now.
  */
 export type LiveReleases = Record<ReleaseChannel, Release | null>
+
+/**
+ * An API token as listed in /ops/tokens — never its value.
+ */
+export type ApiToken = {
+  id: number
+  name: string | null
+  abilities: string[]
+  createdBy: string
+  createdAt: string | null
+  lastUsedAt: string | null
+  expiresAt: string | null
+  status: 'active' | 'expired'
+}
+
+/**
+ * Only present in the response that created the token.
+ */
+export type NewApiToken = {
+  id: number
+  name: string
+  value: string
+}

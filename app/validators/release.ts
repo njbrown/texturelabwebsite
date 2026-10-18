@@ -29,6 +29,29 @@ const releaseFields = {
   releasedAt: vine.string().trim().nullable().optional(),
 }
 
+/**
+ * What CI posts to `/api/ops/releases/drafts`. Version, channel and commit are
+ * parsed out of the identifier on the server, so there is nothing for them to
+ * disagree with; the remaining fields reuse the form's rules.
+ */
+export const releaseDraftValidator = vine.compile(
+  vine.object({
+    identifier: vine.string().trim().regex(IDENTIFIER_PATTERN),
+    build: releaseFields.build,
+    title: releaseFields.title,
+    notes: releaseFields.notes,
+    releasedAt: releaseFields.releasedAt,
+    downloads: vine
+      .object({
+        windows: releaseFields.windowsUrl,
+        mac: releaseFields.macUrl,
+        linux: releaseFields.linuxUrl,
+        itch: releaseFields.itchUrl,
+      })
+      .optional(),
+  })
+)
+
 export const createReleaseValidator = vine.compile(vine.object(releaseFields))
 
 export const updateReleaseValidator = vine.compile(vine.object(releaseFields))

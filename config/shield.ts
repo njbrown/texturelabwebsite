@@ -22,7 +22,11 @@ const shieldConfig = defineConfig({
      * round-tripping a token.
      */
     enabled: !app.inTest,
-    exceptRoutes: [],
+    /**
+     * Called by CI with a bearer token, never from a browser session, so
+     * there is no cookie for a forged request to ride on.
+     */
+    exceptRoutes: ['/api/ops/releases/drafts'],
     enableXsrfCookie: true,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   },

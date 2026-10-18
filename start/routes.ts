@@ -19,6 +19,8 @@ const ApiReleasesController = () => import('#controllers/api/releases_controller
 const DashboardController = () => import('#controllers/ops/dashboard_controller')
 const OpsReleasesController = () => import('#controllers/ops/releases_controller')
 const SessionController = () => import('#controllers/ops/session_controller')
+const ApiTokensController = () => import('#controllers/ops/api_tokens_controller')
+const ReleaseDraftsController = () => import('#controllers/api/release_drafts_controller')
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,18 @@ router
 
 /*
 |--------------------------------------------------------------------------
+| Ops API — called by CI with a token from /ops/tokens
+|--------------------------------------------------------------------------
+|
+| Exempt from CSRF (config/shield.ts). Drafts only: publishing stays a
+| person's job in /ops.
+*/
+router
+  .post('/api/ops/releases/drafts', [ReleaseDraftsController, 'store'])
+  .use(middleware.apiToken({ ability: 'releases:draft', requests: 30, duration: '1 hour' }))
+
+/*
+|--------------------------------------------------------------------------
 | Admin (/ops)
 |--------------------------------------------------------------------------
 */
@@ -71,6 +85,10 @@ router
         router.post('/releases/:id/publish', [OpsReleasesController, 'publish'])
         router.post('/releases/:id/unpublish', [OpsReleasesController, 'unpublish'])
         router.delete('/releases/:id', [OpsReleasesController, 'destroy'])
+
+        router.get('/tokens', [ApiTokensController, 'index'])
+        router.post('/tokens', [ApiTokensController, 'store'])
+        router.delete('/tokens/:id', [ApiTokensController, 'destroy'])
       })
       .use(middleware.auth())
   })

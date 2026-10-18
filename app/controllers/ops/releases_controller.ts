@@ -1,112 +1,20 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
-import Release, { compareBuilds, parseIdentifier, releaseIdentifier } from '#models/release'
+import Release, { compareBuilds, releaseIdentifier } from '#models/release'
 import type { ReleaseChannel } from '#models/release'
 import { liveRelease, offerFor, presentRelease } from '#services/release_feed_service'
+import {
+  downloadProblems,
+  identifierMismatch,
+  identifierTaken,
+  releaseAttributes,
+} from '#services/release_service'
 import {
   createReleaseValidator,
   offerQueryValidator,
   publishReleaseValidator,
   updateReleaseValidator,
 } from '#validators/release'
-
-type ReleasePayload = Awaited<ReturnType<(typeof createReleaseValidator)['validate']>>
-
-function toDateTime(value: string | null | undefined): DateTime | null {
-  if (!value) return null
-
-  const parsed = DateTime.fromISO(value)
-
-  return parsed.isValid ? parsed : null
-}
-
-/**
- * Identifiers are unique, and SQLite reports that as a constraint failure
- * rather than a validation error — so it is checked up front.
- */
-async function identifierTaken(identifier: string, exceptId?: number) {
-  const query = Release.query().where('identifier', identifier)
-
-  if (exceptId) {
-    query.whereNot('id', exceptId)
-  }
-
-  return Boolean(await query.first())
-}
-
-/**
- * A pasted identifier has to agree with the fields it was parsed into — above
- * all the channel, so a beta can't be filed as stable by a stray click.
- */
-function identifierMismatch(payload: ReleasePayload): Record<string, string> | null {
-  if (!payload.identifier) return null
-
-  const parsed = parseIdentifier(payload.identifier)!
-  const errors: Record<string, string> = {}
-
-  if (parsed.channel !== payload.channel) {
-    errors.channel = `The identifier is a ${parsed.channel} build, not ${payload.channel}`
-  }
-  if (parsed.version !== payload.version) {
-    errors.version = `The identifier is version ${parsed.version}`
-  }
-  if (parsed.commit !== payload.commit) {
-    errors.commit = `The identifier is commit ${parsed.commit}`
-  }
-
-  return Object.keys(errors).length ? errors : null
-}
-
-function attributes(payload: ReleasePayload) {
-  return {
-    version: payload.version,
-    channel: payload.channel,
-    build: payload.build,
-    commit: payload.commit,
-    title: payload.title ?? null,
-    notes: payload.notes ?? null,
-    windowsUrl: payload.windowsUrl ?? null,
-    macUrl: payload.macUrl ?? null,
-    linuxUrl: payload.linuxUrl ?? null,
-    itchUrl: payload.itchUrl ?? null,
-    releasedAt: toDateTime(payload.releasedAt),
-  }
-}
-
-const PLATFORM_DOWNLOADS = [
-  { key: 'windowsUrl', label: 'Windows' },
-  { key: 'macUrl', label: 'macOS' },
-  { key: 'linuxUrl', label: 'Linux' },
-] as const
-
-/**
- * Artifacts are named after the build (`texturelab-win-v0.4.0-beta-039faa9.zip`),
- * so a filename that doesn't contain the identifier is almost always a link to
- * the wrong build — typically a beta zip pasted into a stable release. The
- * itch.io page is exempt; it's one page for every build.
- */
-function downloadProblems(release: Release) {
-  const problems: string[] = []
-
-  if (!release.windowsUrl && !release.macUrl && !release.linuxUrl && !release.itchUrl) {
-    problems.push('Add at least one download link.')
-  }
-
-  for (const { key, label } of PLATFORM_DOWNLOADS) {
-    const url = release[key]
-    if (!url) continue
-
-    const filename = decodeURIComponent(new URL(url).pathname.split('/').pop() ?? '')
-
-    if (!filename.includes(release.identifier)) {
-      problems.push(
-        `The ${label} download (${filename || url}) doesn't contain ${release.identifier} — is it the right build?`
-      )
-    }
-  }
-
-  return problems
-}
 
 /**
  * Everything that has to hold before a build goes out to a channel. All of it
@@ -171,7 +79,7 @@ export default class ReleasesController {
       return response.redirect().back()
     }
 
-    await Release.create({ ...attributes(payload), isPublished: false })
+    await Release.create({ ...releaseAttributes(payload), isPublished: false })
     session.flash('notification', `Release ${identifier} created as a draft`)
 
     return response.redirect('/ops/releases')
@@ -219,7 +127,7 @@ export default class ReleasesController {
       return response.redirect().back()
     }
 
-    release.merge(attributes(payload))
+    release.merge(releaseAttributes(payload))
 
     // A live release keeps its links honest too; nothing is saved if they are not.
     const problems = release.isPublished ? downloadProblems(release) : []

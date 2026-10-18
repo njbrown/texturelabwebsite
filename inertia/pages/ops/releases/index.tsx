@@ -131,6 +131,15 @@ export default function ReleasesIndex({ releases, live }: ReleasesIndexProps) {
                                   Live
                                 </Badge>
                               )}
+                              {release.source === 'ci' && (
+                                <Badge
+                                  variant="outline"
+                                  className="ml-1 text-muted-foreground"
+                                  title="Drafted by the release workflow"
+                                >
+                                  CI
+                                </Badge>
+                              )}
                             </TableCell>
                             <TableCell className="text-muted-foreground">
                               {formatDate(release.releasedAt)}

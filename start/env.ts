@@ -61,4 +61,13 @@ export default await Env.create(new URL('../', import.meta.url), {
   REDIS_HOST: Env.schema.string({ format: 'host' }),
   REDIS_PORT: Env.schema.number(),
   REDIS_PASSWORD: Env.schema.string.optional(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the limiter package
+  |----------------------------------------------------------
+  |
+  | Where rate limits are counted. Defaults to "redis"; tests use "memory".
+  */
+  LIMITER_STORE: Env.schema.enum.optional(['redis', 'memory'] as const),
 })
