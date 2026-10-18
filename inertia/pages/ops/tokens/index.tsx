@@ -104,7 +104,8 @@ type TokensIndexProps = {
 }
 
 export default function TokensIndex({ tokens, secretName, newToken }: TokensIndexProps) {
-  const pageErrors = usePage().props.errors as Record<string, string | undefined>
+  // Absent (not `{}`) on a server-rendered first load with nothing flashed.
+  const pageErrors = (usePage().props.errors ?? {}) as Record<string, string | undefined>
   const [pendingRevoke, setPendingRevoke] = useState<ApiToken | null>(null)
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
