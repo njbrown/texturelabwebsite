@@ -24,7 +24,9 @@ const driveConfig = defineConfig({
       bucket: env.get('S3_BUCKET', 'texturelab'),
       endpoint: env.get('S3_ENDPOINT'),
       forcePathStyle: env.get('S3_FORCE_PATH_STYLE', false),
-      cdnUrl: env.get('S3_PUBLIC_URL'),
+      // Keys are resolved against this like a URL, so a path (the bucket, on
+      // MinIO) needs its trailing slash.
+      cdnUrl: env.get('S3_PUBLIC_URL')?.replace(/\/*$/, '/'),
       supportsACL: env.get('S3_SUPPORTS_ACL', true),
       visibility: 'private',
     }),

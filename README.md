@@ -10,9 +10,11 @@ This replaces the v1 Gridsome/Vue site. Page content still lives as markdown und
 ## Getting started
 
 ```bash
+git submodule update --init vendor/texturelab   # the web runtime (never --recursive)
 npm install
 cp .env.example .env         # then set APP_KEY, e.g. `node ace generate:key`
-node ace migration:run       # creates tmp/db.sqlite3
+docker compose up -d         # postgres, redis and MinIO (creates the bucket)
+node ace migration:run
 node ace db:seed             # creates the /ops admin from ADMIN_* env vars
 npm run dev                  # http://localhost:3333
 ```
@@ -78,9 +80,6 @@ listed there.
 **Blog** — `content/blog/*.md`, with `title`, `description`, `date`, `image`,
 `draft` and an optional `slug` (defaults to the filename). Drafts are excluded
 and posts are sorted newest first.
-
-**Gallery** — `content/gallery/*.md`, with `title`, `date`, `image`, `thumbnail`
-and `description`.
 
 Image paths written the v1 way (`../../static/images/foo.png`) are rewritten onto
 `/images/foo.png` automatically.
@@ -159,6 +158,54 @@ hours. We never store your IP address or any identifier — only the daily
 total."_ Also make sure web server / host access logs for `/api/releases/latest`
 don't retain raw IPs longer than needed.
 
+## Texture gallery
+
+`/gallery` lists curated `.texture` files; `/gallery/:category` filters by
+category and `?q=` searches titles, tags, descriptions and category names. Each
+texture has its own page at `/textures/:slug`, with its maps, details and an
+optional live 3D preview that renders the graph on the visitor's GPU, lets them
+change its parameters and variants, and download every map (PNG, in each
+output's own format) or all of them as a zip. Textures are CC0.
+
+**Adding textures** happens in `/ops/textures`: upload a `.texture`, and its
+metadata (resolution, nodes, channels, export formats, parameters, presets) is
+read on the server. The server has no WebGL, so the edit page then renders the
+default maps in the admin's browser and uploads them, and captures the 3D
+preview as the first image. Publishing needs rendered, up-to-date maps and at
+least one image. Categories live in `/ops/categories`.
+
+**The web runtime** is `@njbrown/texturelab-runtime`, from the `web-runtime`
+branch of [texturelab](https://github.com/njbrown/texturelab), vendored as the
+`vendor/texturelab` submodule and linked with a `file:` dependency. `npm run dev`,
+`build`, `test` and `typecheck` compile it first (`npm run runtime:build`). Only
+initialise that submodule, not its own (`public/assets` alone is ~90 MB). To move
+to a newer runtime:
+
+```bash
+git -C vendor/texturelab pull origin web-runtime
+git add vendor/texturelab && git commit -m "Update the web runtime"
+```
+
+**Storage** is S3 through `@adonisjs/drive`: MinIO locally (`docker compose`),
+DigitalOcean Spaces in production. Objects under `public/` (maps, images) are
+served straight from the bucket or CDN with immutable caching; `.texture` sources
+stay under `private/` and are served through the app. For Spaces:
+
+```ini
+DRIVE_DISK=s3
+S3_ENDPOINT=https://<region>.digitaloceanspaces.com
+S3_REGION=<region>
+S3_BUCKET=<bucket>
+S3_ACCESS_KEY_ID=...
+S3_SECRET_ACCESS_KEY=...
+S3_FORCE_PATH_STYLE=false
+S3_SUPPORTS_ACL=true            # public-read is set per object
+S3_PUBLIC_URL=https://<bucket>.<region>.cdn.digitaloceanspaces.com
+```
+
+The local compose file uses `pgsty/minio`, a maintained build of MinIO's
+community edition, since MinIO no longer publishes images.
+
 ## Rendering
 
 Pages are server-side rendered (`config/inertia.ts` → `ssr.enabled`) and then
@@ -171,7 +218,12 @@ v1 was a static Netlify build; v2 is a Node server, so it needs a Node host
 (Fly.io, Render, a container platform, etc.) rather than Netlify's static
 publish. The included `Dockerfile` produces a runnable image:
 
+The image needs the `vendor/texturelab` submodule checked out in the build
+context; the build stops with an error if it isn't. On **Dokploy**, turn on
+*Enable Submodules* in the application's git settings. Elsewhere:
+
 ```bash
+git submodule update --init vendor/texturelab
 docker build -t texturelab-site .
 docker run -p 3333:3333 -e APP_KEY=... -e HOST=0.0.0.0 texturelab-site
 ```

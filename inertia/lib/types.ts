@@ -92,16 +92,6 @@ export type Release = {
   updatedAt: string | null
 }
 
-export type GalleryItem = {
-  slug: string
-  title: string
-  date: string | null
-  dateLabel: string | null
-  image: string | null
-  thumbnail: string | null
-  html: string
-}
-
 export type ReleaseDownloads = {
   windows: string | null
   mac: string | null

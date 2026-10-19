@@ -1,17 +1,35 @@
 # Texture Gallery — Implementation Plan
 
-Status: **approved — in progress** (decisions: markdown gallery dropped, CC0 site-wide, deploy via Dokploy Dockerfile build). Each stage ends in a working, shippable state and gets its
+Status: **implemented, awaiting verification** (decisions: markdown gallery dropped, CC0 site-wide, deploy via Dokploy Dockerfile build). Each stage ends in a working, shippable state and gets its
 own commit. I'll stop after each stage for review.
 
-- [ ] Stage 0 — Vendor the web runtime (submodule, build, Docker)
-- [ ] Stage 1 — Object storage (MinIO locally, DO Spaces in prod)
-- [ ] Stage 2 — Data model + metadata extraction
-- [ ] Stage 3 — Ops: categories and texture upload
-- [ ] Stage 4 — Ops: render outputs in the admin's browser
-- [ ] Stage 5 — Public gallery (browse, search, categories)
-- [ ] Stage 6 — Texture page (static details)
-- [ ] Stage 7 — Live 3D view, parameters, presets, outputs lightbox, downloads
-- [ ] Stage 8 — Hardening, polish, docs
+- [x] Stage 0 — Vendor the web runtime (submodule, build, Docker)
+- [x] Stage 1 — Object storage (MinIO locally, DO Spaces in prod)
+- [x] Stage 2 — Data model + metadata extraction
+- [x] Stage 3 — Ops: categories and texture upload
+- [x] Stage 4 — Ops: render outputs in the admin's browser
+- [x] Stage 5 — Public gallery (browse, search, categories)
+- [x] Stage 6 — Texture page (static details)
+- [x] Stage 7 — Live 3D view, parameters, presets, outputs lightbox, downloads
+- [x] Stage 8 — Hardening, polish, docs
+
+---
+
+## Implementation notes (where it differs from the plan)
+
+- **Export formats come from the file.** Each output node declares components
+  (RGBA/RGB/R/G/B/A) and 8/16-bit precision. Rendered maps and downloads mirror
+  the desktop `Exporter::convertToImage` exactly, so height is not always 16-bit:
+  it is whatever the file says. The server records the format from each PNG's
+  header.
+- **The default maps zip is built on the server** (`/textures/:slug/outputs.zip`),
+  so Spaces needs no CORS setup. Live-render zips are built in the browser.
+- **Images are re-encoded to WebP** (2048px display copy + 512px thumbnail); the
+  original upload isn't kept. Viewer captures are taken at 1024×1024.
+- **Rate limits** are a named `throttle` middleware, not `limiter.define`; the
+  latter breaks the client typecheck through `adonisrc` → routes.
+- **MinIO image:** `pgsty/minio` (MinIO stopped publishing images).
+- **Gallery nav link** enabled in `config/site.ts`.
 
 ---
 

@@ -1,7 +1,9 @@
 import { Link, router, usePage } from '@inertiajs/react'
 import {
+  Boxes,
   FileText,
   Images,
+  Tags,
   KeyRound,
   LayoutDashboard,
   LogOut,
@@ -25,6 +27,8 @@ import type { AuthUser } from '~/lib/types'
 const NAV = [
   { title: 'Overview', url: '/ops', icon: LayoutDashboard },
   { title: 'Releases', url: '/ops/releases', icon: Package },
+  { title: 'Textures', url: '/ops/textures', icon: Boxes },
+  { title: 'Categories', url: '/ops/categories', icon: Tags },
   { title: 'API tokens', url: '/ops/tokens', icon: KeyRound },
 ]
 
