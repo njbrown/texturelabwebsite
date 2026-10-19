@@ -1,0 +1,5 @@
+[submodule "vendor/texturelab"]
+	path = vendor/texturelab
+	url = https://github.com/njbrown/texturelab.git
+	branch = web-runtime
+	shallow = true
