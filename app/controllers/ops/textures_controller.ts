@@ -4,6 +4,7 @@ import Texture, { TEXTURE_STATUSES } from '#models/texture'
 import TextureCategory from '#models/texture_category'
 import TextureImage from '#models/texture_image'
 import { readStream } from '#services/storage_service'
+import { listEnvironments } from '#services/environment_service'
 import {
   extractMetadata,
   MAX_TEXTURE_BYTES,
@@ -147,6 +148,7 @@ export default class TexturesController {
       texture: await presentTexture(texture),
       categories: await categoryOptions(),
       problems: await publishProblems(texture),
+      environments: await listEnvironments(),
       autoRender: request.input('render') === '1',
     })
   }

@@ -34,6 +34,7 @@ const DocsController = () => import('#controllers/docs_controller')
 const BlogController = () => import('#controllers/blog_controller')
 const GalleryController = () => import('#controllers/gallery_controller')
 const TexturesController = () => import('#controllers/textures_controller')
+const EnvironmentsController = () => import('#controllers/environments_controller')
 const DownloadsController = () => import('#controllers/downloads_controller')
 const ApiReleasesController = () => import('#controllers/api/releases_controller')
 const DashboardController = () => import('#controllers/ops/dashboard_controller')
@@ -43,6 +44,7 @@ const ApiTokensController = () => import('#controllers/ops/api_tokens_controller
 const ReleaseDraftsController = () => import('#controllers/api/release_drafts_controller')
 const OpsTexturesController = () => import('#controllers/ops/textures_controller')
 const OpsCategoriesController = () => import('#controllers/ops/texture_categories_controller')
+const OpsEnvironmentsController = () => import('#controllers/ops/environments_controller')
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,7 @@ router.get('/gallery/:category', [GalleryController, 'index'])
 router.get('/textures/:slug', [TexturesController, 'show'])
 router.get('/textures/:slug/source', [TexturesController, 'source']).use(textureFilesThrottle)
 router.get('/textures/:slug/download', [TexturesController, 'download']).use(textureFilesThrottle)
+router.get('/environments/:id/file', [EnvironmentsController, 'file'])
 router
   .get('/textures/:slug/outputs.zip', [TexturesController, 'downloadOutputs'])
   .use(textureFilesThrottle)
@@ -143,6 +146,14 @@ router
         router.post('/categories', [OpsCategoriesController, 'store'])
         router.put('/categories/:id', [OpsCategoriesController, 'update'])
         router.delete('/categories/:id', [OpsCategoriesController, 'destroy'])
+
+        router.get('/environments', [OpsEnvironmentsController, 'index'])
+        router.post('/environments', [OpsEnvironmentsController, 'store']).use(opsUploadsThrottle)
+        router.put('/environments/:id', [OpsEnvironmentsController, 'update'])
+        router
+          .post('/environments/:id/thumbnail', [OpsEnvironmentsController, 'thumbnail'])
+          .use(opsUploadsThrottle)
+        router.delete('/environments/:id', [OpsEnvironmentsController, 'destroy'])
 
         router.get('/tokens', [ApiTokensController, 'index'])
         router.post('/tokens', [ApiTokensController, 'store'])

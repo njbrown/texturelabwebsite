@@ -147,6 +147,36 @@ export function zipFiles(files: { name: string; bytes: Uint8Array }[], readme: s
 }
 
 /**
+ * The viewer as a square PNG, with whatever background it shows (an HDRI,
+ * blurred or sharp).
+ */
+export async function captureOpaque(viewer: Viewer, size: number): Promise<Blob> {
+  const { renderer, scene, camera } = viewer
+  const pixelRatio = renderer.getPixelRatio()
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+
+  try {
+    renderer.setPixelRatio(1)
+    renderer.setSize(size, size, false)
+    renderer.render(scene, camera)
+    // Copied in the same task: the drawing buffer isn't preserved.
+    canvas.getContext('2d')!.drawImage(renderer.domElement, 0, 0, size, size)
+  } finally {
+    renderer.setPixelRatio(pixelRatio)
+    viewer.resize()
+  }
+
+  return new Promise((resolve, reject) =>
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error("Couldn't capture the preview"))),
+      'image/png'
+    )
+  )
+}
+
+/**
  * The viewer's mesh as a square PNG with a transparent background.
  *
  * The viewer's canvas has no alpha channel, so the scene is drawn twice, on

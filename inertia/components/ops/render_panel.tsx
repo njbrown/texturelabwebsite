@@ -5,10 +5,32 @@ import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { useTextureSession } from '~/components/textures/use_texture_session'
-import { CHANNEL_LABELS, formatBytes, xsrfHeaders, type Texture } from '~/lib/textures'
+import {
+  defaultLighting,
+  LightingSelect,
+  viewerEnvironment,
+  type Lighting,
+} from '~/components/textures/lighting'
+import { Label } from '~/components/ui/label'
+import {
+  CHANNEL_LABELS,
+  formatBytes,
+  xsrfHeaders,
+  type EnvironmentOption,
+  type Texture,
+} from '~/lib/textures'
 
 /** Square size of the captured preview image. */
 const CAPTURE_SIZE = 1024
+
+/** What's behind the mesh in a captured image. */
+type Backdrop = 'transparent' | 'blurred' | 'environment'
+
+const BACKDROPS: { value: Backdrop; label: string }[] = [
+  { value: 'transparent', label: 'Transparent' },
+  { value: 'blurred', label: 'HDRI, blurred' },
+  { value: 'environment', label: 'HDRI, sharp' },
+]
 
 type Step = 'idle' | 'rendering' | 'uploading' | 'capturing' | 'done'
 
@@ -33,9 +55,11 @@ async function post(url: string, body: FormData) {
  */
 export default function RenderPanel({
   texture,
+  environments,
   autoRender,
 }: {
   texture: Texture
+  environments: EnvironmentOption[]
   autoRender: boolean
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -43,14 +67,38 @@ export default function RenderPanel({
     useTextureSession(`/ops/textures/${texture.id}/source`, containerRef)
   const [step, setStep] = useState<Step>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [lighting, setLighting] = useState<Lighting>(() => defaultLighting(environments))
+  const [backdrop, setBackdrop] = useState<Backdrop>('transparent')
+  const [lightingState, setLightingState] = useState<'loading' | 'ready' | 'failed'>('ready')
   const started = useRef(false)
   const ready = state.status === 'ready'
+
+  useEffect(() => {
+    const current = viewer.current
+    if (!current || !engine.current) return
+    let failed = false
+    const off = current.on('environmentError', () => (failed = true))
+    setLightingState('loading')
+    current
+      .setEnvironment(viewerEnvironment(lighting, environments, engine.current))
+      .then(() => setLightingState(failed ? 'failed' : 'ready'))
+    return off
+  }, [lighting, environments, ready, viewer, engine])
+
+  // A transparent capture still shows the blurred HDRI while framing the shot.
+  useEffect(
+    () => viewer.current?.setBackground(backdrop === 'transparent' ? 'blurred' : backdrop),
+    [backdrop, ready, viewer]
+  )
 
   async function capture(makePrimary: boolean) {
     const current = viewer.current
     if (!current) return
 
-    const blob = await engine.current!.captureTransparent(current, CAPTURE_SIZE)
+    const blob =
+      backdrop === 'transparent'
+        ? await engine.current!.captureTransparent(current, CAPTURE_SIZE)
+        : await engine.current!.captureOpaque(current, CAPTURE_SIZE)
 
     const body = new FormData()
     body.append('image', new File([blob], 'render.png', { type: 'image/png' }))
@@ -166,6 +214,57 @@ export default function RenderPanel({
         </div>
 
         <div className="grid content-start gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-1.5">
+              <Label htmlFor="capture-lighting">Lighting</Label>
+              <LightingSelect
+                id="capture-lighting"
+                value={lighting}
+                onChange={setLighting}
+                environments={environments}
+                className="h-9 rounded-md border bg-transparent px-3 text-sm shadow-xs"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="capture-backdrop">Image background</Label>
+              <select
+                id="capture-backdrop"
+                className="h-9 rounded-md border bg-transparent px-3 text-sm shadow-xs"
+                value={backdrop}
+                onChange={(event) => setBackdrop(event.target.value as Backdrop)}
+              >
+                {BACKDROPS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {lightingState !== 'ready' && (
+              <p className="flex items-center gap-1.5 text-xs text-muted-foreground sm:col-span-2">
+                {lightingState === 'loading' ? (
+                  <>
+                    <Loader2 className="size-3 animate-spin" /> Loading lighting…
+                  </>
+                ) : (
+                  <>
+                    <AlertTriangle className="size-3 text-amber-600" /> That HDRI couldn't be loaded
+                    (for a link, the host must allow cross-origin requests).
+                  </>
+                )}
+              </p>
+            )}
+            {environments.length === 0 && (
+              <p className="text-xs text-muted-foreground sm:col-span-2">
+                Add HDRIs under{' '}
+                <a href="/ops/environments" className="underline">
+                  Environments
+                </a>
+                .
+              </p>
+            )}
+          </div>
+
           <div className="flex flex-wrap gap-2">
             <Button onClick={renderAndUpload} disabled={!ready || busy}>
               {step === 'rendering' || step === 'uploading' ? (
@@ -179,7 +278,11 @@ export default function RenderPanel({
                   ? 'Uploading…'
                   : 'Render and save outputs'}
             </Button>
-            <Button variant="outline" onClick={captureOnly} disabled={!ready || busy || !outcome}>
+            <Button
+              variant="outline"
+              onClick={captureOnly}
+              disabled={!ready || busy || !outcome || lightingState === 'loading'}
+            >
               {step === 'capturing' ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (

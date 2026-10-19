@@ -27,6 +27,7 @@ import {
   COLOR_TYPE_LABELS,
   formatBytes,
   formatDate,
+  type EnvironmentOption,
   type Texture,
 } from '~/lib/textures'
 
@@ -34,6 +35,7 @@ type EditProps = {
   texture: Texture
   categories: CategoryOption[]
   problems: string[]
+  environments: EnvironmentOption[]
   autoRender: boolean
 }
 
@@ -174,7 +176,13 @@ function SourceCard({ texture }: { texture: Texture }) {
   )
 }
 
-export default function TextureEdit({ texture, categories, problems, autoRender }: EditProps) {
+export default function TextureEdit({
+  texture,
+  categories,
+  problems,
+  environments,
+  autoRender,
+}: EditProps) {
   const [confirmDelete, setConfirmDelete] = useState(false)
   const errors = (usePage().props.errors ?? {}) as Record<string, string | undefined>
   const published = texture.status === 'published'
@@ -239,7 +247,12 @@ export default function TextureEdit({ texture, categories, problems, autoRender 
 
       <div className="grid max-w-5xl gap-4">
         {/* Keyed so a replaced file starts a fresh render session. */}
-        <RenderPanel key={texture.sourceSha256} texture={texture} autoRender={autoRender} />
+        <RenderPanel
+          key={texture.sourceSha256}
+          texture={texture}
+          environments={environments}
+          autoRender={autoRender}
+        />
         <TextureImages texture={texture} />
         <DetailsForm
           key={texture.updatedAt ?? texture.id}

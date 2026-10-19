@@ -9,9 +9,11 @@ import {
   exportFileNames,
   formatBytes,
   type ChannelSpec,
+  type EnvironmentOption,
   type Texture,
 } from '~/lib/textures'
-import type { MeshKind, SkyPreset } from '~/lib/texture_engine'
+import type { MeshKind } from '~/lib/texture_engine'
+import { defaultLighting, LightingSelect, viewerEnvironment, type Lighting } from './lighting'
 
 const MESHES: { value: MeshKind; label: string }[] = [
   { value: 'sphere', label: 'Sphere' },
@@ -20,12 +22,12 @@ const MESHES: { value: MeshKind; label: string }[] = [
   { value: 'plane', label: 'Plane' },
 ]
 
-const SKIES: { value: SkyPreset | 'studio'; label: string }[] = [
-  { value: 'default', label: 'Daylight' },
-  { value: 'overcast', label: 'Overcast' },
-  { value: 'sunset', label: 'Sunset' },
-  { value: 'night', label: 'Night' },
-  { value: 'studio', label: 'Studio' },
+type Backdrop = 'blurred' | 'environment' | 'plain'
+
+const BACKDROPS: { value: Backdrop; label: string }[] = [
+  { value: 'blurred', label: 'Blurred' },
+  { value: 'environment', label: 'Sharp' },
+  { value: 'plain', label: 'Plain' },
 ]
 
 /** Re-render this long after the last parameter change. */
@@ -93,7 +95,13 @@ function readme(
  * together as a zip. Mounted only when asked for, since it loads WebGL,
  * three.js and the runtime.
  */
-export default function LivePreview({ texture }: { texture: Texture }) {
+export default function LivePreview({
+  texture,
+  environments,
+}: {
+  texture: Texture
+  environments: EnvironmentOption[]
+}) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { state, progress, outcome, renderError, render, engine, session, viewer } =
     useTextureSession(`/textures/${texture.slug}/source`, containerRef)
@@ -103,7 +111,9 @@ export default function LivePreview({ texture }: { texture: Texture }) {
   const [values, setValues] = useState<VariableValues>({})
   const [preset, setPreset] = useState<string>(texture.activePreset ?? '')
   const [mesh, setMesh] = useState<MeshKind>('sphere')
-  const [sky, setSky] = useState<SkyPreset | 'studio'>('default')
+  const [lighting, setLighting] = useState<Lighting>(() => defaultLighting(environments))
+  const [backdrop, setBackdrop] = useState<Backdrop>('blurred')
+  const [lightingState, setLightingState] = useState<'loading' | 'ready' | 'failed'>('ready')
   const [tiling, setTiling] = useState(1)
   const [displacement, setDisplacement] = useState(0.05)
   const [previews, setPreviews] = usePreviewUrls()
@@ -189,11 +199,20 @@ export default function LivePreview({ texture }: { texture: Texture }) {
   useEffect(() => viewer.current?.setTiling(tiling), [tiling, ready, viewer])
   useEffect(() => viewer.current?.setDisplacementScale(displacement), [displacement, ready, viewer])
   useEffect(() => {
-    if (!viewer.current || !engine.current) return
-    viewer.current.setEnvironment(
-      sky === 'studio' ? { type: 'studio' } : engine.current.SKY_PRESETS[sky]
-    )
-  }, [sky, ready, viewer, engine])
+    const current = viewer.current
+    if (!current || !engine.current) return
+    let failed = false
+    const off = current.on('environmentError', () => (failed = true))
+    setLightingState('loading')
+    current
+      .setEnvironment(viewerEnvironment(lighting, environments, engine.current))
+      .then(() => setLightingState(failed ? 'failed' : 'ready'))
+    return off
+  }, [lighting, environments, ready, viewer, engine])
+  useEffect(
+    () => viewer.current?.setBackground(backdrop === 'plain' ? '#111827' : backdrop),
+    [backdrop, ready, viewer]
+  )
 
   function downloadOne(spec: ChannelSpec) {
     const bytes = session.current?.encode(spec)
@@ -277,7 +296,8 @@ export default function LivePreview({ texture }: { texture: Texture }) {
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
         {/* 3D view */}
         <div className="overflow-hidden rounded-lg bg-gray-950 ring-1 ring-white/10">
-          <div className="relative aspect-square sm:aspect-[4/3]">
+          {/* Sized to the window, so the view and its controls fit without scrolling. */}
+          <div className="relative aspect-square max-h-[max(280px,calc(100svh-17rem))] w-full">
             <div ref={containerRef} className="absolute inset-0 [&>canvas]:size-full" />
 
             {(!ready || rendering) && (
@@ -292,19 +312,39 @@ export default function LivePreview({ texture }: { texture: Texture }) {
                 </div>
               </div>
             )}
+            {ready && !rendering && lightingState !== 'ready' && (
+              <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center gap-2 px-3 py-2 text-xs text-gray-200">
+                {lightingState === 'loading' ? (
+                  <>
+                    <Loader2 className="size-3.5 animate-spin" /> Loading lighting…
+                  </>
+                ) : (
+                  <>
+                    <AlertTriangle className="size-3.5 text-amber-400" /> That HDRI couldn't be
+                    loaded; showing the daylight sky.
+                  </>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-3 border-t border-gray-800 px-3 py-2">
             <Segmented label="Mesh" value={mesh} options={MESHES} onChange={setMesh} />
+            <LightingSelect
+              value={lighting}
+              onChange={setLighting}
+              environments={environments}
+              className="max-w-40 rounded-md border-0 bg-gray-800 px-2 py-1 text-xs text-gray-200"
+            />
             <select
-              aria-label="Lighting"
+              aria-label="Background"
               className="rounded-md border-0 bg-gray-800 px-2 py-1 text-xs text-gray-200"
-              value={sky}
-              onChange={(event) => setSky(event.target.value as SkyPreset | 'studio')}
+              value={backdrop}
+              onChange={(event) => setBackdrop(event.target.value as Backdrop)}
             >
-              {SKIES.map((option) => (
+              {BACKDROPS.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {option.label}
+                  {option.label} background
                 </option>
               ))}
             </select>

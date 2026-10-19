@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from '@inertiajs/react'
-import { Box, ChevronRight, Download, Eye, FileArchive, Maximize2, Scale } from 'lucide-react'
+import { Box, ChevronRight, Download, FileArchive, Maximize2, Scale } from 'lucide-react'
 import Seo from '~/components/seo'
 import SiteLayout from '~/components/site_layout'
 import Lightbox, { type LightboxItem } from '~/components/textures/lightbox'
@@ -11,6 +11,7 @@ import {
   COLOR_TYPE_LABELS,
   formatBytes,
   formatDate,
+  type EnvironmentOption,
   type Texture,
   type TextureCard as Card,
 } from '~/lib/textures'
@@ -18,6 +19,7 @@ import {
 type ShowProps = {
   texture: Texture
   related: Card[]
+  environments: EnvironmentOption[]
   isPreview: boolean
 }
 
@@ -30,7 +32,7 @@ function Detail({ label, children }: { label: string; children: React.ReactNode 
   )
 }
 
-export default function TextureShow({ texture, related, isPreview }: ShowProps) {
+export default function TextureShow({ texture, related, environments, isPreview }: ShowProps) {
   const [live, setLive] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
   const [lightbox, setLightbox] = useState<number | null>(null)
@@ -107,11 +109,19 @@ export default function TextureShow({ texture, related, isPreview }: ShowProps) 
             {/* Preview */}
             <div className="min-w-0">
               {live ? (
-                <LivePreview texture={texture} />
+                <LivePreview texture={texture} environments={environments} />
               ) : (
                 <div className="grid gap-3">
                   <div className="relative overflow-hidden rounded-lg bg-gray-900 ring-1 ring-white/10">
-                    <div className="aspect-square sm:aspect-[4/3]">
+                    {/* Sized to the window, so the image, its thumbnails and the 3D
+                        button are all visible on load. */}
+                    <div
+                      className={
+                        texture.images.length > 1
+                          ? 'aspect-square max-h-[max(240px,calc(100svh-17rem))] w-full'
+                          : 'aspect-square max-h-[max(240px,calc(100svh-11rem))] w-full'
+                      }
+                    >
                       {hero ? (
                         <img
                           src={hero.url}
@@ -137,13 +147,13 @@ export default function TextureShow({ texture, related, isPreview }: ShowProps) 
                   </div>
 
                   {texture.images.length > 1 && (
-                    <div className="flex gap-2 overflow-x-auto pb-1">
+                    <div className="flex gap-2 overflow-x-auto">
                       {texture.images.map((image, i) => (
                         <button
                           key={image.id}
                           type="button"
                           onClick={() => setImageIndex(i)}
-                          className={`size-20 shrink-0 overflow-hidden rounded-md ring-2 ${
+                          className={`size-16 shrink-0 overflow-hidden rounded-md bg-gray-900 ring-2 ${
                             i === imageIndex ? 'ring-brand' : 'ring-transparent hover:ring-gray-600'
                           }`}
                           aria-label={`Show image ${i + 1}`}
@@ -153,7 +163,7 @@ export default function TextureShow({ texture, related, isPreview }: ShowProps) 
                       ))}
                     </div>
                   )}
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs text-gray-500">
                     The 3D preview renders the texture live on your GPU, so you can change its
                     parameters and download the result.
                   </p>
@@ -280,71 +290,50 @@ export default function TextureShow({ texture, related, isPreview }: ShowProps) 
           {!live && texture.outputs.length > 0 && (
             <section className="mt-10">
               <h2 className="mb-3 font-display text-2xl font-bold text-white">Maps</h2>
-              <div className="overflow-x-auto rounded-lg bg-gray-900 ring-1 ring-white/10">
-                <table className="w-full text-left text-sm">
-                  <thead className="text-gray-400">
-                    <tr className="border-b border-gray-800">
-                      <th className="px-4 py-2 font-medium">Map</th>
-                      <th className="px-4 py-2 font-medium">Resolution</th>
-                      <th className="px-4 py-2 font-medium">Bit depth</th>
-                      <th className="px-4 py-2 font-medium">Channels</th>
-                      <th className="px-4 py-2 font-medium">Size</th>
-                      <th className="px-4 py-2" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {texture.outputs.map((output, i) => (
-                      <tr key={output.channel} className="border-b border-gray-800 last:border-0">
-                        <td className="px-4 py-2">
-                          <button
-                            type="button"
-                            onClick={() => setLightbox(i)}
-                            className="group flex items-center gap-3 text-white"
-                          >
-                            <span className="relative size-12 shrink-0 overflow-hidden rounded bg-gray-950">
-                              <img
-                                src={output.url}
-                                alt=""
-                                loading="lazy"
-                                className="size-full object-cover"
-                              />
-                              <Maximize2 className="absolute inset-0 m-auto size-4 opacity-0 drop-shadow group-hover:opacity-100" />
-                            </span>
-                            {CHANNEL_LABELS[output.channel]}
-                          </button>
-                        </td>
-                        <td className="px-4 py-2 tabular-nums">
-                          {output.width} × {output.height}
-                        </td>
-                        <td className="px-4 py-2">{output.bitDepth}-bit</td>
-                        <td className="px-4 py-2">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+                {texture.outputs.map((output, i) => (
+                  <div
+                    key={output.channel}
+                    className="overflow-hidden rounded-lg bg-gray-900 ring-1 ring-white/10"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setLightbox(i)}
+                      className="group relative block aspect-square w-full bg-gray-950"
+                      aria-label={`View ${CHANNEL_LABELS[output.channel]}`}
+                    >
+                      <img
+                        src={output.url}
+                        alt=""
+                        loading="lazy"
+                        className="size-full object-cover"
+                      />
+                      <Maximize2 className="absolute top-2 right-2 size-4 text-white opacity-0 drop-shadow transition group-hover:opacity-100" />
+                    </button>
+                    <div className="flex items-start justify-between gap-2 px-3 py-2">
+                      <div className="min-w-0 text-sm">
+                        <div className="font-medium text-white">
+                          {CHANNEL_LABELS[output.channel]}
+                        </div>
+                        <div className="text-xs text-gray-400">
+                          {output.width}×{output.height} · {output.bitDepth}-bit{' '}
                           {COLOR_TYPE_LABELS[output.colorType] ?? output.colorType}
-                        </td>
-                        <td className="px-4 py-2 tabular-nums">{formatBytes(output.bytes)}</td>
-                        <td className="px-4 py-2 text-right">
-                          <span className="inline-flex gap-1">
-                            <button
-                              type="button"
-                              onClick={() => setLightbox(i)}
-                              className="rounded p-1.5 text-gray-400 hover:bg-gray-800 hover:text-white"
-                              aria-label={`View ${CHANNEL_LABELS[output.channel]}`}
-                            >
-                              <Eye className="size-4" />
-                            </button>
-                            <a
-                              href={output.url}
-                              download={`${texture.slug}_${output.name}.png`}
-                              className="rounded p-1.5 text-gray-400 hover:bg-gray-800 hover:text-white"
-                              aria-label={`Download ${CHANNEL_LABELS[output.channel]}`}
-                            >
-                              <Download className="size-4" />
-                            </a>
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          PNG · {formatBytes(output.bytes)}
+                        </div>
+                      </div>
+                      <a
+                        href={output.url}
+                        download={`${texture.slug}_${output.name}.png`}
+                        className="rounded p-1.5 text-gray-400 hover:bg-gray-800 hover:text-white"
+                        aria-label={`Download ${CHANNEL_LABELS[output.channel]}`}
+                      >
+                        <Download className="size-4" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
           )}

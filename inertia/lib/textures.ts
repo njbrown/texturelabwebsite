@@ -161,3 +161,16 @@ export function xsrfHeaders(): Record<string, string> {
   const match = document.cookie.match(/(?:^|;\s*)XSRF-TOKEN=([^;]+)/)
   return match ? { 'X-XSRF-TOKEN': decodeURIComponent(match[1]) } : {}
 }
+
+/** An HDRI from /ops/environments. */
+export type EnvironmentOption = {
+  id: number
+  name: string
+  format: 'hdr' | 'exr'
+  source: 'upload' | 'url'
+  url: string
+  thumbUrl: string | null
+  bytes: number | null
+  isDefault: boolean
+  sortOrder: number
+}

@@ -61,3 +61,18 @@ export const galleryQueryValidator = vine.compile(
     page: vine.number().withoutDecimals().min(1).max(10000).optional(),
   })
 )
+
+export const environmentValidator = vine.compile(
+  vine.object({
+    name: vine.string().trim().minLength(1).maxLength(80),
+    url: vine.string().trim().maxLength(2000).url({ require_protocol: true }).nullable().optional(),
+  })
+)
+
+export const environmentUpdateValidator = vine.compile(
+  vine.object({
+    name: vine.string().trim().minLength(1).maxLength(80).optional(),
+    sortOrder: vine.number().withoutDecimals().min(-10000).max(10000).optional(),
+    isDefault: vine.boolean().optional(),
+  })
+)

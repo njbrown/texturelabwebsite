@@ -174,6 +174,14 @@ default maps in the admin's browser and uploads them, and captures the 3D
 preview as the first image. Publishing needs rendered, up-to-date maps and at
 least one image. Categories live in `/ops/categories`.
 
+**HDRIs** for lighting the 3D previews are managed in `/ops/environments`:
+upload an `.hdr`/`.exr` (served through the app at `/environments/:id/file`, so
+the bucket needs no CORS rules) or link one hosted elsewhere (that host must
+allow cross-origin requests; Poly Haven does). The page captures a thumbnail of
+each, and the starred one is what previews start with. Visitors can switch
+between them in the live preview, and the thumbnail capture in
+`/ops/textures/:id/edit` can use one as lighting and, optionally, background.
+
 **The web runtime** is `@njbrown/texturelab-runtime`, from the `web-runtime`
 branch of [texturelab](https://github.com/njbrown/texturelab), vendored as the
 `vendor/texturelab` submodule and linked with a `file:` dependency. `npm run dev`,

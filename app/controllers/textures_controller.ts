@@ -3,6 +3,7 @@ import Texture from '#models/texture'
 import { zipSync, strToU8, type Zippable } from 'fflate'
 import { readBytes, readStream } from '#services/storage_service'
 import { presentCard, presentTexture, TEXTURE_LICENSE } from '#services/texture_service'
+import { listEnvironments } from '#services/environment_service'
 
 /**
  * A published texture, or a draft for someone logged into /ops (preview).
@@ -44,6 +45,7 @@ export default class TexturesController {
     return ctx.inertia.render('textures/show', {
       texture: await presentTexture(texture),
       related: await Promise.all(related.map(presentCard)),
+      environments: await listEnvironments(),
       isPreview: !texture.isPublished,
     })
   }
