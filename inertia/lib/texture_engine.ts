@@ -20,6 +20,8 @@ import {
   type VariableValue,
 } from '@njbrown/texturelab-runtime'
 import { encode } from 'fast-png'
+import { Color } from 'three'
+import type { TextureViewer as Viewer } from '@njbrown/texturelab-runtime/viewer'
 import { strToU8, zipSync, type Zippable } from 'fflate'
 import type { ChannelSpec } from '~/lib/textures'
 
@@ -142,6 +144,81 @@ export function zipFiles(files: { name: string; bytes: Uint8Array }[], readme: s
   // PNGs are already deflated; storing them is as small and much faster.
   for (const file of files) entries[file.name] = [file.bytes, { level: 0 }]
   return zipSync(entries)
+}
+
+/**
+ * The viewer's mesh as a square PNG with a transparent background.
+ *
+ * The viewer's canvas has no alpha channel, so the scene is drawn twice, on
+ * black and on white, and each pixel's coverage is recovered from the
+ * difference: a background pixel changes by the full range, a solid one not at
+ * all, and antialiased edges in between.
+ */
+export async function captureTransparent(viewer: Viewer, size: number): Promise<Blob> {
+  const { renderer, scene, camera } = viewer
+  const saved = {
+    background: scene.background,
+    blurriness: scene.backgroundBlurriness,
+    intensity: scene.backgroundIntensity,
+    pixelRatio: renderer.getPixelRatio(),
+  }
+
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const context = canvas.getContext('2d', { willReadFrequently: true })!
+
+  // The drawing buffer isn't preserved, so each frame is copied out in the
+  // same task it's drawn in.
+  const draw = (background: number) => {
+    scene.background = new Color(background)
+    renderer.render(scene, camera)
+    context.clearRect(0, 0, size, size)
+    context.drawImage(renderer.domElement, 0, 0, size, size)
+    return context.getImageData(0, 0, size, size)
+  }
+
+  let onBlack: ImageData
+  let onWhite: ImageData
+  try {
+    renderer.setPixelRatio(1)
+    renderer.setSize(size, size, false)
+    scene.backgroundBlurriness = 0
+    scene.backgroundIntensity = 1
+    onBlack = draw(0x000000)
+    onWhite = draw(0xffffff)
+  } finally {
+    scene.background = saved.background
+    scene.backgroundBlurriness = saved.blurriness
+    scene.backgroundIntensity = saved.intensity
+    renderer.setPixelRatio(saved.pixelRatio)
+    viewer.resize()
+  }
+
+  const out = new ImageData(size, size)
+  const black = onBlack.data
+  const white = onWhite.data
+
+  for (let i = 0; i < out.data.length; i += 4) {
+    const difference =
+      (white[i] - black[i] + white[i + 1] - black[i + 1] + white[i + 2] - black[i + 2]) / 3
+    const alpha = Math.min(255, Math.max(0, 255 - difference))
+    if (alpha === 0) continue
+    // On black, a pixel is its color times its coverage; divide that back out.
+    const scale = 255 / alpha
+    out.data[i] = Math.min(255, black[i] * scale)
+    out.data[i + 1] = Math.min(255, black[i + 1] * scale)
+    out.data[i + 2] = Math.min(255, black[i + 2] * scale)
+    out.data[i + 3] = alpha
+  }
+
+  context.putImageData(out, 0, 0)
+  return new Promise((resolve, reject) =>
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error("Couldn't capture the preview"))),
+      'image/png'
+    )
+  )
 }
 
 export function downloadBlob(bytes: Uint8Array | Blob, name: string, type: string) {

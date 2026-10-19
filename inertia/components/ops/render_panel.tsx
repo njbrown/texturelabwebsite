@@ -39,10 +39,8 @@ export default function RenderPanel({
   autoRender: boolean
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { state, progress, outcome, renderError, render, session, viewer } = useTextureSession(
-    `/ops/textures/${texture.id}/source`,
-    containerRef
-  )
+  const { state, progress, outcome, renderError, render, engine, session, viewer } =
+    useTextureSession(`/ops/textures/${texture.id}/source`, containerRef)
   const [step, setStep] = useState<Step>('idle')
   const [error, setError] = useState<string | null>(null)
   const started = useRef(false)
@@ -52,19 +50,7 @@ export default function RenderPanel({
     const current = viewer.current
     if (!current) return
 
-    // Draw at a fixed 1024px whatever the panel's size, then put it back. The
-    // viewer doesn't keep its drawing buffer, so draw and read in one go.
-    const { renderer } = current
-    const pixelRatio = renderer.getPixelRatio()
-    renderer.setPixelRatio(1)
-    renderer.setSize(CAPTURE_SIZE, CAPTURE_SIZE, false)
-    renderer.render(current.scene, current.camera)
-    const blob = await new Promise<Blob | null>((resolve) =>
-      renderer.domElement.toBlob(resolve, 'image/png')
-    )
-    renderer.setPixelRatio(pixelRatio)
-    current.resize()
-    if (!blob) throw new Error("Couldn't capture the preview")
+    const blob = await engine.current!.captureTransparent(current, CAPTURE_SIZE)
 
     const body = new FormData()
     body.append('image', new File([blob], 'render.png', { type: 'image/png' }))
