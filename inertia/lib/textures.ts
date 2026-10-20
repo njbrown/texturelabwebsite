@@ -28,10 +28,10 @@ export type VariableSummary = {
   options?: { index: number; label: string }[]
 }
 
-export type CategoryRef = { id: number; slug: string; name: string }
+export type CategoryRef = { id: string; slug: string; name: string }
 
 export type TextureImage = {
-  id: number
+  id: string
   url: string
   thumbUrl: string
   width: number
@@ -56,7 +56,7 @@ export type TextureOutput = {
 }
 
 export type Texture = {
-  id: number
+  id: string
   slug: string
   title: string
   description: string
@@ -94,7 +94,7 @@ export type Texture = {
 }
 
 export type TextureCard = {
-  id: number
+  id: string
   slug: string
   title: string
   category: CategoryRef | null
@@ -170,7 +170,7 @@ export function xsrfHeaders(): Record<string, string> {
 
 /** An HDRI from /ops/environments. */
 export type EnvironmentOption = {
-  id: number
+  id: string
   name: string
   format: 'hdr' | 'exr'
   source: 'upload' | 'url'

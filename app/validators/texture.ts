@@ -16,7 +16,7 @@ const textureFields = {
   title: vine.string().trim().minLength(1).maxLength(120),
   slug: vine.string().trim().toLowerCase().regex(SLUG_PATTERN).maxLength(80).optional(),
   description: vine.string().trim().maxLength(20000).nullable().optional(),
-  categoryId: vine.number().withoutDecimals().positive().nullable().optional(),
+  categoryId: vine.string().trim().maxLength(32).nullable().optional(),
   tags,
   featured: vine.boolean().optional(),
   sortOrder: vine.number().withoutDecimals().min(-10000).max(10000).optional(),
@@ -50,7 +50,7 @@ export const imageUpdateValidator = vine.compile(
 
 export const imageOrderValidator = vine.compile(
   vine.object({
-    ids: vine.array(vine.number().withoutDecimals().positive()).maxLength(200),
+    ids: vine.array(vine.string().trim().maxLength(32)).maxLength(200),
   })
 )
 

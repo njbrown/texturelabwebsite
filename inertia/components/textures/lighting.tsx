@@ -32,7 +32,7 @@ export function viewerEnvironment(
   if (lighting === 'studio') return { type: 'studio' }
 
   if (lighting.startsWith('hdri:')) {
-    const id = Number(lighting.slice(5))
+    const id = lighting.slice(5)
     const environment = environments.find((option) => option.id === id)
     if (environment) {
       return { type: environment.format, url: new URL(environment.url, location.href).toString() }

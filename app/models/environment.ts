@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, scope } from '@adonisjs/lucid/orm'
+import { createId } from '@paralleldrive/cuid2'
+import { BaseModel, beforeCreate, column, scope } from '@adonisjs/lucid/orm'
 
 export const ENVIRONMENT_FORMATS = ['hdr', 'exr'] as const
 export type EnvironmentFormat = (typeof ENVIRONMENT_FORMATS)[number]
@@ -9,8 +10,16 @@ export type EnvironmentFormat = (typeof ENVIRONMENT_FORMATS)[number]
  * elsewhere (which then has to allow cross-origin requests).
  */
 export default class Environment extends BaseModel {
+  /** CUIDs, assigned on create. */
+  static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
+
+  @beforeCreate()
+  static assignId(model: Environment) {
+    model.id ??= createId()
+  }
 
   @column()
   declare name: string

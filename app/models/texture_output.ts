@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { createId } from '@paralleldrive/cuid2'
+import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Texture from '#models/texture'
 
@@ -8,11 +9,19 @@ import Texture from '#models/texture'
  * (the server has no WebGL) and stored as PNG.
  */
 export default class TextureOutput extends BaseModel {
+  /** CUIDs, assigned on create. */
+  static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
+
+  @beforeCreate()
+  static assignId(model: TextureOutput) {
+    model.id ??= createId()
+  }
 
   @column()
-  declare textureId: number
+  declare textureId: string
 
   @belongsTo(() => Texture)
   declare texture: BelongsTo<typeof Texture>

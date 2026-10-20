@@ -14,7 +14,7 @@ type GalleryProps = {
   filters: { q: string; sort: Sort; category: string | null }
   category: { slug: string; name: string; description: string | null } | null
   categories: {
-    id: number
+    id: string
     slug: string
     name: string
     description: string | null

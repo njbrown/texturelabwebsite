@@ -3,7 +3,7 @@ import { Label } from '~/components/ui/label'
 import { Switch } from '~/components/ui/switch'
 import MarkdownEditor from './markdown_editor'
 
-export type CategoryOption = { id: number; slug: string; name: string }
+export type CategoryOption = { id: string; slug: string; name: string }
 
 export type TextureFieldValues = {
   title: string
@@ -135,7 +135,7 @@ export function fieldsPayload(data: TextureFieldValues) {
   return {
     title: data.title.trim(),
     slug: data.slug.trim() || undefined,
-    categoryId: data.categoryId ? Number(data.categoryId) : null,
+    categoryId: data.categoryId || null,
     tags: data.tags,
     featured: data.featured,
     sortOrder: data.sortOrder === '' ? 0 : Number(data.sortOrder),

@@ -83,6 +83,7 @@
     "@fontsource/inter": "^5.3.0",
     "@inertiajs/react": "^3.6.1",
     "@njbrown/texturelab-runtime": "file:vendor/texturelab/web/packages/runtime",
+    "@paralleldrive/cuid2": "^3.3.0",
     "@shikijs/markdown-it": "^4.4.2",
     "@vinejs/vine": "^3.0.1",
     "better-sqlite3": "^13.0.3",

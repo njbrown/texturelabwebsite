@@ -16,7 +16,7 @@ import {
 } from '~/components/ui/table'
 
 type Category = {
-  id: number
+  id: string
   slug: string
   name: string
   description: string | null

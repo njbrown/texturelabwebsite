@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany, scope } from '@adonisjs/lucid/orm'
+import { createId } from '@paralleldrive/cuid2'
+import { BaseModel, beforeCreate, belongsTo, column, hasMany, scope } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import TextureCategory from '#models/texture_category'
 import TextureImage from '#models/texture_image'
@@ -31,8 +32,16 @@ function json<T>(fallback: T) {
 }
 
 export default class Texture extends BaseModel {
+  /** CUIDs, assigned on create. */
+  static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
+
+  @beforeCreate()
+  static assignId(model: Texture) {
+    model.id ??= createId()
+  }
 
   @column()
   declare slug: string
@@ -44,7 +53,7 @@ export default class Texture extends BaseModel {
   declare description: string | null
 
   @column()
-  declare categoryId: number | null
+  declare categoryId: string | null
 
   @belongsTo(() => TextureCategory, { foreignKey: 'categoryId' })
   declare category: BelongsTo<typeof TextureCategory>

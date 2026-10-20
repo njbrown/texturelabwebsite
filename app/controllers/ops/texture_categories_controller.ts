@@ -4,7 +4,7 @@ import TextureCategory from '#models/texture_category'
 import { slugify } from '#services/texture_service'
 import { categoryValidator } from '#validators/texture'
 
-async function slugTaken(slug: string, ignoreId?: number) {
+async function slugTaken(slug: string, ignoreId?: string) {
   const existing = await TextureCategory.query()
     .where('slug', slug)
     .if(ignoreId, (query) => query.whereNot('id', ignoreId!))

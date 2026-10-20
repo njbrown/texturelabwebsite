@@ -101,7 +101,8 @@ test.group('Environments', (group) => {
         .loginAs(user)
         .redirects(0)
     }
-    const [one, two] = await Environment.query().orderBy('id')
+    const one = await Environment.findByOrFail('name', 'One')
+    const two = await Environment.findByOrFail('name', 'Two')
 
     await client.put(`/ops/environments/${two.id}`).json({ isDefault: true }).loginAs(user)
     await one.refresh()

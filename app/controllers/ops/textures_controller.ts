@@ -69,7 +69,7 @@ async function categoryOptions() {
   }))
 }
 
-async function loadTexture(id: number | string) {
+async function loadTexture(id: string) {
   return Texture.query()
     .where('id', id)
     .preload('category')

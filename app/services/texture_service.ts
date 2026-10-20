@@ -60,7 +60,7 @@ export function titleFromFileName(name: string) {
   return spaced ? spaced[0].toUpperCase() + spaced.slice(1) : 'Untitled'
 }
 
-export async function uniqueSlug(base: string, ignoreId?: number) {
+export async function uniqueSlug(base: string, ignoreId?: string) {
   const root = slugify(base)
 
   for (let n = 1; ; n++) {
@@ -100,7 +100,7 @@ type TextureFields = {
   title: string
   slug?: string | null
   description?: string | null
-  categoryId?: number | null
+  categoryId?: string | null
   tags?: string[]
   featured?: boolean
   sortOrder?: number
@@ -379,7 +379,7 @@ export async function deleteImage(image: TextureImage) {
   }
 }
 
-export async function reorderImages(texture: Texture, ids: number[]) {
+export async function reorderImages(texture: Texture, ids: string[]) {
   const images = await TextureImage.query().where('texture_id', texture.id)
   const order = new Map(ids.map((id, index) => [id, index]))
 
@@ -439,7 +439,10 @@ async function presentImage(image: TextureImage) {
 
 function sortedImages(images: TextureImage[]) {
   return [...images].sort(
-    (a, b) => Number(b.isPrimary) - Number(a.isPrimary) || a.sortOrder - b.sortOrder || a.id - b.id
+    (a, b) =>
+      Number(b.isPrimary) - Number(a.isPrimary) ||
+      a.sortOrder - b.sortOrder ||
+      a.createdAt.toMillis() - b.createdAt.toMillis()
   )
 }
 

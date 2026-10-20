@@ -157,7 +157,7 @@ function Preview({ environment }: { environment: EnvironmentOption | null }) {
   const [state, setState] = useState<'idle' | 'loading' | 'ready' | 'failed'>('idle')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const autoSaved = useRef(new Set<number>())
+  const autoSaved = useRef(new Set<string>())
 
   useEffect(() => {
     let cancelled = false
@@ -266,9 +266,9 @@ export default function EnvironmentsIndex({
   selected,
 }: {
   environments: EnvironmentOption[]
-  selected: number | null
+  selected: string | null
 }) {
-  const [selectedId, setSelectedId] = useState<number | null>(
+  const [selectedId, setSelectedId] = useState<string | null>(
     selected ?? environments[0]?.id ?? null
   )
   const current = environments.find((environment) => environment.id === selectedId) ?? null

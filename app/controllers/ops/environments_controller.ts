@@ -16,7 +16,7 @@ export default class EnvironmentsController {
   async index({ inertia, request }: HttpContext) {
     return inertia.render('ops/environments/index', {
       environments: await listEnvironments(),
-      selected: Number(request.input('selected')) || null,
+      selected: String(request.input('selected') ?? '') || null,
     })
   }
 

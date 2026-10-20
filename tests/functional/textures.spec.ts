@@ -6,6 +6,7 @@ import limiter from '@adonisjs/limiter/services/main'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { encode } from 'fast-png'
 import sharp from 'sharp'
+import { isCuid } from '@paralleldrive/cuid2'
 import { unzipSync } from 'fflate'
 import Texture from '#models/texture'
 import TextureCategory from '#models/texture_category'
@@ -146,7 +147,11 @@ test.group('Textures / ops', (group) => {
     assert.deepEqual(created.tags, ['metal', 'worn'])
     assert.equal(created.nodeCount, 12)
     assert.isTrue(created.outputsStale)
-    assert.match(created.sourceKey, /^private\/textures\/\d+\/source\/[0-9a-f]{64}\.texture$/)
+    assert.isTrue(isCuid(created.id))
+    assert.equal(
+      created.sourceKey,
+      `private/textures/${created.id}/source/${created.sourceSha256}.texture`
+    )
     assert.include(await storedKeys(), created.sourceKey)
   })
 
@@ -259,6 +264,33 @@ test.group('Textures / ops', (group) => {
     assert.equal(saved.width, 64)
     assert.match(saved.key, /\.webp$/)
     assert.match(saved.thumbKey, /-512\.webp$/)
+  })
+
+  test('images can be reordered and made primary by id', async ({ client, assert }) => {
+    const user = await admin()
+    const created = await texture({ publish: false })
+    const second = await addImage(created, await image(), { source: 'upload' })
+    const [first] = await TextureImage.query()
+      .where('texture_id', created.id)
+      .whereNot('id', second.id)
+
+    await client
+      .put(`/ops/textures/${created.id}/images/order`)
+      .json({ ids: [second.id, first.id] })
+      .loginAs(user)
+      .redirects(0)
+    await client
+      .put(`/ops/textures/${created.id}/images/${second.id}`)
+      .json({ isPrimary: true })
+      .loginAs(user)
+      .redirects(0)
+
+    await first.refresh()
+    await second.refresh()
+    assert.equal(second.sortOrder, 0)
+    assert.equal(first.sortOrder, 1)
+    assert.isTrue(second.isPrimary)
+    assert.isFalse(first.isPrimary)
   })
 
   test('publishing needs rendered outputs and an image', async ({ client, assert }) => {

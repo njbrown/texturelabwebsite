@@ -27,22 +27,22 @@ function disposition(name?: string) {
 }
 
 export const storageKeys = {
-  source: (textureId: number, sha256: string) =>
+  source: (textureId: string, sha256: string) =>
     `${PRIVATE_PREFIX}textures/${textureId}/source/${sha256}.texture`,
-  output: (textureId: number, revision: number, channel: string) =>
+  output: (textureId: string, revision: number, channel: string) =>
     `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/${channel}.png`,
-  outputThumb: (textureId: number, revision: number, channel: string) =>
+  outputThumb: (textureId: string, revision: number, channel: string) =>
     `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/${channel}-512.webp`,
-  outputsRevision: (textureId: number, revision: number) =>
+  outputsRevision: (textureId: string, revision: number) =>
     `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/`,
-  image: (textureId: number, name: string) =>
+  image: (textureId: string, name: string) =>
     `${PUBLIC_PREFIX}textures/${textureId}/images/${name}`,
-  ogImage: (textureId: number, version: string) =>
+  ogImage: (textureId: string, version: string) =>
     `${PUBLIC_PREFIX}textures/${textureId}/og/${version}.jpg`,
-  ogImages: (textureId: number) => `${PUBLIC_PREFIX}textures/${textureId}/og/`,
+  ogImages: (textureId: string) => `${PUBLIC_PREFIX}textures/${textureId}/og/`,
   environment: (name: string) => `${PRIVATE_PREFIX}environments/${name}`,
   environmentThumb: (name: string) => `${PUBLIC_PREFIX}environments/${name}`,
-  texture: (textureId: number) => [
+  texture: (textureId: string) => [
     `${PUBLIC_PREFIX}textures/${textureId}/`,
     `${PRIVATE_PREFIX}textures/${textureId}/`,
   ],
