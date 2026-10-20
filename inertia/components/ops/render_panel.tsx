@@ -41,6 +41,11 @@ const MAX_ZOOM = 2.5
 
 const isNumber = (value: unknown): value is number =>
   typeof value === 'number' && Number.isFinite(value)
+/** Resolutions the preview can render the texture at; the GPU may cap them. */
+const TEXTURE_SIZES = [512, 1024, 2048, 4096]
+const DEFAULT_TEXTURE_SIZE = 2048
+const isTextureSize = (value: unknown): value is number => TEXTURE_SIZES.includes(value as number)
+
 const isBackdrop = (value: unknown): value is Backdrop =>
   BACKDROPS.some((option) => option.value === value)
 
@@ -100,8 +105,14 @@ export default function RenderPanel({
     (value): value is number | null => value === null || isNumber(value)
   )
   const fileSeed = useRef(0)
-  const previewSize = Math.min(texture.resolution, 1024)
-  const seedTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const [textureSize, setTextureSize] = useStoredState(
+    'ops.capture.textureSize',
+    DEFAULT_TEXTURE_SIZE,
+    isTextureSize
+  )
+  const [sizeOptions, setSizeOptions] = useState(TEXTURE_SIZES)
+  const previewSize = Math.min(textureSize, Math.max(...sizeOptions))
+  const previewTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const [lightingState, setLightingState] = useState<'loading' | 'ready' | 'failed'>('ready')
   const started = useRef(false)
   const ready = state.status === 'ready'
@@ -134,14 +145,14 @@ export default function RenderPanel({
     return render(previewSize)
   }
 
-  // Re-render shortly after the seed stops changing.
+  // Re-render shortly after the seed or size stops changing.
   useEffect(() => {
     if (!started.current || (step !== 'idle' && step !== 'done')) return
-    clearTimeout(seedTimer.current)
-    seedTimer.current = setTimeout(renderPreview, 250)
-    return () => clearTimeout(seedTimer.current)
-    // renderPreview reads the latest seed through this effect's run.
-  }, [seed])
+    clearTimeout(previewTimer.current)
+    previewTimer.current = setTimeout(renderPreview, 250)
+    return () => clearTimeout(previewTimer.current)
+    // renderPreview reads the latest values through this effect's run.
+  }, [seed, previewSize])
 
   // A transparent capture still shows the blurred HDRI while framing the shot.
   useEffect(
@@ -202,7 +213,10 @@ export default function RenderPanel({
       }
 
       setStep('done')
-      if (seed !== null && seed !== fileSeed.current) await renderPreview()
+      // Back to the preview's own seed and size.
+      if ((seed !== null && seed !== fileSeed.current) || previewSize !== texture.resolution) {
+        await renderPreview()
+      }
       router.reload()
     } catch (failure) {
       setError((failure as Error).message)
@@ -228,6 +242,7 @@ export default function RenderPanel({
     if (!ready || started.current) return
     started.current = true
     fileSeed.current = session.current!.doc.randomSeed
+    setSizeOptions(engine.current!.resolutionOptions())
     if (autoRender || texture.outputsStale) renderAndUpload()
     else renderPreview()
     // Runs once, when the runtime is ready.
@@ -303,6 +318,22 @@ export default function RenderPanel({
               </select>
             </div>
             <div className="grid gap-1.5">
+              <Label htmlFor="capture-texture-size">Texture size</Label>
+              <select
+                id="capture-texture-size"
+                className="h-9 rounded-md border bg-transparent px-3 text-sm shadow-xs"
+                value={previewSize}
+                onChange={(event) => setTextureSize(Number(event.target.value))}
+              >
+                {sizeOptions.map((size) => (
+                  <option key={size} value={size}>
+                    {size} × {size}
+                    {size === texture.resolution ? ' (saved)' : ''}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="grid gap-1.5">
               <div className="flex items-center justify-between">
                 <Label htmlFor="capture-zoom">Zoom</Label>
                 <button
@@ -364,8 +395,9 @@ export default function RenderPanel({
               </div>
             </div>
             <p className="text-xs text-muted-foreground sm:col-span-2">
-              Zoom and seed change the preview and captured images only; saved maps always use the
-              file's seed. These settings are remembered in this browser.
+              Texture size, zoom and seed change the preview and captured images only; saved maps
+              always use the file's resolution and seed. These settings are remembered in this
+              browser.
             </p>
             {lightingState !== 'ready' && (
               <p className="flex items-center gap-1.5 text-xs text-muted-foreground sm:col-span-2">
