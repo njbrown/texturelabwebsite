@@ -47,7 +47,7 @@ export default function TextureImages({ texture }: { texture: Texture }) {
         <CardTitle>Images</CardTitle>
         <CardDescription>
           The primary image is the gallery thumbnail and the hero on the texture page. PNG, JPEG or
-          WebP up to 10 MB; stored as WebP (2048px, plus a 512px thumbnail).
+          WebP up to 25 MB; stored as WebP (2048px, plus a 512px thumbnail).
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">

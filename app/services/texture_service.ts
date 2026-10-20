@@ -28,7 +28,7 @@ export const TEXTURE_LICENSE = {
   url: 'https://creativecommons.org/publicdomain/zero/1.0/',
 }
 
-export const MAX_IMAGE_BYTES = 10 * 1024 * 1024
+export const MAX_IMAGE_BYTES = 25 * 1024 * 1024
 const IMAGE_MAX_SIZE = 2048
 const THUMB_SIZE = 512
 
@@ -292,7 +292,7 @@ export async function addImage(
   options: { source: ImageSource; alt?: string | null; makePrimary?: boolean }
 ) {
   if (contents.byteLength > MAX_IMAGE_BYTES) {
-    throw new TextureServiceError('Images are limited to 10 MB')
+    throw new TextureServiceError('Images are limited to 25 MB')
   }
 
   let display: { data: Buffer; info: OutputInfo }

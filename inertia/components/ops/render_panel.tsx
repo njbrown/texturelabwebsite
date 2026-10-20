@@ -21,7 +21,7 @@ import {
 } from '~/lib/textures'
 
 /** Square size of the captured preview image. */
-const CAPTURE_SIZE = 1024
+const CAPTURE_SIZE = 2048
 
 /** What's behind the mesh in a captured image. */
 type Backdrop = 'transparent' | 'blurred' | 'environment'

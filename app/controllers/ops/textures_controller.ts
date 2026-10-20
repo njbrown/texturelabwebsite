@@ -36,7 +36,7 @@ import {
 } from '#validators/texture'
 
 const SOURCE_FILE = { size: MAX_TEXTURE_BYTES, extnames: ['texture', 'json'] }
-const IMAGE_FILE = { size: '10mb', extnames: ['png', 'jpg', 'jpeg', 'webp'] }
+const IMAGE_FILE = { size: '25mb', extnames: ['png', 'jpg', 'jpeg', 'webp'] }
 const OUTPUT_FILE = { size: '64mb', extnames: ['png'] }
 
 /**
