@@ -21,7 +21,7 @@ export default function TextureCard({ texture }: { texture: Card }) {
               alt=""
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 size-full object-contain p-4 transition duration-300 group-hover:scale-105"
+              className="absolute inset-0 size-full object-contain transition duration-300 group-hover:scale-105"
             />
             {texture.hoverUrl && (
               <img
@@ -29,7 +29,7 @@ export default function TextureCard({ texture }: { texture: Card }) {
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 size-full object-contain p-4 opacity-0 transition duration-300 group-hover:opacity-100"
+                className="absolute inset-0 size-full object-contain opacity-0 transition duration-300 group-hover:opacity-100"
               />
             )}
           </>
