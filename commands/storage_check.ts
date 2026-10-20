@@ -51,6 +51,11 @@ export default class StorageCheck extends BaseCommand {
       if (host.endsWith('digitaloceanspaces.com') && pathStyle) {
         warn('Spaces expects S3_FORCE_PATH_STYLE=false.')
       }
+      if (host.endsWith('digitaloceanspaces.com') && !env.get('S3_SUPPORTS_ACL', true)) {
+        warn(
+          'Spaces needs S3_SUPPORTS_ACL=true: objects are private unless each one is uploaded public-read, so maps and images would be refused by the CDN.'
+        )
+      }
     }
     if (publicUrl && endpoint && new URL(publicUrl).host.endsWith('digitaloceanspaces.com')) {
       if (!new URL(publicUrl).host.startsWith(`${bucket}.`)) {
