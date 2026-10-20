@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { router } from '@inertiajs/react'
-import { AlertTriangle, Camera, CheckCircle2, Loader2, RefreshCw } from 'lucide-react'
+import { AlertTriangle, Camera, CheckCircle2, Dices, Loader2, RefreshCw } from 'lucide-react'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
@@ -11,7 +11,9 @@ import {
   viewerEnvironment,
   type Lighting,
 } from '~/components/textures/lighting'
+import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import { useStoredState } from '~/lib/use_stored_state'
 import {
   CHANNEL_LABELS,
   formatBytes,
@@ -31,6 +33,16 @@ const BACKDROPS: { value: Backdrop; label: string }[] = [
   { value: 'blurred', label: 'HDRI, blurred' },
   { value: 'environment', label: 'HDRI, sharp' },
 ]
+
+/** Camera zoom for the preview and captures; a little closer than the viewer's default. */
+const DEFAULT_ZOOM = 1.25
+const MIN_ZOOM = 0.75
+const MAX_ZOOM = 2.5
+
+const isNumber = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isFinite(value)
+const isBackdrop = (value: unknown): value is Backdrop =>
+  BACKDROPS.some((option) => option.value === value)
 
 type Step = 'idle' | 'rendering' | 'uploading' | 'capturing' | 'done'
 
@@ -67,8 +79,29 @@ export default function RenderPanel({
     useTextureSession(`/ops/textures/${texture.id}/source`, containerRef)
   const [step, setStep] = useState<Step>('idle')
   const [error, setError] = useState<string | null>(null)
-  const [lighting, setLighting] = useState<Lighting>(() => defaultLighting(environments))
-  const [backdrop, setBackdrop] = useState<Backdrop>('transparent')
+  // Remembered in this browser: framing for every texture, the seed per texture.
+  const [lighting, setLighting] = useStoredState<Lighting>(
+    'ops.capture.lighting',
+    defaultLighting(environments),
+    (value): value is Lighting =>
+      typeof value === 'string' &&
+      (!value.startsWith('hdri:') || environments.some((e) => `hdri:${e.id}` === value))
+  )
+  const [backdrop, setBackdrop] = useStoredState<Backdrop>(
+    'ops.capture.background',
+    'transparent',
+    isBackdrop
+  )
+  const [zoom, setZoom] = useStoredState('ops.capture.zoom', DEFAULT_ZOOM, isNumber)
+  /** null: the file's own seed. */
+  const [seed, setSeed] = useStoredState<number | null>(
+    `ops.capture.seed.${texture.id}`,
+    null,
+    (value): value is number | null => value === null || isNumber(value)
+  )
+  const fileSeed = useRef(0)
+  const previewSize = Math.min(texture.resolution, 1024)
+  const seedTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const [lightingState, setLightingState] = useState<'loading' | 'ready' | 'failed'>('ready')
   const started = useRef(false)
   const ready = state.status === 'ready'
@@ -84,6 +117,31 @@ export default function RenderPanel({
       .then(() => setLightingState(failed ? 'failed' : 'ready'))
     return off
   }, [lighting, environments, ready, viewer, engine])
+
+  useEffect(() => {
+    const current = viewer.current
+    if (!current) return
+    current.camera.zoom = zoom
+    current.camera.updateProjectionMatrix()
+    current.requestRender()
+  }, [zoom, ready, viewer])
+
+  /** Render the preview with the chosen seed (the saved maps use the file's). */
+  function renderPreview() {
+    const doc = session.current?.doc
+    if (!doc) return
+    doc.randomSeed = seed ?? fileSeed.current
+    return render(previewSize)
+  }
+
+  // Re-render shortly after the seed stops changing.
+  useEffect(() => {
+    if (!started.current || (step !== 'idle' && step !== 'done')) return
+    clearTimeout(seedTimer.current)
+    seedTimer.current = setTimeout(renderPreview, 250)
+    return () => clearTimeout(seedTimer.current)
+    // renderPreview reads the latest seed through this effect's run.
+  }, [seed])
 
   // A transparent capture still shows the blurred HDRI while framing the shot.
   useEffect(
@@ -115,6 +173,8 @@ export default function RenderPanel({
 
     try {
       setStep('rendering')
+      // The saved maps are the file as it is, whatever seed the preview uses.
+      current.doc.randomSeed = fileSeed.current
       const result = await render(texture.resolution)
       if (!result) {
         setStep('idle')
@@ -142,6 +202,7 @@ export default function RenderPanel({
       }
 
       setStep('done')
+      if (seed !== null && seed !== fileSeed.current) await renderPreview()
       router.reload()
     } catch (failure) {
       setError((failure as Error).message)
@@ -166,8 +227,9 @@ export default function RenderPanel({
   useEffect(() => {
     if (!ready || started.current) return
     started.current = true
+    fileSeed.current = session.current!.doc.randomSeed
     if (autoRender || texture.outputsStale) renderAndUpload()
-    else render(Math.min(texture.resolution, 1024))
+    else renderPreview()
     // Runs once, when the runtime is ready.
   }, [ready])
 
@@ -240,6 +302,71 @@ export default function RenderPanel({
                 ))}
               </select>
             </div>
+            <div className="grid gap-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="capture-zoom">Zoom</Label>
+                <button
+                  type="button"
+                  className="text-xs text-muted-foreground tabular-nums hover:text-foreground"
+                  onClick={() => setZoom(DEFAULT_ZOOM)}
+                  title="Reset zoom"
+                >
+                  {zoom.toFixed(2)}×
+                </button>
+              </div>
+              <input
+                id="capture-zoom"
+                type="range"
+                min={MIN_ZOOM}
+                max={MAX_ZOOM}
+                step={0.05}
+                value={zoom}
+                onChange={(event) => setZoom(Number(event.target.value))}
+                className="h-9 w-full accent-primary"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="capture-seed">Random seed</Label>
+                {seed !== null && seed !== fileSeed.current && (
+                  <button
+                    type="button"
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                    onClick={() => setSeed(null)}
+                  >
+                    Use file's ({fileSeed.current})
+                  </button>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  id="capture-seed"
+                  type="number"
+                  step={1}
+                  value={seed ?? fileSeed.current}
+                  disabled={!ready}
+                  onChange={(event) => {
+                    const next = Number.parseInt(event.target.value, 10)
+                    if (Number.isFinite(next)) setSeed(next)
+                  }}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  disabled={!ready}
+                  onClick={() => setSeed(Math.floor(Math.random() * 100000))}
+                  aria-label="Random seed"
+                  title="Random seed"
+                >
+                  <Dices className="size-4" />
+                </Button>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground sm:col-span-2">
+              Zoom and seed change the preview and captured images only; saved maps always use the
+              file's seed. These settings are remembered in this browser.
+            </p>
             {lightingState !== 'ready' && (
               <p className="flex items-center gap-1.5 text-xs text-muted-foreground sm:col-span-2">
                 {lightingState === 'loading' ? (
