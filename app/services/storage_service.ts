@@ -1,4 +1,5 @@
 import drive from '@adonisjs/drive/services/main'
+import logger from '@adonisjs/core/services/logger'
 import type { Readable } from 'node:stream'
 
 /**
@@ -77,10 +78,24 @@ export async function readStream(key: string): Promise<Readable> {
   return drive.use().getStream(key)
 }
 
+/*
+| Removal is cleanup after the database has already moved on (old revisions,
+| replaced files, deleted textures). A failure leaves an orphaned object, which
+| is logged rather than failing the request that caused it.
+*/
+
 export async function remove(key: string) {
-  await drive.use().delete(key)
+  try {
+    await drive.use().delete(key)
+  } catch (error) {
+    logger.warn({ err: error, key }, 'storage: could not delete an object; it is now orphaned')
+  }
 }
 
 export async function removePrefix(prefix: string) {
-  await drive.use().deleteAll(prefix)
+  try {
+    await drive.use().deleteAll(prefix)
+  } catch (error) {
+    logger.warn({ err: error, prefix }, 'storage: could not delete objects under a prefix')
+  }
 }

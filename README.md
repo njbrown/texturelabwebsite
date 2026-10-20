@@ -214,6 +214,11 @@ S3_SUPPORTS_ACL=true            # public-read is set per object
 S3_PUBLIC_URL=https://<bucket>.<region>.cdn.digitaloceanspaces.com
 ```
 
+`S3_ENDPOINT` is the **region** endpoint, without the bucket in the host. To
+verify a deployment's storage, run `node ace storage:check` in the container:
+it writes, reads, lists and deletes test objects, fetches one by its public URL,
+and flags common misconfigurations.
+
 The local compose file uses `pgsty/minio`, a maintained build of MinIO's
 community edition, since MinIO no longer publishes images.
 

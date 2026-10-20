@@ -193,6 +193,24 @@ test.group('Textures / ops', (group) => {
     assert.isFalse(keys.some((key) => key.includes('/outputs/1/')))
   })
 
+  test('a failed cleanup of the old revision does not fail the save', async ({ assert }) => {
+    const contents = await readFile(fixturePath('Copper.texture'))
+    const created = await createTexture(contents, 'Copper.texture', extractMetadata(contents), {
+      title: 'Copper',
+    })
+    await storeOutputs(created, outputsFor(created), created.sourceSha256, null)
+
+    // As DigitalOcean Spaces did with a misconfigured endpoint
+    const disk = drive.use()
+    disk.deleteAll = async () => {
+      throw new Error('Cannot delete directory: NoSuchKey')
+    }
+
+    await storeOutputs(created, outputsFor(created), created.sourceSha256, null)
+    await created.refresh()
+    assert.equal(created.outputsRevision, 2)
+  })
+
   test('the outputs endpoint takes one PNG per channel', async ({ client, assert }) => {
     const user = await admin()
     const contents = await readFile(fixturePath('Copper.texture'))
