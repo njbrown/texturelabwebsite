@@ -99,7 +99,9 @@ export default function GalleryIndex({
     )
   }
 
-  const title = category ? `${category.name} textures` : 'Texture gallery'
+  const title = category ? `${category.name} textures` : 'Textures'
+  // Shown under the title; the longer description is for search results.
+  const tagline = 'Free CC0 procedural textures, made with TextureLab'
   const description =
     category?.description ||
     'Free CC0 procedural textures made with TextureLab. Preview them in 3D, tweak their parameters and download every map.'
@@ -114,20 +116,22 @@ export default function GalleryIndex({
       />
 
       <section className="bg-gray-900">
-        <div className="container mx-auto px-4 pt-10 pb-8">
-          <h1 className="font-display text-4xl font-bold text-white md:text-5xl">{title}</h1>
-          <p className="mt-3 max-w-2xl text-lg text-gray-300">{description}</p>
+        <div className="container mx-auto flex flex-col gap-4 px-4 py-5 lg:flex-row lg:items-end lg:justify-between lg:py-6">
+          <div>
+            <h1 className="font-display text-3xl font-bold text-white md:text-4xl">{title}</h1>
+            <p className="mt-1 text-gray-400">{category?.description || tagline}</p>
+          </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="relative max-w-xl flex-1">
+          <div className="flex items-center gap-3 lg:w-[36rem]">
+            <div className="relative flex-1">
               <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-gray-500" />
               <input
                 type="search"
                 value={q}
                 onChange={(event) => search(event.target.value)}
-                placeholder="Search textures, tags, categories…"
+                placeholder="Search textures"
                 aria-label="Search textures"
-                className="w-full rounded-lg border border-gray-700 bg-gray-950 py-2.5 pr-9 pl-9 text-white placeholder:text-gray-500 focus:border-brand focus:outline-none"
+                className="w-full rounded-lg border border-gray-700 bg-gray-950 py-2 pr-9 pl-9 text-white placeholder:text-gray-500 focus:border-brand focus:outline-none"
               />
               {q && (
                 <button
@@ -142,11 +146,11 @@ export default function GalleryIndex({
             </div>
 
             <label className="flex items-center gap-2 text-sm text-gray-400">
-              Sort
+              <span className="sr-only">Sort</span>
               <select
                 value={filters.sort}
                 onChange={(event) => sort(event.target.value as Sort)}
-                className="rounded-lg border border-gray-700 bg-gray-950 px-3 py-2.5 text-white"
+                className="rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-white"
               >
                 {SORTS.map((option) => (
                   <option key={option.value} value={option.value}>
