@@ -202,6 +202,18 @@ export function readPngHeader(bytes: Uint8Array) {
 export type OutputUpload = { channel: string; bytes: Uint8Array }
 
 /**
+ * A 512px webp of a map, for grids and card hovers; the PNG itself can be
+ * several MB.
+ */
+export async function outputThumbnail(png: Uint8Array) {
+  return sharp(png)
+    .resize(THUMB_SIZE, THUMB_SIZE, { fit: 'cover' })
+    .toColourspace('srgb')
+    .webp({ quality: 82 })
+    .toBuffer()
+}
+
+/**
  * Store a full set of outputs as a new revision and drop the previous one.
  * `renderedFrom` is the source hash the browser rendered; it must still be the
  * current file, or the outputs would describe a different graph.
@@ -248,6 +260,11 @@ export async function storeOutputs(
       contentType: 'image/png',
       downloadName: `${texture.slug}_${spec.name}.png`,
     })
+    await putPublic(
+      storageKeys.outputThumb(texture.id, revision, upload.channel),
+      await outputThumbnail(upload.bytes),
+      { contentType: 'image/webp' }
+    )
   }
 
   await db.transaction(async (trx) => {
@@ -259,6 +276,7 @@ export async function storeOutputs(
         revision,
         channel: upload.channel,
         key: storageKeys.output(texture.id, revision, upload.channel),
+        thumbKey: storageKeys.outputThumb(texture.id, revision, upload.channel),
         width: header.width,
         height: header.height,
         bitDepth: header.bitDepth,
@@ -436,6 +454,7 @@ async function presentOutputs(texture: Texture, outputs: TextureOutput[]) {
         channel: output.channel,
         name: specs.get(output.channel as never)?.name ?? output.channel,
         url: await publicUrl(output.key),
+        thumbUrl: await publicUrl(output.thumbKey ?? output.key),
         width: output.width,
         height: output.height,
         bitDepth: output.bitDepth,
@@ -450,8 +469,8 @@ function presentCategory(category: TextureCategory | null | undefined) {
 }
 
 /**
- * A grid card. `hoverUrl` is a second image (or the albedo output) to swap in
- * on hover.
+ * A grid card. `hoverUrl` is the albedo map (or, without one, a second image)
+ * to swap in on hover.
  */
 export async function presentCard(texture: Texture) {
   const images = sortedImages(texture.images ?? [])
@@ -463,10 +482,10 @@ export async function presentCard(texture: Texture) {
     title: texture.title,
     category: presentCategory(texture.category),
     thumbUrl: images[0] ? await publicUrl(images[0].thumbKey) : null,
-    hoverUrl: images[1]
-      ? await publicUrl(images[1].thumbKey)
-      : albedo
-        ? await publicUrl(albedo.key)
+    hoverUrl: albedo
+      ? await publicUrl(albedo.thumbKey ?? albedo.key)
+      : images[1]
+        ? await publicUrl(images[1].thumbKey)
         : null,
     resolution: texture.resolution,
     channelCount: texture.channels.length,

@@ -333,7 +333,7 @@ export default function TextureShow({ texture, related, environments, isPreview 
                       aria-label={`View ${CHANNEL_LABELS[output.channel]}`}
                     >
                       <img
-                        src={output.url}
+                        src={output.thumbUrl}
                         alt=""
                         loading="lazy"
                         className="size-full object-cover"

@@ -183,6 +183,7 @@ test.group('Textures / ops', (group) => {
     assert.isFalse(created.outputsStale)
     const height = created.outputs.find((output) => output.channel === 'height')!
     assert.equal(height.bitDepth, 16)
+    assert.equal(height.thumbKey, `public/textures/${created.id}/outputs/2/height-512.webp`)
     assert.equal(height.colorType, 'grey')
     assert.equal(height.width, 8)
 
@@ -344,6 +345,8 @@ test.group('Textures / public', (group) => {
     )
     assert.equal(props.textures[0].channelCount, 5)
     assert.isString(props.textures[0].thumbUrl)
+    // Hovering shows the albedo map's preview, not the full PNG
+    assert.match(props.textures[0].hoverUrl, /\/outputs\/1\/albedo-512\.webp$/)
     assert.equal(props.total, 1)
   })
 

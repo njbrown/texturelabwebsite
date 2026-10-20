@@ -26,6 +26,10 @@ export default class TextureOutput extends BaseModel {
   @column({ serializeAs: null })
   declare key: string
 
+  /** 512px webp, for grids and hovers. Null on outputs stored before it existed. */
+  @column({ serializeAs: null })
+  declare thumbKey: string | null
+
   @column()
   declare width: number
 

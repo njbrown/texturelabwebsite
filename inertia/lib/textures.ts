@@ -46,6 +46,8 @@ export type TextureOutput = {
   channel: TextureChannel
   name: string
   url: string
+  /** 512px webp preview; the PNG itself for outputs stored before those existed. */
+  thumbUrl: string
   width: number
   height: number
   bitDepth: number

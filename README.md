@@ -173,6 +173,9 @@ read on the server. The server has no WebGL, so the edit page then renders the
 default maps in the admin's browser and uploads them, and captures the 3D
 preview as the first image. Publishing needs rendered, up-to-date maps and at
 least one image. Categories live in `/ops/categories`.
+Each map also gets a 512px WebP preview, used for card hovers and the maps
+grid; `node ace textures:thumbnails` makes any that are missing (maps rendered
+before previews existed).
 
 **HDRIs** for lighting the 3D previews are managed in `/ops/environments`:
 upload an `.hdr`/`.exr` (served through the app at `/environments/:id/file`, so

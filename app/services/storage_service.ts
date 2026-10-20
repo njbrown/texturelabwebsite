@@ -30,6 +30,8 @@ export const storageKeys = {
     `${PRIVATE_PREFIX}textures/${textureId}/source/${sha256}.texture`,
   output: (textureId: number, revision: number, channel: string) =>
     `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/${channel}.png`,
+  outputThumb: (textureId: number, revision: number, channel: string) =>
+    `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/${channel}-512.webp`,
   outputsRevision: (textureId: number, revision: number) =>
     `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/`,
   image: (textureId: number, name: string) =>

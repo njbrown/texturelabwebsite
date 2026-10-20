@@ -321,7 +321,7 @@ export default function RenderPanel({
                   rel="noopener noreferrer"
                   className="overflow-hidden rounded border text-xs hover:ring-2 hover:ring-ring"
                 >
-                  <img src={output.url} alt="" className="aspect-square w-full object-cover" />
+                  <img src={output.thumbUrl} alt="" className="aspect-square w-full object-cover" />
                   <div className="px-1.5 py-1">
                     <div className="font-medium">{CHANNEL_LABELS[output.channel]}</div>
                     <div className="text-muted-foreground">
