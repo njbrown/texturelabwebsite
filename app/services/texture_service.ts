@@ -17,6 +17,7 @@ import {
   storageKeys,
 } from '#services/storage_service'
 import type { TextureMetadata } from '#services/texture_metadata_service'
+import { OG_HEIGHT, OG_WIDTH, ogImageVersion } from '#services/og_image_service'
 
 /**
  * Every texture on the site is CC0 for now; a per-texture license can come
@@ -475,6 +476,51 @@ export async function presentCard(texture: Texture) {
   }
 }
 
+const CHANNEL_NAMES: Record<string, string> = {
+  albedo: 'albedo',
+  normal: 'normal',
+  metalness: 'metalness',
+  roughness: 'roughness',
+  height: 'height',
+  alpha: 'alpha',
+  ao: 'ambient occlusion',
+}
+
+/** Plain text from rendered markdown, for meta descriptions. */
+function plainText(html: string) {
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function truncate(value: string, length: number) {
+  if (value.length <= length) return value
+  const cut = value.slice(0, length - 1)
+  return `${cut.slice(0, Math.max(cut.lastIndexOf(' '), length * 0.6))}…`
+}
+
+/**
+ * One or two sentences for search results and share previews: the
+ * description's opening, or one made from the texture's details.
+ */
+function summaryFor(texture: Texture, html: string) {
+  const written = plainText(html)
+  if (written) return truncate(written, 200)
+
+  const kind = texture.category ? `${texture.category.name.toLowerCase()} texture` : 'texture'
+  const maps = texture.channels.map((c) => CHANNEL_NAMES[c.channel] ?? c.channel)
+  const list = maps.length > 1 ? `${maps.slice(0, -1).join(', ')} and ${maps.at(-1)}` : maps[0]
+  const extras = texture.variables.length ? ' Adjust its parameters live in 3D.' : ''
+  return `${texture.title}: a free CC0 procedural ${kind} made with TextureLab, with ${list} maps at ${texture.resolution}×${texture.resolution}.${extras}`
+}
+
 export async function presentTexture(texture: Texture) {
   const { html } = await renderMarkdown(texture.description ?? '')
 
@@ -510,6 +556,12 @@ export async function presentTexture(texture: Texture) {
     outputs: await presentOutputs(texture, texture.outputs ?? []),
     images: await Promise.all(sortedImages(texture.images ?? []).map(presentImage)),
     license: TEXTURE_LICENSE,
+    summary: summaryFor(texture, html),
+    ogImage: {
+      url: `/textures/${texture.slug}/og.jpg?v=${ogImageVersion(texture)}`,
+      width: OG_WIDTH,
+      height: OG_HEIGHT,
+    },
   }
 }
 

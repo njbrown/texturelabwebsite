@@ -60,6 +60,7 @@ router.get('/gallery', [GalleryController, 'index'])
 router.get('/gallery/:category', [GalleryController, 'index'])
 
 router.get('/textures/:slug', [TexturesController, 'show'])
+router.get('/textures/:slug/og.jpg', [TexturesController, 'ogImage'])
 router.get('/textures/:slug/source', [TexturesController, 'source']).use(textureFilesThrottle)
 router.get('/textures/:slug/download', [TexturesController, 'download']).use(textureFilesThrottle)
 router.get('/environments/:id/file', [EnvironmentsController, 'file'])

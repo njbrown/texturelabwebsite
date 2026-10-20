@@ -34,6 +34,9 @@ export const storageKeys = {
     `${PUBLIC_PREFIX}textures/${textureId}/outputs/${revision}/`,
   image: (textureId: number, name: string) =>
     `${PUBLIC_PREFIX}textures/${textureId}/images/${name}`,
+  ogImage: (textureId: number, version: string) =>
+    `${PUBLIC_PREFIX}textures/${textureId}/og/${version}.jpg`,
+  ogImages: (textureId: number) => `${PUBLIC_PREFIX}textures/${textureId}/og/`,
   environment: (name: string) => `${PRIVATE_PREFIX}environments/${name}`,
   environmentThumb: (name: string) => `${PUBLIC_PREFIX}environments/${name}`,
   texture: (textureId: number) => [

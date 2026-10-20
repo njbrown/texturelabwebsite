@@ -455,6 +455,52 @@ test.group('Textures / public', (group) => {
     assert.equal(created.downloadCount, 1)
   })
 
+  test('the page links a versioned 1200x630 share card', async ({ client, assert }) => {
+    await texture()
+
+    const page = await client.get('/textures/copper').headers(inertiaHeaders)
+    const props = page.body().props.texture
+    assert.match(props.ogImage.url, /^\/textures\/copper\/og\.jpg\?v=[0-9a-f]{16}$/)
+    assert.include(props.summary, 'free CC0 procedural texture')
+
+    const card = await fetch(`http://${process.env.HOST}:${process.env.PORT}${props.ogImage.url}`)
+    assert.equal(card.status, 200)
+    assert.equal(card.headers.get('content-type'), 'image/jpeg')
+    assert.include(card.headers.get('cache-control') ?? '', 'immutable')
+    const meta = await sharp(Buffer.from(await card.arrayBuffer())).metadata()
+    assert.equal(meta.width, 1200)
+    assert.equal(meta.height, 630)
+  })
+
+  test('the share card changes when the texture does', async ({ client, assert }) => {
+    const created = await texture()
+    const cardUrl = async () => {
+      const response = await client.get('/textures/copper').headers(inertiaHeaders)
+      return response.body().props.texture.ogImage.url
+    }
+
+    const before = await cardUrl()
+    created.title = 'Copper sheet'
+    await created.save()
+
+    assert.notEqual(before, await cardUrl())
+  })
+
+  test('share tags are in the server-rendered html', async ({ client, assert }) => {
+    await texture()
+
+    const response = await client.get('/textures/copper')
+    const html = response.text()
+    assert.include(
+      html,
+      'property="og:image" content="https://texturelab.io/textures/copper/og.jpg?v='
+    )
+    assert.include(html, 'property="og:image:width" content="1200"')
+    assert.include(html, 'name="twitter:card" content="summary_large_image"')
+    assert.include(html, 'rel="canonical" href="https://texturelab.io/textures/copper"')
+    assert.include(html, 'application/ld+json')
+  })
+
   test('the default outputs download as one zip', async ({ assert }) => {
     await texture()
 

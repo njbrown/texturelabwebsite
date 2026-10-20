@@ -35,6 +35,9 @@ ENV NODE_ENV=production
 ENV PORT=3333
 ENV HOST=0.0.0.0
 WORKDIR /app
+# Share cards draw text with the bundled fonts (resources/fonts); fontconfig
+# only provides its default config, so libvips doesn't log an error per card.
+RUN apk add --no-cache fontconfig
 COPY --from=build /app/build ./
 COPY --from=build /app/${RUNTIME_DIR}/package.json ./${RUNTIME_DIR}/
 COPY --from=build /app/${RUNTIME_DIR}/dist ./${RUNTIME_DIR}/dist

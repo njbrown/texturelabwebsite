@@ -106,7 +106,12 @@ export default function GalleryIndex({
 
   return (
     <SiteLayout>
-      <Seo title={title} description={description} image={textures[0]?.thumbUrl ?? null} />
+      <Seo
+        title={title}
+        description={description}
+        image={textures[0]?.thumbUrl ?? null}
+        canonicalPath={galleryUrl(filters.category, { page: pagination.page })}
+      />
 
       <section className="bg-gray-900">
         <div className="container mx-auto px-4 pt-10 pb-8">

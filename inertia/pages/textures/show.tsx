@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react'
 import { Box, ChevronRight, Download, FileArchive, Maximize2, Scale } from 'lucide-react'
 import Seo from '~/components/seo'
 import SiteLayout from '~/components/site_layout'
+import { useSite } from '~/lib/use_site'
 import Lightbox, { type LightboxItem } from '~/components/textures/lightbox'
 import LivePreview from '~/components/textures/live_preview'
 import TextureCard from '~/components/textures/texture_card'
@@ -33,6 +34,7 @@ function Detail({ label, children }: { label: string; children: React.ReactNode 
 }
 
 export default function TextureShow({ texture, related, environments, isPreview }: ShowProps) {
+  const site = useSite()
   const [live, setLive] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
   const [lightbox, setLightbox] = useState<number | null>(null)
@@ -66,11 +68,39 @@ export default function TextureShow({ texture, related, environments, isPreview 
     <SiteLayout>
       <Seo
         title={`${texture.title} – free CC0 texture`}
-        description={
-          texture.description.slice(0, 160) ||
-          `${texture.title}: a procedural ${texture.category?.name.toLowerCase() ?? ''} texture made with TextureLab. ${texture.channels.length} maps, ${texture.resolution}px, CC0.`
-        }
-        image={texture.images[0]?.url ?? null}
+        description={texture.summary}
+        type="article"
+        canonicalPath={`/textures/${texture.slug}`}
+        image={{
+          ...texture.ogImage,
+          alt: `${texture.title}, a procedural texture rendered on a sphere, with its maps`,
+        }}
+        article={{
+          publishedTime: texture.publishedAt,
+          modifiedTime: texture.updatedAt,
+          section: texture.category?.name,
+          tags: texture.tags,
+        }}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'CreativeWork',
+          'name': texture.title,
+          'description': texture.summary,
+          'url': `${site.url}/textures/${texture.slug}`,
+          'image': [
+            new URL(texture.ogImage.url, site.url).toString(),
+            ...texture.images.slice(0, 3).map((image) => image.url),
+          ],
+          'thumbnailUrl': texture.images[0]?.thumbUrl,
+          'license': texture.license.url,
+          'isAccessibleForFree': true,
+          'datePublished': texture.publishedAt,
+          'dateModified': texture.updatedAt,
+          'genre': texture.category?.name,
+          'keywords': texture.tags.join(', '),
+          'creator': { '@type': 'Organization', 'name': site.name, 'url': site.url },
+          'encodingFormat': 'application/json',
+        }}
       />
 
       <div className="bg-gray-950 text-gray-200">

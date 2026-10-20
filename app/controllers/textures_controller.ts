@@ -4,6 +4,7 @@ import { zipSync, strToU8, type Zippable } from 'fflate'
 import { readBytes, readStream } from '#services/storage_service'
 import { presentCard, presentTexture, TEXTURE_LICENSE } from '#services/texture_service'
 import { listEnvironments } from '#services/environment_service'
+import { ensureOgImage, ogImageVersion } from '#services/og_image_service'
 
 /**
  * A published texture, or a draft for someone logged into /ops (preview).
@@ -61,6 +62,25 @@ export default class TexturesController {
     ctx.response.header('Cache-Control', 'public, max-age=300')
     ctx.response.header('ETag', `"${texture.sourceSha256}"`)
     return ctx.response.stream(await readStream(texture.sourceKey))
+  }
+
+  /**
+   * The share card (1200×630 JPEG), drawn on first request and stored. The
+   * page links it with ?v=<version>, which changes whenever the card would.
+   */
+  async ogImage(ctx: HttpContext) {
+    const texture = await findVisible(ctx)
+    if (!texture) return ctx.response.notFound()
+
+    const { bytes } = await ensureOgImage(texture)
+    const current = ctx.request.input('v') === ogImageVersion(texture)
+
+    ctx.response.header('Content-Type', 'image/jpeg')
+    ctx.response.header(
+      'Cache-Control',
+      current ? 'public, max-age=31536000, immutable' : 'public, max-age=3600'
+    )
+    return Buffer.from(bytes)
   }
 
   async download(ctx: HttpContext) {

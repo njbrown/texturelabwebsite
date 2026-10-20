@@ -85,6 +85,10 @@ export type Texture = {
   outputs: TextureOutput[]
   images: TextureImage[]
   license: { name: string; url: string }
+  /** Plain text for meta descriptions and share previews. */
+  summary: string
+  /** The 1200×630 share card. */
+  ogImage: { url: string; width: number; height: number }
 }
 
 export type TextureCard = {

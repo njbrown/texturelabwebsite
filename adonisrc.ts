@@ -115,6 +115,10 @@ export default defineConfig({
       pattern: 'content/**/*.md',
       reloadServer: false,
     },
+    {
+      pattern: 'resources/fonts/**',
+      reloadServer: false,
+    },
   ],
 
   assetsBundler: false,
