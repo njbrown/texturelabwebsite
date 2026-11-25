@@ -25,7 +25,7 @@ type DashboardProps = {
     draftReleases: number
     docs: number
     posts: number
-    gallery: number
+    textures: number
   }
   live: LiveReleases
   recent: Release[]
@@ -47,7 +47,7 @@ export default function OpsDashboard({ stats, live, recent, usage }: DashboardPr
     { label: 'Drafts', value: stats.draftReleases },
     { label: 'Doc pages', value: stats.docs },
     { label: 'Blog posts', value: stats.posts },
-    { label: 'Gallery items', value: stats.gallery },
+    { label: 'Published textures', value: stats.textures },
   ]
 
   const todayUsers = usage.at(-1)?.visitors ?? 0

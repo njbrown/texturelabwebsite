@@ -45,9 +45,10 @@ const bodyParserConfig = defineConfig({
 
     /**
      * Maximum limit of data to parse including all files
-     * and fields
+     * and fields. Sized for /ops: HDRIs (up to 100 MB) and a full set of
+     * rendered maps. Each upload checks its own, smaller limit too.
      */
-    limit: '20mb',
+    limit: '110mb',
     types: ['multipart/form-data'],
   },
 })

@@ -70,4 +70,22 @@ export default await Env.create(new URL('../', import.meta.url), {
   | Where rate limits are counted. Defaults to "redis"; tests use "memory".
   */
   LIMITER_STORE: Env.schema.enum.optional(['redis', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the drive package
+  |----------------------------------------------------------
+  |
+  | Texture storage. "s3" is MinIO locally (docker-compose.yml) and
+  | DigitalOcean Spaces in production; "fs" is for tests.
+  */
+  DRIVE_DISK: Env.schema.enum.optional(['s3', 'fs'] as const),
+  S3_ENDPOINT: Env.schema.string.optional(),
+  S3_REGION: Env.schema.string.optional(),
+  S3_BUCKET: Env.schema.string.optional(),
+  S3_ACCESS_KEY_ID: Env.schema.string.optional(),
+  S3_SECRET_ACCESS_KEY: Env.schema.string.optional(),
+  S3_FORCE_PATH_STYLE: Env.schema.boolean.optional(),
+  S3_SUPPORTS_ACL: Env.schema.boolean.optional(),
+  S3_PUBLIC_URL: Env.schema.string.optional(),
 })

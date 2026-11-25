@@ -1,18 +1,21 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Release from '#models/release'
+import Texture from '#models/texture'
 import { liveRelease } from '#services/release_feed_service'
-import { getBlogPosts, getDocLinks, getGalleryItems } from '#services/content_service'
+import { getBlogPosts, getDocLinks } from '#services/content_service'
 import { dailyVisitors } from '#services/usage_service'
 
 export default class DashboardController {
   async index({ inertia }: HttpContext) {
-    const [releases, liveStable, liveBeta, docs, posts, gallery, usage] = await Promise.all([
+    const [releases, liveStable, liveBeta, docs, posts, textureCount, usage] = await Promise.all([
       Release.query().withScopes((scopes) => scopes.newestFirst()),
       liveRelease('stable'),
       liveRelease('beta'),
       getDocLinks(),
       getBlogPosts(),
-      getGalleryItems(),
+      Texture.query()
+        .withScopes((scopes) => scopes.published())
+        .count('* as total'),
       dailyVisitors(30),
     ])
 
@@ -25,7 +28,7 @@ export default class DashboardController {
         draftReleases: releases.length - published.length,
         docs: docs.length,
         posts: posts.length,
-        gallery: gallery.length,
+        textures: Number(textureCount[0].$extras.total ?? 0),
       },
       // Exactly what /api/releases/latest serves each channel.
       live: {

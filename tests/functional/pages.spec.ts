@@ -68,14 +68,4 @@ test.group('Pages', () => {
 
     response.assertStatus(404)
   })
-
-  test('renders the gallery', async ({ client, assert }) => {
-    const response = await client.get('/gallery').headers(inertiaHeaders)
-    const items = response.body().props.items
-
-    response.assertStatus(200)
-    assert.isArray(items)
-    assert.equal(items[0].title, 'Hex Texture')
-    assert.equal(items[0].image, '/uploads/hex-render.jpg')
-  })
 })

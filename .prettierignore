@@ -4,3 +4,4 @@ content
 build
 node_modules
 public
+vendor

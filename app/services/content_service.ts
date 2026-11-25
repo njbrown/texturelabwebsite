@@ -36,16 +36,6 @@ export type BlogPost = {
   html: string
 }
 
-export type GalleryItem = {
-  slug: string
-  title: string
-  date: string | null
-  dateLabel: string | null
-  image: string | null
-  thumbnail: string | null
-  html: string
-}
-
 const CONTENT_ROOT = app.makePath('content')
 
 /**
@@ -192,30 +182,4 @@ export async function findBlogPost(slug: string): Promise<BlogPost | null> {
   const posts = await getBlogPosts()
 
   return posts.find((post) => post.slug === slug) ?? null
-}
-
-export async function getGalleryItems(): Promise<GalleryItem[]> {
-  return cached('gallery', async () => {
-    const files = await markdownFiles(join(CONTENT_ROOT, 'gallery'))
-
-    const items = await Promise.all(
-      files.map(async (file) => {
-        const { data, content } = matter(await readFile(file, 'utf8'))
-        const { html } = await renderMarkdown(content || data.description || '')
-        const { date, dateLabel } = formatDate(data.date)
-
-        return {
-          slug: file.split('/').pop()!.replace(/\.md$/, ''),
-          title: data.title || 'Untitled',
-          date,
-          dateLabel,
-          image: data.image ? normalizeAssetPath(data.image) : null,
-          thumbnail: data.thumbnail ? normalizeAssetPath(data.thumbnail) : null,
-          html,
-        }
-      })
-    )
-
-    return items.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
-  })
 }

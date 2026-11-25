@@ -8,3 +8,12 @@ tmp
 npm-debug.log
 yarn-error.log
 .DS_Store
+
+# Only the web runtime package is needed from the texturelab submodule
+vendor/texturelab/*
+!vendor/texturelab/web
+vendor/texturelab/web/apps
+vendor/texturelab/web/tests
+vendor/texturelab/web/scripts
+vendor/texturelab/web/**/node_modules
+vendor/texturelab/web/**/dist
