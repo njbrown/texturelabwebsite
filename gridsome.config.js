@@ -107,6 +107,16 @@ module.exports = {
       }
     },
     {
+      use: '@gridsome/source-filesystem',
+      options: {
+        baseDir:'./content/gallery',
+        path: '**/*.md',
+        pathPrefix: '/gallery',
+        typeName: 'GalleryPage',
+        // index: ['index'], //  necessary to prevent conflicts between plugins
+      }
+    },
+    {
 			use: "@gridsome/vue-remark",
 			options: {
 				typeName: 'BlogPage',
